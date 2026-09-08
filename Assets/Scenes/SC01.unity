@@ -677,7 +677,6 @@ GameObject:
   - component: {fileID: 474039067}
   - component: {fileID: 474039066}
   - component: {fileID: 474039072}
-  - component: {fileID: 474039077}
   - component: {fileID: 474039073}
   - component: {fileID: 474039080}
   - component: {fileID: 474039091}
@@ -697,8 +696,6 @@ GameObject:
   - component: {fileID: 474039098}
   - component: {fileID: 474039156}
   - component: {fileID: 474039155}
-  - component: {fileID: 474039154}
-  - component: {fileID: 474039153}
   - component: {fileID: 474039152}
   - component: {fileID: 474039151}
   - component: {fileID: 474039150}
@@ -756,6 +753,7 @@ GameObject:
   - component: {fileID: 474039159}
   - component: {fileID: 474039158}
   - component: {fileID: 474039157}
+  - component: {fileID: 474039160}
   m_Layer: 0
   m_Name: Scenario01_Flowchart
   m_TagString: Untagged
@@ -821,11 +819,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 1051.889, y: -26.108238}
+  scrollPos: {x: 566.16016, y: 135.76009}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 0.64000034
+  zoom: 0.77550024
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -835,14 +833,14 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 474039073}
   selectedCommands:
-  - {fileID: 474039158}
+  - {fileID: 474039151}
   variables:
   - {fileID: 474039080}
   - {fileID: 474039092}
   - {fileID: 474039156}
   - {fileID: 474039094}
   - {fileID: 474039155}
-  - {fileID: 474039154}
+  - {fileID: 474039160}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -968,8 +966,6 @@ MonoBehaviour:
   commandList:
   - {fileID: 474039066}
   - {fileID: 474039072}
-  - {fileID: 474039077}
-  - {fileID: 474039153}
   - {fileID: 474039088}
   suppressAllAutoSelections: 0
 --- !u!114 &474039072
@@ -986,12 +982,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 6
   indentLevel: 0
-  storyText: "[EVENT 01 \u2014 ARRIVAL & ORIENTATION]\r\nThe player enters the response
-    hub. Amina welcomes them and explains the clinic concern. The player reviews
-    the situation and activates the dashboard.\r\n"
+  storyText: "Welcome to Kivu. I\u2019m Amina, a community health worker here. We
+    have a situation that needs careful attention, and I need your help.\r\n"
   description: 
-  character: {fileID: 0}
-  portrait: {fileID: 0}
+  character: {fileID: 873003680}
+  portrait: {fileID: 5234105000392165450, guid: 4c48a11ba7cea944aaf9065820a1f4e3, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1034,33 +1029,6 @@ MonoBehaviour:
   - {fileID: 474039090}
   - {fileID: 474039089}
   suppressAllAutoSelections: 0
---- !u!114 &474039077
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 9
-  indentLevel: 0
-  storyText: '[Amina explaining clinic concern]'
-  description: 
-  character: {fileID: 873003680}
-  portrait: {fileID: 8698055557713868069, guid: e3f352bf9afe8364daf1d24be1f76a4d, type: 3}
-  voiceOverClip: {fileID: 0}
-  showAlways: 1
-  showCount: 1
-  extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
-  stopVoiceover: 1
-  waitForVO: 0
-  setSayDialog: {fileID: 0}
 --- !u!114 &474039080
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1381,7 +1349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scope: 0
   key: Time
-  value: 100
+  value: 4
 --- !u!114 &474039094
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1396,7 +1364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scope: 0
   key: Resistance
-  value: 100
+  value: 50
 --- !u!114 &474039097
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -7346,7 +7314,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 33
   indentLevel: 0
-  storyText: '[Mariam/Kojo text placeholder highlighting the antibiotic demands]'
+  storyText: You are joining us as a One Health Innovator. Your job is not to find
+    a perfect answer. Your job is to understand the situation, make a responsible
+    decision, and learn from what happens next.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -7379,188 +7349,6 @@ MonoBehaviour:
   useDefaultSettings: 1
   fadeDuration: 0
   waitUntilFinished: 0
---- !u!114 &474039153
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb77d0ce495044f6e9feb91b31798e8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 31
-  indentLevel: 0
-  anyVar:
-    variable: {fileID: 474039154}
-    data:
-      animatorData:
-        animatorRef: {fileID: 0}
-        animatorVal: {fileID: 0}
-      audioSourceData:
-        audioSourceRef: {fileID: 0}
-        audioSourceVal: {fileID: 0}
-      booleanData:
-        booleanRef: {fileID: 0}
-        booleanVal: 1
-      collectionData:
-        collectionRef: {fileID: 0}
-        collectionVal: {fileID: 0}
-      collider2DData:
-        collider2DRef: {fileID: 0}
-        collider2DVal: {fileID: 0}
-      colliderData:
-        colliderRef: {fileID: 0}
-        colliderVal: {fileID: 0}
-      colorData:
-        colorRef: {fileID: 0}
-        colorVal: {r: 0, g: 0, b: 0, a: 0}
-      floatData:
-        floatRef: {fileID: 0}
-        floatVal: 0
-      gameObjectData:
-        gameObjectRef: {fileID: 0}
-        gameObjectVal: {fileID: 0}
-      integerData:
-        integerRef: {fileID: 0}
-        integerVal: 0
-      materialData:
-        materialRef: {fileID: 0}
-        materialVal: {fileID: 0}
-      matrix4x4Data:
-        matrix4x4Ref: {fileID: 0}
-        matrix4x4Val:
-          e00: 0
-          e01: 0
-          e02: 0
-          e03: 0
-          e10: 0
-          e11: 0
-          e12: 0
-          e13: 0
-          e20: 0
-          e21: 0
-          e22: 0
-          e23: 0
-          e30: 0
-          e31: 0
-          e32: 0
-          e33: 0
-      objectData:
-        objectRef: {fileID: 0}
-        objectVal: {fileID: 0}
-      quaternionData:
-        quaternionRef: {fileID: 0}
-        quaternionVal: {x: 0, y: 0, z: 0, w: 0}
-      rigidbody2DData:
-        rigidbody2DRef: {fileID: 0}
-        rigidbody2DVal: {fileID: 0}
-      rigidbodyData:
-        rigidbodyRef: {fileID: 0}
-        rigidbodyVal: {fileID: 0}
-      spriteData:
-        spriteRef: {fileID: 0}
-        spriteVal: {fileID: 0}
-      stringData:
-        stringRef: {fileID: 0}
-        stringVal: 
-      textureData:
-        textureRef: {fileID: 0}
-        textureVal: {fileID: 0}
-      transformData:
-        transformRef: {fileID: 0}
-        transformVal: {fileID: 0}
-      vector2Data:
-        vector2Ref: {fileID: 0}
-        vector2Val: {x: 0, y: 0}
-      vector3Data:
-        vector3Ref: {fileID: 0}
-        vector3Val: {x: 0, y: 0, z: 0}
-      vector4Data:
-        vector4Ref: {fileID: 0}
-        vector4Val: {x: 0, y: 0, z: 0, w: 0}
-      audioClipData:
-        audioClipRef: {fileID: 0}
-        audioClipVal: {fileID: 0}
-      audioMixerGroupData:
-        audioMixerGroupRef: {fileID: 0}
-        audioMixerGroupVal: {fileID: 0}
-      audioMixerSnapshotData:
-        audioMixerSnapshotRef: {fileID: 0}
-        audioMixerSnapshotVal: {fileID: 0}
-      audioMixerData:
-        audioMixerRef: {fileID: 0}
-        audioMixerVal: {fileID: 0}
-      characterData:
-        characterRef: {fileID: 0}
-        characterVal: {fileID: 0}
-  setOperator: 0
-  variable: {fileID: 0}
-  booleanData:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
-  integerData:
-    integerRef: {fileID: 0}
-    integerVal: 0
-  floatData:
-    floatRef: {fileID: 0}
-    floatVal: 0
-  stringData:
-    stringRef: {fileID: 0}
-    stringVal: 
-  animatorData:
-    animatorRef: {fileID: 0}
-    animatorVal: {fileID: 0}
-  audioSourceData:
-    audioSourceRef: {fileID: 0}
-    audioSourceVal: {fileID: 0}
-  colorData:
-    colorRef: {fileID: 0}
-    colorVal: {r: 0, g: 0, b: 0, a: 0}
-  gameObjectData:
-    gameObjectRef: {fileID: 0}
-    gameObjectVal: {fileID: 0}
-  materialData:
-    materialRef: {fileID: 0}
-    materialVal: {fileID: 0}
-  objectData:
-    objectRef: {fileID: 0}
-    objectVal: {fileID: 0}
-  rigidbody2DData:
-    rigidbody2DRef: {fileID: 0}
-    rigidbody2DVal: {fileID: 0}
-  spriteData:
-    spriteRef: {fileID: 0}
-    spriteVal: {fileID: 0}
-  textureData:
-    textureRef: {fileID: 0}
-    textureVal: {fileID: 0}
-  transformData:
-    transformRef: {fileID: 0}
-    transformVal: {fileID: 0}
-  vector2Data:
-    vector2Ref: {fileID: 0}
-    vector2Val: {x: 0, y: 0}
-  vector3Data:
-    vector3Ref: {fileID: 0}
-    vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &474039154
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d02d9822eec54c98afe95bb497211b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scope: 0
-  key: Knowledge_AMR
-  value: 0
 --- !u!114 &474039155
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -7590,10 +7378,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scope: 0
   key: Trust
-  value: 100
+  value: 50
 --- !u!114 &474039157
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -7623,7 +7411,7 @@ MonoBehaviour:
   waitUntilFinished: 0
 --- !u!114 &474039158
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -7653,7 +7441,7 @@ MonoBehaviour:
   waitUntilFinished: 0
 --- !u!114 &474039159
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -7676,6 +7464,21 @@ MonoBehaviour:
   orthoSizeTweenType: 4
   posTweenType: 4
   rotTweenType: 4
+--- !u!114 &474039160
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb91b566ceda411bad1e9d3c3243ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 0
+  key: Knowledge
+  value: 0
 --- !u!1 &527487650
 GameObject:
   m_ObjectHideFlags: 0
