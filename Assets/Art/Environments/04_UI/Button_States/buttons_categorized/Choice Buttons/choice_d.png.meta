@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 03cffd470a235b045873bbcc89cacbb3
+guid: f8f1cc91fd0f77b4083796fdaa5e266d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7999025083656865621
-    second: button_save_0
+      213: -8020931455292694275
+    second: choice_a_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,27 +96,53 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: button_save_0
+      name: choice_a_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 16
         y: 0
-        width: 508
-        height: 133
+        width: 781
+        height: 142
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 106, y: 0, z: 48, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ba8713b2111cdf090800000000000000
-      internalID: -7999025083656865621
+      spriteID: df0a58f865defa090800000000000000
+      internalID: -8020931455292694275
       vertices: []
       indices: 
       edges: []
@@ -125,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0d5f2d29a1c78254ebc09a8767a09d3f
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      button_save_0: -7999025083656865621
+      choice_a_0: -8020931455292694275
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
