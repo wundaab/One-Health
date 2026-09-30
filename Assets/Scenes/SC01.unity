@@ -1580,10 +1580,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 474039069}
-  selectedCommands:
-  - {fileID: 474039176}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 474039080}
   - {fileID: 474039092}
@@ -6790,7 +6788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb91b566ceda411bad1e9d3c3243ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 0
+  scope: 2
   key: Trust
   value: 100
 --- !u!114 &474039159
@@ -10082,7 +10080,7 @@ MonoBehaviour:
   waitUntilFinished: 0
 --- !u!114 &474039218
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -10110,7 +10108,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 0}
 --- !u!114 &474039219
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
