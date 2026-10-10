@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: b2a159be74986e24982068a2ecfe447d
+guid: b7c5a9b13a50bcb459ef05712a360325
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -902171627471266829
-    second: WhatsApp Image 2026-09-16 at 7.40.26 PM_0
+      213: -7212743939725961781
+    second: DialogBox_0
+  - first:
+      213: 6597976356242773756
+    second: DialogBox_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +129,35 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WhatsApp Image 2026-09-16 at 7.40.26 PM_0
+      name: DialogBox_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 52
-        width: 1517
-        height: 635
+        x: 0
+        y: 0
+        width: 3718
+        height: 1114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1220, y: 0, z: 963, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc558c00a9f27eb90800000000000000
+      internalID: -7212743939725961781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DialogBox_1
+      rect:
+        serializedVersion: 2
+        x: 3740
+        y: 149
+        width: 9
+        height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3fb932a4fa7da73f0800000000000000
-      internalID: -902171627471266829
+      spriteID: cf6d646d988b09b50800000000000000
+      internalID: 6597976356242773756
       vertices: []
       indices: 
       edges: []
@@ -151,7 +176,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 339c46d69ec0c794f9613cf25383e2bf
+    spriteID: 222a95b262d7302439437b6b3068a6e2
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WhatsApp Image 2026-09-16 at 7.40.26 PM_0: -902171627471266829
+      DialogBox_0: -7212743939725961781
+      DialogBox_1: 6597976356242773756
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
