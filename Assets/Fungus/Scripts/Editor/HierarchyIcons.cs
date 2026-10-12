@@ -26,14 +26,22 @@ namespace Fungus
         static Texture2D TextureIcon { get { return Fungus.EditorUtils.FungusEditorResources.FungusMushroom; } }
 
         //sorted list of the GO instance IDs that have flowcharts on them
+#if UNITY_6000_5_OR_NEWER
+        static HashSet<EntityId> flowchartIDs = new HashSet<EntityId>();
+#else
         static List<int> flowchartIDs = new List<int>();
+#endif
 
         static bool initalHierarchyCheckFlag = true;
 
         static HierarchyIcons()
         {
             initalHierarchyCheckFlag = true;
+#if UNITY_6000_5_OR_NEWER
+            EditorApplication.hierarchyWindowItemByEntityIdOnGUI += HierarchyIconCallback;
+#else
             EditorApplication.hierarchyWindowItemOnGUI += HierarchyIconCallback;
+#endif
 #if UNITY_2018_1_OR_NEWER
             EditorApplication.hierarchyChanged += HierarchyChanged;
 #else
@@ -55,12 +63,20 @@ namespace Fungus
             var flowcharts = GameObject.FindObjectsOfType<Flowchart>();
         #endif
 
+#if UNITY_6000_5_OR_NEWER
+            flowchartIDs = new HashSet<EntityId>(flowcharts.Select(x => x.gameObject.GetEntityId()));
+#else
             flowchartIDs = flowcharts.Select(x => x.gameObject.GetInstanceID()).Distinct().ToList();
             flowchartIDs.Sort();
+#endif
         }
 
         //Draw icon if the isntance id is in our cached list
+#if UNITY_6000_5_OR_NEWER
+        static void HierarchyIconCallback(EntityId instanceID, Rect selectionRect)
+#else
         static void HierarchyIconCallback(int instanceID, Rect selectionRect)
+#endif
         {
             if(initalHierarchyCheckFlag)
             {
@@ -84,7 +100,11 @@ namespace Fungus
 
             //binary search as it is much faster to cache and int bin search than GetComponent
             //  should be less GC too
+#if UNITY_6000_5_OR_NEWER
+            if (flowchartIDs.Contains(instanceID))
+#else
             if (flowchartIDs.BinarySearch(instanceID) >= 0)
+#endif
                 GUI.Label(r, TextureIcon);
         }
     }
