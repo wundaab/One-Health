@@ -1437,6 +1437,7 @@ GameObject:
   - component: {fileID: 474039302}
   - component: {fileID: 474039301}
   - component: {fileID: 474039300}
+  - component: {fileID: 474039312}
   m_Layer: 0
   m_Name: Scenario01_Flowchart
   m_TagString: Untagged
@@ -1488,6 +1489,7 @@ MonoBehaviour:
   - {fileID: 474039163}
   - {fileID: 474039311}
   - {fileID: 474039295}
+  - {fileID: 474039312}
   - {fileID: 474039294}
   suppressAllAutoSelections: 0
 --- !u!114 &474039063
@@ -5195,12 +5197,12 @@ MonoBehaviour:
   itemId: 233
   indentLevel: 0
   scenarioId: S01
-  scenarioTitle: "S01 \u2014 The First Response"
+  scenarioTitle: "Scenario 1 \u2014 The First Response"
   nextScene: SC02
-  nextLabel: BUILD
+  nextLabel: Continue to Scenario 2
   summary: You learned what AMR and resistance mean, made two decisions with limited
-    resources, and saw how each one changed Money, Time, Trust and Resistance. The
-    next stage gives less guidance and stronger trade-offs.
+    resources, and saw how each one changed Money, Time, Trust and Resistance. Scenario
+    2 gives less guidance and stronger trade-offs.
 --- !u!114 &474039243
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -5247,7 +5249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 230
   indentLevel: 1
-  storyText: Community Engagement was not unlocked this time. Involving the community
+  storyText: Community Coordination was not unlocked this time. Involving the community
     in your decisions would have earned it.
   description: 
   character: {fileID: 0}
@@ -5289,8 +5291,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 228
   indentLevel: 1
-  storyText: "UNLOCKED \u2014 Community Engagement. Because you involved the community,
-    you can use community engagement actions in the next stage."
+  storyText: "UNLOCKED \u2014 Community Coordination. Because you involved the community,
+    this capability carries into Scenario 2."
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -8127,7 +8129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OneHealth.UnlockCapability
   itemId: 239
   indentLevel: 1
-  capabilityId: Community Engagement
+  capabilityId: Community Coordination
 --- !u!114 &474039307
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -8204,6 +8206,27 @@ MonoBehaviour:
   indentLevel: 0
   scenarioId: S01
   timeBudgetWeeks: 4
+  showTime: 1
+--- !u!114 &474039312
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed413638dc688554fb795da575df2789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.ShowVisualCard
+  itemId: 246
+  indentLevel: 0
+  title: "Scenario 1 \u2014 The First Response"
+  image: {fileID: 0}
+  caption: 'ONE HEALTH INNOVATOR
+
+
+    Your decisions shape what happens next.'
 --- !u!1 &527487650
 GameObject:
   m_ObjectHideFlags: 0

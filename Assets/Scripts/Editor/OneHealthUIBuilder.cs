@@ -388,7 +388,7 @@ namespace OneHealth.EditorTools
             Chip(hud, StatKind.Time, "Time", "HUD/time_icon.png", "How much time do I have left?", GameState.TimeMax, false, false);
             Chip(hud, StatKind.Trust, "Trust", "HUD/trust_icon.png", "Will people work with me? (0–100)", GameState.TrustMax, true, false);
             Chip(hud, StatKind.Resistance, "Resistance", "HUD/resistance_icon.png", "How serious is the resistance problem? Higher is worse. (0–100)", GameState.ResistanceMax, true, true);
-            var capacity = Chip(hud, StatKind.FlowchartInteger, "Clinic Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png","How much the clinic team can still take on. (0–100)", 100, true, false);
+            var capacity = Chip(hud, StatKind.FlowchartInteger, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png","How much the clinic team can still take on. (0–100)", 100, true, false);
             Set(capacity.GetComponent<StatChip>(), "variableKey", "ClinicResponseCapacity");   // shown only in scenes that track it
 
             var h = hud.gameObject.AddComponent<StatHUD>();
@@ -516,6 +516,10 @@ namespace OneHealth.EditorTools
             var header = Txt("Text", ribbon, "Scenario Complete", true, 42, Color.white, TextAlignmentOptions.Center, new Vector2(0, 4), new Vector2(520, 70));
             var title = Txt("ScenarioTitle", c, "", true, 36, UITheme.Teal, TextAlignmentOptions.Center, new Vector2(0, 292), new Vector2(1180, 50));
             var summary = Txt("Summary", c, "", false, 28, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 198), new Vector2(1160, 130));
+            summary.enableAutoSizing = true;
+            summary.fontSizeMin = 18;
+            summary.fontSizeMax = 28;
+            summary.overflowMode = TextOverflowModes.Ellipsis;
 
             // Left column: final state
             var left = Center("FinalState", c, new Vector2(-300, -66), new Vector2(560, 360));

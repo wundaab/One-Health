@@ -29,6 +29,34 @@ namespace OneHealth.EditorTools
             return b;
         }
 
+        public static void DeleteBlock(Block block)
+        {
+            foreach (var c in block.CommandList.ToList())
+                if (c != null) Undo.DestroyObjectImmediate(c);
+            if (block._EventHandler != null) Undo.DestroyObjectImmediate(block._EventHandler);
+            Undo.DestroyObjectImmediate(block);
+        }
+
+        public static T Var<T>(Flowchart fc, string key) where T : Variable
+        {
+            var existing = fc.GetVariable(key) as T;
+            if (existing != null) return existing;
+            var v = Undo.AddComponent<T>(fc.gameObject);
+            v.Key = key;
+            v.Scope = VariableScope.Private;
+            v.hideFlags = HideFlags.HideInInspector;
+            fc.Variables.Add(v);
+            return v;
+        }
+
+        public static void RemoveVar(Flowchart fc, string key)
+        {
+            var v = fc.GetVariable(key);
+            if (v == null) return;
+            fc.Variables.Remove(v);
+            Undo.DestroyObjectImmediate(v);
+        }
+
         public static T Insert<T>(Block block, int index) where T : Command
         {
             var fc = block.GetFlowchart();

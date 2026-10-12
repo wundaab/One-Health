@@ -44,7 +44,14 @@ namespace OneHealth
         }
 
         void OnStatsChanged(StatDelta d) { foreach (var c in chips) if (c.isActiveAndEnabled) c.Refresh(true); }
-        void OnStateReset() { foreach (var c in chips) if (c.isActiveAndEnabled) c.Refresh(false); }
+        void OnStateReset()
+        {
+            foreach (var c in chips)
+            {
+                if (c.Kind == StatKind.Time) c.gameObject.SetActive(GameSession.ShowTimeStat);
+                if (c.isActiveAndEnabled) c.Refresh(false);
+            }
+        }
 
         public void SetVisible(bool visible)
         {

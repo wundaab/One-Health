@@ -18,8 +18,12 @@ namespace OneHealth
         [Tooltip("Weeks available for this scenario. -1 keeps the time inherited from the previous scenario.")]
         [SerializeField] protected int timeBudgetWeeks = -1;
 
+        [Tooltip("Show Time on the HUD. Off for scenarios whose design does not use time (e.g. Scenario 2).")]
+        [SerializeField] protected bool showTime = true;
+
         public override void OnEnter()
         {
+            GameSession.ShowTimeStat = showTime;
             GameSession.BeginScenario(scenarioId, timeBudgetWeeks);
             FlowchartSync.Push(GetFlowchart());
             Continue();

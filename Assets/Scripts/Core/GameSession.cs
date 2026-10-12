@@ -36,6 +36,9 @@ namespace OneHealth
 
         public static string CurrentScenarioId { get { return scenarioId; } }
 
+        /// <summary>Whether the current scenario shows Time on the HUD (set by Begin Scenario).</summary>
+        public static bool ShowTimeStat { get; set; }
+
         public static bool HasSave { get { return PlayerPrefs.HasKey(SaveKey); } }
 
         // ---------------------------------------------------------------- campaign
@@ -147,8 +150,8 @@ namespace OneHealth
         {
             if (IsReplay) return;
             State.AddUnique(State.completedScenarios, id);
-            if (!string.IsNullOrEmpty(nextScene))
-                State.checkpointScene = nextScene;
+            // Continue resumes at the next scenario; after the last one there is nothing to resume.
+            State.checkpointScene = string.IsNullOrEmpty(nextScene) || nextScene == MainMenuScene ? "" : nextScene;
             Save();
         }
 

@@ -71,8 +71,8 @@ namespace OneHealth
             bool unlocked = !string.IsNullOrEmpty(nextScene) && GameSession.State.HasCompleted(GameSession.CurrentScenarioId);
             nextButton.interactable = unlocked;
             nextLockIcon.SetActive(!unlocked);
-            string stage = string.IsNullOrEmpty(nextStageLabel) ? "" : ": " + nextStageLabel;
-            nextLabel.text = unlocked ? "Next" + stage : "Next" + stage + " (locked)";
+            string label = string.IsNullOrEmpty(nextStageLabel) ? "Next" : nextStageLabel;
+            nextLabel.text = unlocked ? label : label + " (locked)";
             if (hintText != null)
                 hintText.text = unlocked || string.IsNullOrEmpty(nextScene)
                     ? "Press Esc to resume"

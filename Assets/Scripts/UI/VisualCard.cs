@@ -15,6 +15,7 @@ namespace OneHealth
 
         System.Action onContinue;
         Vector2 maxImageSize;
+        Rect captionDefault;
 
         void Awake()
         {
@@ -40,6 +41,15 @@ namespace OneHealth
                 float scale = Mathf.Min(maxImageSize.x / native.x, maxImageSize.y / native.y, 1.5f);
                 image.rectTransform.sizeDelta = native * scale;
             }
+            // Text-only cards (title cards, decision review) use the image area for the caption.
+            if (captionDefault.size == Vector2.zero)
+                captionDefault = new Rect(caption.rectTransform.anchoredPosition, caption.rectTransform.sizeDelta);
+            bool textOnly = sprite == null;
+            caption.rectTransform.anchoredPosition = textOnly ? new Vector2(0, 30) : captionDefault.position;
+            caption.rectTransform.sizeDelta = textOnly ? new Vector2(captionDefault.width, 520) : captionDefault.size;
+            caption.enableAutoSizing = true;
+            caption.fontSizeMin = 18;
+            caption.fontSizeMax = textOnly ? 34 : 30;
             caption.text = captionText;
             onContinue = continued;
             panel.Open();

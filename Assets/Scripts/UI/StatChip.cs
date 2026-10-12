@@ -20,6 +20,8 @@ namespace OneHealth
         [SerializeField] int maxValue = 100;
         [Tooltip("Higher values are bad (Resistance)")]
         [SerializeField] bool higherIsWorse;
+        [Tooltip("For FlowchartInteger: at or below this value the chip shows LOW")]
+        [SerializeField] int lowThreshold = 30;
 
         [SerializeField] TMP_Text valueText;
         [SerializeField] TMP_Text statusText;
@@ -100,6 +102,7 @@ namespace OneHealth
             if (kind == StatKind.Resistance && v > GameState.ResistanceCriticalAbove) { status = "Severe"; critical = true; }
             if (kind == StatKind.Money && v <= 0) { status = "No funds"; critical = true; }
             if (kind == StatKind.Time && v <= 0) { status = "Deadline"; critical = true; }
+            if (kind == StatKind.FlowchartInteger && v <= lowThreshold) { status = "Low"; critical = true; }
             if (statusText != null)
             {
                 statusText.text = status;

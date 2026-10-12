@@ -42,9 +42,9 @@ namespace OneHealth
         {
             nextScene = next;
             header.text = "Scenario Complete";
-            replayLabel.text = "Replay";
+            replayLabel.text = "Replay Scenario";
             nextButton.gameObject.SetActive(!string.IsNullOrEmpty(next));
-            nextLabel.text = string.IsNullOrEmpty(nextStageLabel) ? "Next" : "Next: " + nextStageLabel;
+            nextLabel.text = string.IsNullOrEmpty(nextStageLabel) ? "Next" : nextStageLabel;
             if (GameSession.IsReplay)
                 summaryText += "\n<i>This was a replay to try a different strategy. Your campaign continues from your original outcome.</i>";
             Fill(title, summaryText);
@@ -56,7 +56,7 @@ namespace OneHealth
         {
             nextScene = null;
             header.text = "Scenario Not Completed";
-            replayLabel.text = "Retry";
+            replayLabel.text = "Retry Scenario";
             nextButton.gameObject.SetActive(false);
             Fill(title, reason);
             panel.Open();
@@ -71,6 +71,9 @@ namespace OneHealth
             summary.text = summaryText;
             moneyRow.text = Row(start.money, end.money, "", false);
             timeRow.text = Row(start.timeWeeks, end.timeWeeks, " weeks", false);
+            // Scenarios that do not use time (Scenario 2) hide the Time row.
+            foreach (Transform t in timeRow.transform.parent)
+                if (t.name.StartsWith("Time")) t.gameObject.SetActive(GameSession.ShowTimeStat);
             trustRow.text = Row(start.trust, end.trust, "", false);
             resistanceRow.text = Row(start.resistance, end.resistance, "", true);
 
@@ -96,11 +99,17 @@ namespace OneHealth
         {
             var lines = new List<string>();
             var earlier = new List<string>();
+            var fresh = new List<string>();
             foreach (var id in now)
             {
                 if (before.Contains(id)) earlier.Add(id);
-                else lines.Add("• <b>New:</b> " + id);
+                else fresh.Add(id);
             }
+            // Up to three new items as bullets; more than that as one compact line so nothing is cut off.
+            if (fresh.Count <= 3)
+                foreach (var id in fresh) lines.Add("• <b>New:</b> " + id);
+            else
+                lines.Add("<b>New:</b> " + string.Join(", ", fresh.ToArray()));
             if (earlier.Count > 0)
                 lines.Add("<size=80%><color=#" + ColorUtility.ToHtmlStringRGB(UITheme.Teal) + ">Earlier: " + string.Join(", ", earlier.ToArray()) + "</color></size>");
             return lines.Count == 0 ? empty : string.Join("\n", lines.ToArray());
