@@ -14,7 +14,7 @@ namespace OneHealth
         public override void OnEnter()
         {
             GameSession.AddUnlock(capabilityId);
-            FlowchartSync.SetBool(GetFlowchart(), "Unlocked_" + capabilityId.Replace(" ", ""), true);
+            FlowchartSync.SetBool(GetFlowchart(), "Unlocked_" + FlowchartSync.Key(capabilityId), true);
             Debug.Log("[OHI] Capability unlocked: " + capabilityId);
             Continue();
         }

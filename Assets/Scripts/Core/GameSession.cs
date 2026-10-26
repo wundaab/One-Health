@@ -39,6 +39,9 @@ namespace OneHealth
         /// <summary>Whether the current scenario shows Time on the HUD (set by Begin Scenario).</summary>
         public static bool ShowTimeStat { get; set; }
 
+        /// <summary>Whether the current scenario shows Capacity on the HUD (set by Begin Scenario).</summary>
+        public static bool ShowCapacityStat { get; set; }
+
         public static bool HasSave { get { return PlayerPrefs.HasKey(SaveKey); } }
 
         // ---------------------------------------------------------------- campaign
@@ -62,11 +65,21 @@ namespace OneHealth
         /// Marks the start of a scenario: records the checkpoint and snapshots the inherited
         /// state so Retry/Replay restore exactly what the player entered with.
         /// </summary>
-        public static void BeginScenario(string id, int timeBudgetWeeks)
+        public static void BeginScenario(string id, int timeBudgetWeeks, int timeGrantWeeks = 0, int capacityStart = -1)
         {
             var s = State;
             if (timeBudgetWeeks >= 0)
                 s.timeWeeks = Mathf.Clamp(timeBudgetWeeks, GameState.TimeMin, GameState.TimeMax);
+            // A new response period adds time to what was carried forward (see BeginScenario.timeGrantWeeks).
+            // Applied once per scenario: Retry/Continue reload the scene with the snapshot, which already
+            // carries the grant flag, so the grant is never added twice.
+            if (timeGrantWeeks > 0 && s.GetFlag("time_granted_" + id) != "1")
+            {
+                s.timeWeeks = Mathf.Clamp(s.timeWeeks + timeGrantWeeks, GameState.TimeMin, GameState.TimeMax);
+                s.SetFlag("time_granted_" + id, "1");
+            }
+            if (capacityStart >= 0)
+                s.capacity = Mathf.Clamp(capacityStart, GameState.CapacityMin, GameState.CapacityMax);
             scenarioId = id;
             scenarioStart = s.Clone();
 
@@ -78,8 +91,8 @@ namespace OneHealth
                 scenarioStart.checkpointScene = s.checkpointScene;
                 Save();
             }
-            Debug.Log(string.Format("[OHI] Begin {0}{5}: Money {1}, Time {2}w, Trust {3}, Resistance {4}",
-                id, s.money, s.timeWeeks, s.trust, s.resistance, IsReplay ? " (replay)" : ""));
+            Debug.Log(string.Format("[OHI] Begin {0}{6}: Money {1}, Time {2}w, Trust {3}, Resistance {4}, Capacity {5}",
+                id, s.money, s.timeWeeks, s.trust, s.resistance, s.capacity, IsReplay ? " (replay)" : ""));
             if (StateReset != null) StateReset();
         }
 
@@ -90,9 +103,10 @@ namespace OneHealth
         public static GameState ScenarioStartState { get { return scenarioStart; } }
 
         /// <summary>
-        /// Retry/Replay: restores the parameters the player had when the current scenario began.
-        /// Completions, knowledge and unlocks already earned are kept, so replaying can never
-        /// remove or duplicate campaign progress (Progression sheet: Replay integrity).
+        /// Retry/Replay: restores the parameters, flags and badges the player had when the current
+        /// scenario began. Completions, knowledge and unlocks already earned are kept, so replaying
+        /// can never remove or duplicate campaign progress (Progression sheet: Replay integrity).
+        /// Badges earned during the abandoned attempt are cleared (Scenario 3/4 blueprints: Retry).
         /// </summary>
         public static void RestoreScenarioStart()
         {
@@ -116,17 +130,18 @@ namespace OneHealth
         public static StatDelta Apply(StatDelta requested, string reason)
         {
             var s = State;
-            int m0 = s.money, t0 = s.timeWeeks, tr0 = s.trust, r0 = s.resistance;
+            int m0 = s.money, t0 = s.timeWeeks, tr0 = s.trust, r0 = s.resistance, c0 = s.capacity;
 
             s.money += requested.money;
             s.timeWeeks += requested.timeWeeks;
             s.trust += requested.trust;
             s.resistance += requested.resistance;
+            s.capacity += requested.capacity;
             s.Clamp();
 
-            var applied = new StatDelta(s.money - m0, s.timeWeeks - t0, s.trust - tr0, s.resistance - r0);
-            Debug.Log(string.Format("[OHI] {0}: Money {1}->{2}, Time {3}->{4}w, Trust {5}->{6}, Resistance {7}->{8}",
-                reason, m0, s.money, t0, s.timeWeeks, tr0, s.trust, r0, s.resistance));
+            var applied = new StatDelta(s.money - m0, s.timeWeeks - t0, s.trust - tr0, s.resistance - r0, s.capacity - c0);
+            Debug.Log(string.Format("[OHI] {0}: Money {1}->{2}, Time {3}->{4}w, Trust {5}->{6}, Resistance {7}->{8}, Capacity {9}->{10}",
+                reason, m0, s.money, t0, s.timeWeeks, tr0, s.trust, r0, s.resistance, c0, s.capacity));
 
             if (StatsChanged != null) StatsChanged(applied);
             return applied;
@@ -141,6 +156,17 @@ namespace OneHealth
         public static void AddKnowledge(string id) { State.AddUnique(State.knowledge, id); }
 
         public static void AddUnlock(string id) { State.AddUnique(State.unlocks, id); }
+
+        public static void AwardBadge(string id) { State.AddUnique(State.badges, id); }
+
+        /// <summary>Sets an absolute Capacity value (e.g. syncing a scenario's own capacity counter).</summary>
+        public static void SetCapacity(int value)
+        {
+            int before = State.capacity;
+            State.capacity = Mathf.Clamp(value, GameState.CapacityMin, GameState.CapacityMax);
+            if (StatsChanged != null && before != State.capacity)
+                StatsChanged(new StatDelta(0, 0, 0, 0, State.capacity - before));
+        }
 
         /// <summary>
         /// Records completion and saves the final state as the checkpoint for the next scenario,

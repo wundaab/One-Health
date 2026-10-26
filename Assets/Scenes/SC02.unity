@@ -3566,7 +3566,10 @@ MonoBehaviour:
   indentLevel: 0
   scenarioId: S02
   timeBudgetWeeks: -1
+  timeGrantWeeks: 0
   showTime: 0
+  showCapacity: 1
+  capacityStart: 100
 --- !u!114 &131339111
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -4565,8 +4568,8 @@ MonoBehaviour:
   indentLevel: 0
   scenarioId: S02
   scenarioTitle: "Scenario 2 \u2014 The Fever That Won\u2019t Wait"
-  nextScene: MainMenu
-  nextLabel: Continue Journey
+  nextScene: SC03
+  nextLabel: Continue to Scenario 3
   summary: 'OUTCOME: {$Outcome}. {$OutcomeText}'
 --- !u!114 &131339156
 MonoBehaviour:
@@ -13758,6 +13761,7 @@ MonoBehaviour:
   timeWeeks: 0
   trust: 4
   resistance: 0
+  capacity: 0
 --- !u!114 &131339253
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -15047,6 +15051,7 @@ MonoBehaviour:
   timeWeeks: 0
   trust: 3
   resistance: 0
+  capacity: 0
 --- !u!114 &131339267
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -20876,6 +20881,7 @@ MonoBehaviour:
   timeWeeks: 0
   trust: 5
   resistance: -3
+  capacity: 0
 --- !u!114 &131339328
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -24136,6 +24142,7 @@ MonoBehaviour:
   timeWeeks: 0
   trust: 3
   resistance: 0
+  capacity: 0
 --- !u!114 &131339373
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -25043,6 +25050,7 @@ MonoBehaviour:
   timeWeeks: 0
   trust: -5
   resistance: 0
+  capacity: 0
 --- !u!114 &131339384
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -25950,6 +25958,7 @@ MonoBehaviour:
   timeWeeks: 0
   trust: 6
   resistance: 0
+  capacity: 0
 --- !u!114 &131339395
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -41385,6 +41394,38 @@ PrefabInstance:
     - target: {fileID: 1449080605853455987, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2103273104026852780, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_Name

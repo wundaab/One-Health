@@ -113,14 +113,20 @@ namespace OneHealth.EditorTools
                 var legacy = buttons[pick].GetComponentInChildren<Text>();
                 string labelText = label != null ? label.text : legacy != null ? legacy.text : "?";
                 Log("CHOOSE [" + pick + "]: " + labelText);
+                if (!buttons[pick].interactable)
+                {
+                    Log("ERROR: option " + pick + " is disabled (cannot be afforded); a player could not choose it.");
+                    Stop();
+                    return;
+                }
                 SessionState.SetInt(StepKey, step + 1);
 
                 // Fungus starts the chosen block after WaitForEndOfFrame, which never fires in an
                 // unfocused editor. Do what the click does, minus that wait: find the Menu command
                 // with this label and execute its target block.
-                var command = Object.FindObjectsByType<Fungus.Menu>()
-                    .FirstOrDefault(m => m.GetFlowchart().SubstituteVariables(m.GetStandardText()) == labelText);
-                var target = command == null ? null : (Block)new SerializedObject(command).FindProperty("targetBlock").objectReferenceValue;
+                // Labels repeat across menus ("Commit", "NOT YET KNOWN"), so read the option's own
+                // target block from the click delegate Fungus attached to this button.
+                var target = TargetOf(buttons[pick]);
                 if (target == null)
                 {
                     Log("ERROR: no Menu command found for '" + labelText + "'");
@@ -155,6 +161,25 @@ namespace OneHealth.EditorTools
                     writer.OnNextLineEvent();
                 }
             }
+        }
+
+        /// <summary>The Block captured by the runtime listener MenuDialog.AddOption added to this button.</summary>
+        static Block TargetOf(Button button)
+        {
+            const System.Reflection.BindingFlags F = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public;
+            var calls = typeof(UnityEngine.Events.UnityEventBase).GetField("m_Calls", F).GetValue(button.onClick);
+            var runtime = calls.GetType().GetField("m_RuntimeCalls", F).GetValue(calls) as System.Collections.IEnumerable;
+            foreach (var call in runtime)
+            {
+                var del = call.GetType().GetField("Delegate", F).GetValue(call) as System.Delegate;
+                if (del == null || del.Target == null) continue;
+                foreach (var field in del.Target.GetType().GetFields(F))
+                {
+                    var block = field.GetValue(del.Target) as Block;
+                    if (block != null) return block;
+                }
+            }
+            return null;
         }
 
         static void ClickNamed(Transform root, string name)

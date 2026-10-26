@@ -20,6 +20,7 @@ namespace OneHealth
         [SerializeField] TMP_Text timeRow;
         [SerializeField] TMP_Text trustRow;
         [SerializeField] TMP_Text resistanceRow;
+        [SerializeField] TMP_Text capacityRow;
         [SerializeField] TMP_Text learnedText;
         [SerializeField] TMP_Text unlockedText;
 
@@ -31,8 +32,15 @@ namespace OneHealth
 
         string nextScene;
 
-        void Awake()
+        bool wired;
+
+        void Awake() { Wire(); }
+
+        // Buttons are wired on first use as well as in Awake, so the overlay works however it is activated.
+        void Wire()
         {
+            if (wired) return;
+            wired = true;
             replayButton.onClick.AddListener(Replay);
             menuButton.onClick.AddListener(GameSession.ReturnToMainMenu);
             nextButton.onClick.AddListener(Next);
@@ -40,8 +48,9 @@ namespace OneHealth
 
         public void ShowCompleted(string title, string summaryText, string next, string nextStageLabel)
         {
+            Wire();
             nextScene = next;
-            header.text = "Scenario Complete";
+            header.text = string.IsNullOrEmpty(next) || next == GameSession.MainMenuScene ? "Game Complete" : "Scenario Complete";
             replayLabel.text = "Replay Scenario";
             nextButton.gameObject.SetActive(!string.IsNullOrEmpty(next));
             nextLabel.text = string.IsNullOrEmpty(nextStageLabel) ? "Next" : nextStageLabel;
@@ -54,6 +63,7 @@ namespace OneHealth
 
         public void ShowNotCompleted(string title, string reason)
         {
+            Wire();
             nextScene = null;
             header.text = "Scenario Not Completed";
             replayLabel.text = "Retry Scenario";
@@ -71,14 +81,23 @@ namespace OneHealth
             summary.text = summaryText;
             moneyRow.text = Row(start.money, end.money, "", false);
             timeRow.text = Row(start.timeWeeks, end.timeWeeks, " weeks", false);
-            // Scenarios that do not use time (Scenario 2) hide the Time row.
+            if (capacityRow != null)
+                capacityRow.text = Row(start.capacity, end.capacity, "", false);
+            // Rows for parameters the scenario does not use are hidden (e.g. Time in Scenario 2).
             foreach (Transform t in timeRow.transform.parent)
+            {
                 if (t.name.StartsWith("Time")) t.gameObject.SetActive(GameSession.ShowTimeStat);
+                if (t.name.StartsWith("Capacity")) t.gameObject.SetActive(GameSession.ShowCapacityStat);
+            }
             trustRow.text = Row(start.trust, end.trust, "", false);
             resistanceRow.text = Row(start.resistance, end.resistance, "", true);
 
             learnedText.text = List(end.knowledge, start.knowledge, "Nothing new recorded");
-            unlockedText.text = List(end.unlocks, start.unlocks, "No new capability unlocked");
+            var text = List(end.unlocks, start.unlocks, "No new capability unlocked");
+            var newBadges = end.badges.FindAll(b => !start.badges.Contains(b));
+            if (newBadges.Count > 0)
+                text += "\n<b>Badges:</b> " + string.Join(", ", newBadges.ToArray());
+            unlockedText.text = text;
         }
 
         static string Row(int from, int to, string unit, bool higherIsWorse)

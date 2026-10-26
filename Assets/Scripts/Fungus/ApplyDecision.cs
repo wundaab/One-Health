@@ -23,13 +23,17 @@ namespace OneHealth
         [Tooltip("Weeks. Negative values consume time.")]
         [SerializeField] protected int timeWeeks;
         [SerializeField] protected int trust;
-        [Tooltip("Higher is worse.")]
+        [Tooltip("Resistance Pressure. Higher is worse.")]
         [SerializeField] protected int resistance;
+        [Tooltip("Team capacity (Scenario 3 onwards).")]
+        [SerializeField] protected int capacity;
+
+        public StatDelta Delta { get { return new StatDelta(money, timeWeeks, trust, resistance, capacity); } }
 
         public override void OnEnter()
         {
             var flowchart = GetFlowchart();
-            var applied = GameSession.Apply(new StatDelta(money, timeWeeks, trust, resistance),
+            var applied = GameSession.Apply(Delta,
                 "Decision " + decisionId + " (" + actionName + ")");
             GameSession.RecordDecision(decisionId);
 
@@ -41,7 +45,7 @@ namespace OneHealth
 
         public override string GetSummary()
         {
-            return decisionId + ": " + new StatDelta(money, timeWeeks, trust, resistance).ToDisplayString();
+            return decisionId + ": " + Delta.ToDisplayString();
         }
 
         public override Color GetButtonColor() { return new Color32(242, 167, 59, 255); }

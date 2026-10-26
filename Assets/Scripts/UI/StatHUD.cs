@@ -27,8 +27,12 @@ namespace OneHealth
         {
             // Scenario-specific stats (e.g. S02 Clinic Capacity) appear only in scenes that track them.
             foreach (var c in chips)
+            {
                 if (c.Kind == StatKind.FlowchartInteger)
                     c.gameObject.SetActive(c.HasSource());
+                if (c.Kind == StatKind.Capacity)
+                    c.gameObject.SetActive(GameSession.ShowCapacityStat);
+            }
         }
 
         void OnEnable()
@@ -49,6 +53,7 @@ namespace OneHealth
             foreach (var c in chips)
             {
                 if (c.Kind == StatKind.Time) c.gameObject.SetActive(GameSession.ShowTimeStat);
+                if (c.Kind == StatKind.Capacity) c.gameObject.SetActive(GameSession.ShowCapacityStat);
                 if (c.isActiveAndEnabled) c.Refresh(false);
             }
         }

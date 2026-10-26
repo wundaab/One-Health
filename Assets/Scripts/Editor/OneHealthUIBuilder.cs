@@ -387,9 +387,11 @@ namespace OneHealth.EditorTools
             Chip(hud, StatKind.Money, "Money", "HUD/money_icon.png", "How much can I afford to do?", GameState.MoneyMax, false, false);
             Chip(hud, StatKind.Time, "Time", "HUD/time_icon.png", "How much time do I have left?", GameState.TimeMax, false, false);
             Chip(hud, StatKind.Trust, "Trust", "HUD/trust_icon.png", "Will people work with me? (0–100)", GameState.TrustMax, true, false);
-            Chip(hud, StatKind.Resistance, "Resistance", "HUD/resistance_icon.png", "How serious is the resistance problem? Higher is worse. (0–100)", GameState.ResistanceMax, true, true);
-            var capacity = Chip(hud, StatKind.FlowchartInteger, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png","How much the clinic team can still take on. (0–100)", 100, true, false);
-            Set(capacity.GetComponent<StatChip>(), "variableKey", "ClinicResponseCapacity");   // shown only in scenes that track it
+            // Tooltip wording from the Scenario 3 blueprint.
+            Chip(hud, StatKind.Resistance, "Resistance Pressure", "HUD/resistance_icon.png", "A simplified gameplay indicator of conditions that can increase or reduce AMR risk. It is not a clinical measurement and does not show whether a person or animal has a resistant infection.", GameState.ResistanceMax, true, true);
+            var capacity = Chip(hud, StatKind.Capacity, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png", "How much work your team can still take on. (0–100)", GameState.CapacityMax, true, false);
+            // Scenario 3/4 outcome rules use Capacity >= 10 and >= 5; warn at 10 and below.
+            Set(capacity.GetComponent<StatChip>(), "lowThreshold", 10);
 
             var h = hud.gameObject.AddComponent<StatHUD>();
             Set(h, "visibleOnStart", false);
@@ -405,7 +407,11 @@ namespace OneHealth.EditorTools
             var ic = Center("Icon", rt, new Vector2(-78, 0), new Vector2(64, 64));
             Img(ic, iconSprite, Color.white, false).raycastTarget = false;
 
-            Txt("Label", rt, label.ToUpperInvariant(), true, 17, UITheme.TealLight, TextAlignmentOptions.MidlineLeft, new Vector2(34, 28), new Vector2(150, 26));
+            var labelText = Txt("Label", rt, label.ToUpperInvariant(), true, 17, UITheme.TealLight, TextAlignmentOptions.MidlineLeft, new Vector2(34, 28), new Vector2(150, 26));
+            labelText.textWrappingMode = TextWrappingModes.NoWrap;
+            labelText.enableAutoSizing = true;
+            labelText.fontSizeMin = 11;
+            labelText.fontSizeMax = 17;
             var value = Txt("Value", rt, "0", true, 34, Color.white, TextAlignmentOptions.MidlineLeft, new Vector2(34, -4), new Vector2(150, 42));
             var status = Txt("Status", rt, "", true, 16, UITheme.Coral, TextAlignmentOptions.MidlineRight, new Vector2(60, 28), new Vector2(98, 24));
             status.gameObject.SetActive(false);
@@ -430,9 +436,13 @@ namespace OneHealth.EditorTools
             drt.anchorMin = drt.anchorMax = new Vector2(0.5f, 0f);
             drt.anchoredPosition = new Vector2(0, -24);
 
-            var tip = Rect("Tooltip", rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0, -78), new Vector2(330, 74));
+            bool longTip = tooltip.Length > 60;
+            var tip = Rect("Tooltip", rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0, longTip ? -100 : -78), longTip ? new Vector2(420, 120) : new Vector2(330, 74));
             Img(tip, S("Panels/generic_panel_dark.png"), Color.white);
-            Txt("Text", tip, tooltip, false, 20, Color.white, TextAlignmentOptions.Center, Vector2.zero, new Vector2(296, 60));
+            var tipText = Txt("Text", tip, tooltip, false, 20, Color.white, TextAlignmentOptions.Center, Vector2.zero, longTip ? new Vector2(384, 104) : new Vector2(296, 60));
+            tipText.enableAutoSizing = true;
+            tipText.fontSizeMin = 14;
+            tipText.fontSizeMax = 20;
             tip.gameObject.SetActive(false);
 
             var chip = rt.gameObject.AddComponent<StatChip>();
@@ -457,17 +467,18 @@ namespace OneHealth.EditorTools
             prt.anchoredPosition = new Vector2(-122, -76);
 
             RectTransform c;
-            var panel = PanelRoot("PausePanel", host, out c, new Vector2(560, 760), S("Menus/Pause_Menu/panel.png"), 0.65f);
-            Txt("Title", c, "Paused", true, 54, Color.white, TextAlignmentOptions.Center, new Vector2(0, 300), new Vector2(460, 70));
+            var panel = PanelRoot("PausePanel", host, out c, new Vector2(560, 870), S("Menus/Pause_Menu/panel.png"), 0.65f);
+            Txt("Title", c, "Paused", true, 54, Color.white, TextAlignmentOptions.Center, new Vector2(0, 360), new Vector2(460, 70));
             var size = new Vector2(420, 92);
-            var resume = Btn("ResumeButton", c, "Green", "Resume", "Icons/continue_arrow_icon.png", new Vector2(0, 186), size);
-            var settings = Btn("SettingsButton", c, "Navy", "Settings", "Icons/settings_icon.png", new Vector2(0, 80), size);
+            var resume = Btn("ResumeButton", c, "Green", "Resume", "Icons/continue_arrow_icon.png", new Vector2(0, 250), size);
+            var settings = Btn("SettingsButton", c, "Navy", "Settings", "Icons/settings_icon.png", new Vector2(0, 146), size);
+            var restart = Btn("RestartButton", c, "Orange", "Restart Scenario", null, new Vector2(0, 42), size);
             TextMeshProUGUI nextLabel;
-            var next = Btn("NextButton", c, "Gold", "Next", "Icons/lock_icon.png", new Vector2(0, -26), size, 30f, out nextLabel);
+            var next = Btn("NextButton", c, "Gold", "Next", "Icons/lock_icon.png", new Vector2(0, -62), size, 30f, out nextLabel);
             var lockIcon = next.transform.Find("Icon");
-            var menu = Btn("MainMenuButton", c, "Blue", "Main Menu", "Icons/back_arrow_icon.png", new Vector2(0, -132), size);
-            var exit = Btn("ExitButton", c, "Slate", "Exit Game", null, new Vector2(0, -238), size);
-            var hint = Txt("Hint", c, "Press Esc to resume", false, 22, UITheme.TealLight, TextAlignmentOptions.Center, new Vector2(0, -318), new Vector2(460, 60));
+            var menu = Btn("MainMenuButton", c, "Blue", "Main Menu", "Icons/back_arrow_icon.png", new Vector2(0, -166), size);
+            var exit = Btn("ExitButton", c, "Slate", "Exit Game", null, new Vector2(0, -270), size);
+            var hint = Txt("Hint", c, "Press Esc to resume", false, 22, UITheme.TealLight, TextAlignmentOptions.Center, new Vector2(0, -360), new Vector2(460, 60));
 
             var pm = host.gameObject.AddComponent<PauseMenu>();
             Set(pm, "panel", panel);
@@ -476,6 +487,7 @@ namespace OneHealth.EditorTools
             Set(pm, "settingsButton", settings);
             Set(pm, "mainMenuButton", menu);
             Set(pm, "exitButton", exit);
+            Set(pm, "restartButton", restart);
             Set(pm, "nextButton", next);
             Set(pm, "nextLabel", nextLabel);
             Set(pm, "nextLockIcon", lockIcon.gameObject);
@@ -525,17 +537,18 @@ namespace OneHealth.EditorTools
             var left = Center("FinalState", c, new Vector2(-300, -66), new Vector2(560, 360));
             Img(left, S("Panels/info_card_white.png"), Color.white);
             Txt("Heading", left, "Your resources", true, 30, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(10, 140), new Vector2(460, 44));
-            var money = StatRow(left, "Money", "HUD/money_icon.png", 72);
-            var time = StatRow(left, "Time", "HUD/time_icon.png", 6);
-            var trust = StatRow(left, "Trust", "HUD/trust_icon.png", -60);
-            var res = StatRow(left, "Resistance", "HUD/resistance_icon.png", -126);
+            var money = StatRow(left, "Money", "HUD/money_icon.png", 86);
+            var time = StatRow(left, "Time", "HUD/time_icon.png", 32);
+            var trust = StatRow(left, "Trust", "HUD/trust_icon.png", -22);
+            var res = StatRow(left, "Resistance Pressure", "HUD/resistance_icon.png", -76);
+            var cap = StatRow(left, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png", -130);
 
             // Right column: learning and unlocks
             var right = Center("Learning", c, new Vector2(300, -66), new Vector2(560, 360));
             Img(right, S("Panels/info_card_white.png"), Color.white);
             Txt("LearnedHeading", right, "What you learned", true, 30, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(10, 140), new Vector2(460, 44));
             var learned = Txt("Learned", right, "", false, 26, UITheme.TealDark, TextAlignmentOptions.TopLeft, new Vector2(10, 52), new Vector2(460, 128));
-            Txt("UnlockedHeading", right, "Unlocked", true, 30, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(10, -42), new Vector2(460, 44));
+            Txt("UnlockedHeading", right, "Unlocked & badges", true, 30, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(10, -42), new Vector2(460, 44));
             var unlocked = Txt("Unlocked", right, "", false, 26, UITheme.TealDark, TextAlignmentOptions.TopLeft, new Vector2(10, -114), new Vector2(460, 96));
             foreach (var t in new[] { learned, unlocked })
             {
@@ -560,6 +573,7 @@ namespace OneHealth.EditorTools
             Set(rp, "timeRow", time);
             Set(rp, "trustRow", trust);
             Set(rp, "resistanceRow", res);
+            Set(rp, "capacityRow", cap);
             Set(rp, "learnedText", learned);
             Set(rp, "unlockedText", unlocked);
             Set(rp, "replayButton", replay);
@@ -573,11 +587,19 @@ namespace OneHealth.EditorTools
 
         static TMP_Text StatRow(Transform parent, string label, string icon, float y)
         {
-            var ic = Center(label + "Icon", parent, new Vector2(-216, y), new Vector2(50, 50));
+            var id = label.Replace(" ", "");
+            var ic = Center(id + "Icon", parent, new Vector2(-216, y), new Vector2(46, 46));
             Img(ic, S(icon), Color.white, false);
-            Txt(label + "Label", parent, label, true, 26, UITheme.Teal, TextAlignmentOptions.MidlineLeft, new Vector2(-110, y), new Vector2(160, 40));
-            var v = Txt(label + "Value", parent, "", false, 26, UITheme.TealDark, TextAlignmentOptions.MidlineRight, new Vector2(90, y), new Vector2(340, 40));
+            var l = Txt(id + "Label", parent, label, true, 24, UITheme.Teal, TextAlignmentOptions.MidlineLeft, new Vector2(-104, y), new Vector2(170, 40));
+            l.textWrappingMode = TextWrappingModes.NoWrap;
+            l.enableAutoSizing = true;
+            l.fontSizeMin = 15;
+            l.fontSizeMax = 24;
+            var v = Txt(id + "Value", parent, "", false, 26, UITheme.TealDark, TextAlignmentOptions.MidlineRight, new Vector2(128, y), new Vector2(264, 40));
             v.textWrappingMode = TextWrappingModes.NoWrap;
+            v.enableAutoSizing = true;
+            v.fontSizeMin = 16;
+            v.fontSizeMax = 24;
             return v;
         }
 
@@ -631,7 +653,7 @@ namespace OneHealth.EditorTools
             var cont = Btn("ContinueButton", menuRoot, "Blue", "Continue", "Icons/clipboard_icon.png", new Vector2(0, -16), size, 38f);
             var settingsBtn = Btn("SettingsButton", menuRoot, "Navy", "Settings", "Icons/settings_icon.png", new Vector2(0, -132), size, 38f);
             var exit = Btn("ExitButton", menuRoot, "Slate", "Exit", "Icons/back_arrow_icon.png", new Vector2(0, -248), size, 38f);
-            Txt("Footer", menuRoot, "Commercialization Lab MVP", false, 20, UITheme.WithAlpha(UITheme.TealDark, 0.55f), TextAlignmentOptions.Center, new Vector2(0, -326), new Vector2(520, 30));
+            Txt("Footer", menuRoot, "An educational game, not medical advice.", false, 20, UITheme.WithAlpha(UITheme.TealDark, 0.6f), TextAlignmentOptions.Center, new Vector2(0, -326), new Vector2(520, 30));
 
             var settings = InstantiatePrefab("SettingsPanel", root);
             var confirm = InstantiatePrefab("ConfirmDialog", root);

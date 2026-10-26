@@ -16,8 +16,15 @@ namespace OneHealth
 
         System.Action onClosed;
 
-        void Awake()
+        bool wired;
+
+        void Awake() { Wire(); }
+
+        // Buttons are wired on first use as well as in Awake, so the overlay works however it is activated.
+        void Wire()
         {
+            if (wired) return;
+            wired = true;
             musicToggle.onValueChanged.AddListener(v => { AudioPreferences.MusicOn = v; Refresh(); });
             sfxToggle.onValueChanged.AddListener(v => { AudioPreferences.SfxOn = v; Refresh(); });
             backButton.onClick.AddListener(Close);
@@ -25,6 +32,7 @@ namespace OneHealth
 
         public void Open(System.Action closed = null)
         {
+            Wire();
             onClosed = closed;
             musicToggle.SetIsOnWithoutNotify(AudioPreferences.MusicOn);
             sfxToggle.SetIsOnWithoutNotify(AudioPreferences.SfxOn);

@@ -17,19 +17,25 @@ namespace OneHealth
         Vector2 maxImageSize;
         Rect captionDefault;
 
-        void Awake()
+        // Re-attached on every Show (remove-then-add keeps exactly one listener), so Continue always
+        // works however and whenever the card object was activated.
+        void Wire()
         {
-            continueButton.onClick.AddListener(() =>
-            {
-                panel.Close();
-                var done = onContinue;
-                onContinue = null;
-                if (done != null) done();
-            });
+            continueButton.onClick.RemoveListener(OnContinueClicked);
+            continueButton.onClick.AddListener(OnContinueClicked);
+        }
+
+        void OnContinueClicked()
+        {
+            panel.Close();
+            var done = onContinue;
+            onContinue = null;
+            if (done != null) done();
         }
 
         public void Show(string titleText, Sprite sprite, string captionText, System.Action continued)
         {
+            Wire();
             title.text = titleText;
             image.sprite = sprite;
             image.gameObject.SetActive(sprite != null);

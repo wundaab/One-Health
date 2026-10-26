@@ -16,14 +16,22 @@ namespace OneHealth
 
         System.Action onConfirm;
 
-        void Awake()
+        bool wired;
+
+        void Awake() { Wire(); }
+
+        // Buttons are wired on first use as well as in Awake, so the overlay works however it is activated.
+        void Wire()
         {
+            if (wired) return;
+            wired = true;
             confirmButton.onClick.AddListener(() => { panel.Close(); if (onConfirm != null) onConfirm(); });
             cancelButton.onClick.AddListener(() => panel.Close());
         }
 
         public void Show(string titleText, string messageText, string confirmText, System.Action confirmed)
         {
+            Wire();
             title.text = titleText;
             message.text = messageText;
             confirmLabel.text = confirmText;

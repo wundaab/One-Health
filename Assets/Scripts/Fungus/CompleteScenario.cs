@@ -31,6 +31,7 @@ namespace OneHealth
 
         public override void OnEnter()
         {
+            FlowchartSync.PullCapacity(GetFlowchart());
             GameSession.CompleteScenario(scenarioId, nextScene);
             var results = Object.FindAnyObjectByType<ResultsPanel>(FindObjectsInactive.Include);
             if (results == null)

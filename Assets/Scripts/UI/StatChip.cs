@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace OneHealth
 {
-    public enum StatKind { Money, Time, Trust, Resistance, FlowchartInteger }
+    public enum StatKind { Money, Time, Trust, Resistance, FlowchartInteger, Capacity }
 
     /// <summary>
     /// One HUD parameter: icon, label, value, optional bar, a +/- change popup and a one-line
@@ -52,7 +52,7 @@ namespace OneHealth
 
         void Update()
         {
-            if (kind == StatKind.FlowchartInteger)
+            if (kind == StatKind.FlowchartInteger || kind == StatKind.Capacity)
                 Refresh(true);
 
             if (deltaTimer > 0f && deltaText != null)
@@ -72,6 +72,12 @@ namespace OneHealth
                 case StatKind.Time: return s.timeWeeks;
                 case StatKind.Trust: return s.trust;
                 case StatKind.Resistance: return s.resistance;
+                case StatKind.Capacity:
+                    // Scenario 2 keeps its own live counter; elsewhere Capacity is the campaign value.
+                    foreach (var f in FindObjectsByType<Flowchart>())
+                        if (f.HasVariable(FlowchartSync.ScenarioCapacityKey))
+                            return f.GetIntegerVariable(FlowchartSync.ScenarioCapacityKey);
+                    return s.capacity;
                 default:
                     if (flowchart == null || !flowchart.HasVariable(variableKey))
                     {
@@ -102,7 +108,7 @@ namespace OneHealth
             if (kind == StatKind.Resistance && v > GameState.ResistanceCriticalAbove) { status = "Severe"; critical = true; }
             if (kind == StatKind.Money && v <= 0) { status = "No funds"; critical = true; }
             if (kind == StatKind.Time && v <= 0) { status = "Deadline"; critical = true; }
-            if (kind == StatKind.FlowchartInteger && v <= lowThreshold) { status = "Low"; critical = true; }
+            if ((kind == StatKind.FlowchartInteger || kind == StatKind.Capacity) && v <= lowThreshold) { status = "Low"; critical = true; }
             if (statusText != null)
             {
                 statusText.text = status;

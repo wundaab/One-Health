@@ -19,6 +19,7 @@ namespace OneHealth
         [SerializeField] Button settingsButton;
         [SerializeField] Button mainMenuButton;
         [SerializeField] Button exitButton;
+        [SerializeField] Button restartButton;
         [SerializeField] Button nextButton;
         [SerializeField] TMP_Text nextLabel;
         [SerializeField] GameObject nextLockIcon;
@@ -46,6 +47,14 @@ namespace OneHealth
                 "Progress in this scenario since it started will not be saved.",
                 "Exit", GameSession.QuitGame));
             nextButton.onClick.AddListener(() => GameSession.LoadScene(nextScene));
+            if (restartButton != null)
+                restartButton.onClick.AddListener(() => confirm.Show("Restart this scenario?",
+                    "You will return to the start of this scenario with the values you entered it with. Progress and badges from this attempt will be lost.",
+                    "Restart", () =>
+                    {
+                        GameSession.RestoreScenarioStart();
+                        GameSession.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+                    }));
 #if UNITY_WEBGL
             exitButton.gameObject.SetActive(false);
 #endif

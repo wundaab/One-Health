@@ -14,7 +14,7 @@ namespace OneHealth
         public override void OnEnter()
         {
             GameSession.AddKnowledge(knowledgeId);
-            FlowchartSync.SetBool(GetFlowchart(), "Knowledge_" + knowledgeId.Replace(" ", ""), true);
+            FlowchartSync.SetBool(GetFlowchart(), "Knowledge_" + FlowchartSync.Key(knowledgeId), true);
             Debug.Log("[OHI] Knowledge recorded: " + knowledgeId);
             Continue();
         }
