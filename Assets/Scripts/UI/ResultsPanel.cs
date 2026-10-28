@@ -155,7 +155,7 @@ namespace OneHealth
         }
 
         /// <summary>
-        /// A summary that opens with an all-caps rank ("ONE HEALTH CHAMPION. GAME COMPLETE — ...") shows that
+        /// A summary that opens with an all-caps rank ("ONE HEALTH CHAMPION — ...") shows that
         /// run as a small teal eyebrow line above the sentence instead of shouting inline. Same words.
         /// </summary>
         static string Eyebrow(string text)

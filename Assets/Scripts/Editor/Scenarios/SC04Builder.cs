@@ -417,10 +417,10 @@ namespace OneHealth.EditorTools
             k.Flag(ending, "s05_ending", "{$Ending}");
             k.IfString(ending, "Ending", "champion");
             k.Badge(ending, "One Health Champion", "Every workstream completed, a verified report, a transparent briefing and a shared coordination plan.");
-            k.SetString(ending, "EndingText", "ONE HEALTH CHAMPION. GAME COMPLETE — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
+            k.SetString(ending, "EndingText", "ONE HEALTH CHAMPION — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
             k.Else(ending);
             k.Say(ending, "RESPONSE COMPLETED.");
-            k.SetString(ending, "EndingText", "RESPONSE COMPLETED. GAME COMPLETE — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
+            k.SetString(ending, "EndingText", "RESPONSE COMPLETED — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
             k.End(ending);
             k.Card(ending, "Debrief — Evidence", "You learned to separate observations from explanations. A possible connection is not proof of a common cause.");
             k.Card(ending, "Debrief — Stewardship", "Antimicrobials are essential when clinically indicated. Stewardship means appropriate access and use, not withholding needed treatment.");
