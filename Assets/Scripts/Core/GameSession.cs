@@ -65,21 +65,27 @@ namespace OneHealth
         /// Marks the start of a scenario: records the checkpoint and snapshots the inherited
         /// state so Retry/Replay restore exactly what the player entered with.
         /// </summary>
-        public static void BeginScenario(string id, int timeBudgetWeeks, int timeGrantWeeks = 0, int capacityStart = -1)
+        public static void BeginScenario(string id, int timeBudgetWeeks, int timeGrantWeeks = 0, int capacityStart = -1,
+            int capacityRescaleBase = -1, int capacityRescaleDivisor = 10, int moneyGrant = 0)
         {
             var s = State;
             if (timeBudgetWeeks >= 0)
                 s.timeWeeks = Mathf.Clamp(timeBudgetWeeks, GameState.TimeMin, GameState.TimeMax);
-            // A new response period adds time to what was carried forward (see BeginScenario.timeGrantWeeks).
-            // Applied once per scenario: Retry/Continue reload the scene with the snapshot, which already
-            // carries the grant flag, so the grant is never added twice.
-            if (timeGrantWeeks > 0 && s.GetFlag("time_granted_" + id) != "1")
-            {
-                s.timeWeeks = Mathf.Clamp(s.timeWeeks + timeGrantWeeks, GameState.TimeMin, GameState.TimeMax);
-                s.SetFlag("time_granted_" + id, "1");
-            }
             if (capacityStart >= 0)
                 s.capacity = Mathf.Clamp(capacityStart, GameState.CapacityMin, GameState.CapacityMax);
+            // Relative entry adjustments (see BeginScenario) are applied once per scenario: Retry/Continue
+            // reload the scene with the snapshot, which already carries the flag, so they never stack.
+            if (s.GetFlag("entry_applied_" + id) != "1")
+            {
+                if (timeGrantWeeks > 0)
+                    s.timeWeeks = Mathf.Clamp(s.timeWeeks + timeGrantWeeks, GameState.TimeMin, GameState.TimeMax);
+                if (capacityRescaleBase >= 0)
+                    s.capacity = Mathf.Clamp(capacityRescaleBase + Mathf.RoundToInt(s.capacity / (float)Mathf.Max(1, capacityRescaleDivisor)),
+                        GameState.CapacityMin, GameState.CapacityMax);
+                if (moneyGrant != 0)
+                    s.money = Mathf.Clamp(s.money + moneyGrant, GameState.MoneyMin, GameState.MoneyMax);
+                s.SetFlag("entry_applied_" + id, "1");
+            }
             scenarioId = id;
             scenarioStart = s.Clone();
 

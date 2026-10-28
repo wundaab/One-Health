@@ -19,6 +19,7 @@ namespace OneHealth.EditorTools
         const string PlanKey = "OHI_TestPlan";
         const string LogKey = "OHI_TestLog";
         const string StepKey = "OHI_TestStep";
+        const string StopAtKey = "OHI_TestStopAt";
         static double nextAction;
 
         static PlaythroughDriver()
@@ -26,11 +27,21 @@ namespace OneHealth.EditorTools
             EditorApplication.update += Tick;
         }
 
-        public static void Start(string plan)
+        /// <param name="stopAt">Optional: stop (leaving that screen up, e.g. for a screenshot) once a logged line contains this text.</param>
+        public static void Start(string plan, string stopAt = "")
         {
+            SessionState.SetString(StopAtKey, stopAt ?? "");
             SessionState.SetString(PlanKey, plan);
+            SessionState.SetString(PlanKey + "_Copy", plan);
             SessionState.SetInt(StepKey, 0);
             SessionState.SetString(LogKey, "");
+        }
+
+        /// <summary>Continues a run halted by stopAt, from the same step, until the next stopAt (if any).</summary>
+        public static void Resume(string stopAt = "")
+        {
+            SessionState.SetString(StopAtKey, stopAt ?? "");
+            SessionState.SetString(PlanKey, SessionState.GetString(PlanKey + "_Copy", ""));
         }
 
         public static void Stop() { SessionState.EraseString(PlanKey); }
@@ -42,11 +53,19 @@ namespace OneHealth.EditorTools
         static void Log(string line)
         {
             SessionState.SetString(LogKey, Transcript + line + "\n");
+            var stopAt = SessionState.GetString(StopAtKey, "");
+            if (stopAt.Length > 0 && line.Contains(stopAt)) Stop();
         }
 
         static void Tick()
         {
-            if (!EditorApplication.isPlaying || !Running) return;
+            if (!EditorApplication.isPlaying) return;
+            if (!Running)
+            {
+                // Halted at a stopAt: keep the player loop running so fades finish for screenshots.
+                if (SessionState.GetString(StopAtKey, "").Length > 0) EditorApplication.QueuePlayerLoopUpdate();
+                return;
+            }
             Application.runInBackground = true;   // keep the player loop ticking while the editor is unfocused
             if (Time.timeScale == 1f) Time.timeScale = 40f;   // fast-forward typing and fades
             EditorApplication.QueuePlayerLoopUpdate();
@@ -71,9 +90,10 @@ namespace OneHealth.EditorTools
             if (results != null && results.gameObject.activeInHierarchy)
             {
                 var s = GameSession.State;
-                Log(string.Format("RESULTS: Money {0}, Time {1}, Trust {2}, Resistance {3} | knowledge [{4}] | unlocks [{5}] | decisions [{6}] | completed [{7}]",
+                Log(string.Format("RESULTS: Money {0}, Time {1}, Trust {2}, Resistance {3}, Capacity {8} | knowledge [{4}] | unlocks [{5}] | badges [{9}] | decisions [{6}] | completed [{7}]",
                     s.money, s.timeWeeks, s.trust, s.resistance, string.Join(", ", s.knowledge.ToArray()),
-                    string.Join(", ", s.unlocks.ToArray()), string.Join(", ", s.decisions.ToArray()), string.Join(", ", s.completedScenarios.ToArray())));
+                    string.Join(", ", s.unlocks.ToArray()), string.Join(", ", s.decisions.ToArray()), string.Join(", ", s.completedScenarios.ToArray()),
+                    s.capacity, string.Join(", ", s.badges.ToArray())));
                 Stop();
                 return;
             }
@@ -97,6 +117,7 @@ namespace OneHealth.EditorTools
             {
                 var title = card.GetComponentsInChildren<TMPro.TMP_Text>(true).First().text;
                 Log("CARD: " + title);
+                if (!Running) return;
                 ClickNamed(card.transform, "ContinueButton");
                 nextAction += 0.4;
                 return;
@@ -106,6 +127,18 @@ namespace OneHealth.EditorTools
             if (menu != null && menu.isActiveAndEnabled && menu.DisplayedOptionsCount > 0)
             {
                 var buttons = menu.CachedButtons.Where(b => b.gameObject.activeSelf).ToList();
+                var shown = string.Join(" | ", buttons.Select(b =>
+                {
+                    var t = b.GetComponentInChildren<TMPro.TMP_Text>();
+                    var u = b.GetComponentInChildren<Text>();
+                    return (t != null ? t.text : u != null ? u.text : "?").Split('\n')[0];
+                }).ToArray());
+                if (SessionState.GetString("OHI_LastMenu", "") != shown)
+                {
+                    SessionState.SetString("OHI_LastMenu", shown);
+                    Log("OPTIONS: " + shown);
+                    if (!Running) return;
+                }
                 var plan = SessionState.GetString(PlanKey, "").Split(',');
                 int step = SessionState.GetInt(StepKey, 0);
                 int pick = step < plan.Length ? int.Parse(plan[step].Trim()) : 0;
@@ -157,6 +190,7 @@ namespace OneHealth.EditorTools
                     {
                         Log("SAY: " + text.Replace("\n", " "));
                         SessionState.SetString("OHI_LastSay", text);
+                        if (!Running) return;
                     }
                     writer.OnNextLineEvent();
                 }

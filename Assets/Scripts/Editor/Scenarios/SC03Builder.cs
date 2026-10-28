@@ -1,3 +1,4 @@
+using System.Linq;
 using Fungus;
 using UnityEditor;
 using UnityEngine;
@@ -15,14 +16,18 @@ namespace OneHealth.EditorTools
     {
         public const string ScenePath = "Assets/Scenes/SC03.unity";
         const string Title = "Scenario 3 — The Warning Signs";
-        const string You = "Coordinator (you)";
+        // The player has no voiced dialogue (S01 asset manifest): the blueprint's "Coordinator" lines are
+        // shown as on-screen instructions with no speaker name or portrait.
+        const string You = null;
         const string Radio = "Radio operator";
         const string Amina = "Amina";
         const string Farmer = "Farmer";
         const string Water = "Water collector";
         const string AnimalWorker = "Animal-health worker";
         const string EnvOfficer = "Environmental officer";
-        const string CommunityRep = "Community representative";
+        const string CommunityRep = "Samuel";   // the blueprint's community representative; Samuel speaks for the community in Scenario 1
+        const string CC = GameState.CommunityCoordination, XS = GameState.CrossSectorResponse;
+        public const string MapPath = "Assets/Art/03_Scenario_3/field_map_placeholder.png";
 
         static StatDelta D(int money, int time, int trust, int res, int cap) { return new StatDelta(money, time, trust, res, cap); }
 
@@ -88,8 +93,13 @@ namespace OneHealth.EditorTools
             // ---------------------------------------------------------------- start
             var begin = E.Add<BeginScenario>(start);
             E.Set(begin, "scenarioId", "S03");
-            E.Set(begin, "timeBudgetWeeks", -1);
-            E.Set(begin, "timeGrantWeeks", 5);
+            // A new response period with its own deadline, as Scenario 1 does. Scenario 2's 0-100 clinic
+            // capacity converts to the field-team scale used from here on (S04 blueprint allows rescaling):
+            // a clinic that kept its workload under control gives the field team more room.
+            E.Set(begin, "timeBudgetWeeks", 7);
+            E.Set(begin, "timeGrantWeeks", 0);
+            E.Set(begin, "capacityRescaleBase", 12);
+            E.Set(begin, "capacityRescaleDivisor", 10);
             E.Set(begin, "showTime", true);
             E.Set(begin, "showCapacity", true);
             k.FadeToBackground(start);
@@ -100,6 +110,7 @@ namespace OneHealth.EditorTools
             k.Card(intro, Title, "Three reports arrive from a nearby farming community.\n\n<size=80%>One Health Innovator is an educational game, not medical advice.</size>");
             k.Say(intro, "Coordinator, three reports need attention: several animals are unwell, residents have noticed changes in a local water source after heavy rain, and community members are worried about possible health risks. We do not yet know whether these reports are connected.", Radio);
             k.Say(intro, "Investigate the reports, separate observations from assumptions, and build a response your team can deliver.");
+            k.Say(intro, "NEW RESPONSE PERIOD — {$Time} weeks. Field-team capacity: {$Capacity}. How well the clinic managed its workload in Scenario 2 sets how much the team can take on now.");
             k.Plain(intro, "Start investigation", a1);
 
             // ---------------------------------------------------------------- A1 — Three reports arrive
@@ -144,12 +155,13 @@ namespace OneHealth.EditorTools
             k.Say(a2, "We should assess the animals before deciding what care is needed.", AnimalWorker);
             k.Say(a2, "Choose how you will begin the conversations.", You);
             k.FailIfNone(a2, failure);
-            k.Option(a2, "Listen and record", a2Listen, D(-5, -1, 8, -1, 1));
+            K.Boost(k.Option(a2, "Listen and record", a2Listen, D(-5, -1, 8, -1, 1)), CC, 2, 0);
             k.Option(a2, "Rush the interviews", a2Rush, D(0, 0, -5, 1, 0));
 
-            k.Apply(a2Listen, "A2_Listen", "Listen and record", D(-5, -1, 8, -1, 1));
+            K.Boost(k.Apply(a2Listen, "A2_Listen", "Listen and record", D(-5, -1, 8, -1, 1)), CC, 2, 0);
             k.Flag(a2Listen, "s04_interview_approach", "listen");
             k.Say(a2Listen, "People are more willing to share what they know. The team has a clearer starting point.");
+            k.CapabilityNote(a2Listen, "COMMUNITY COORDINATION — Residents remember how you involved them before. Trust +2.");
             k.Say(a2Listen, "INTERVIEW NOTES ADDED.");
             k.Call(a2Listen, a2Question);
             k.Apply(a2Rush, "A2_Rush", "Rush the interviews", D(0, 0, -5, 1, 0));
@@ -202,9 +214,8 @@ namespace OneHealth.EditorTools
 
             k.Say(a3Leads, "Good investigation separates observations from explanations. A possible connection is not proof.");
             k.IfBool(a3Leads, "Overclaimed", false);
-            k.Badge(a3Leads, "Evidence Tracker");
+            k.Badge(a3Leads, "Evidence Tracker", "You kept both unsupported statements out of the evidence.");
             k.Flag(a3Leads, "s04_evidence_badge", "true");
-            k.Say(a3Leads, "BADGE — EVIDENCE TRACKER. You kept both unsupported statements out of the evidence.");
             k.Else(a3Leads);
             k.Flag(a3Leads, "s04_evidence_badge", "false");
             k.End(a3Leads);
@@ -214,7 +225,14 @@ namespace OneHealth.EditorTools
             k.Option(a3Leads, "Investigate two leads", a3Two, D(-10, -1, 2, -2, -2));
             k.Option(a3Leads, "Investigate one lead", a3One, D(-5, 0, 0, 0, 0));
             k.Apply(a3Two, "A3_Two", "Investigate two leads", D(-10, -1, 2, -2, -2));
+            // Strong evidence needs reasoning as well as resources: two leads checked AND both unsupported
+            // statements kept out of the evidence first time (the Evidence Tracker standard).
+            k.IfBool(a3Two, "Overclaimed", false);
             k.Flag(a3Two, "s04_evidence_quality", "strong");
+            k.Else(a3Two);
+            k.Flag(a3Two, "s04_evidence_quality", "partial");
+            k.Say(a3Two, "Two leads are checked, but an unsupported statement was first treated as evidence. The evidence is recorded as partial.");
+            k.End(a3Two);
             k.Flag(a3Two, "s04_leads_checked", "2");
             k.Call(a3Two, a4);
             k.Apply(a3One, "A3_One", "Investigate one lead", D(-5, 0, 0, 0, 0));
@@ -228,9 +246,10 @@ namespace OneHealth.EditorTools
             k.Say(a4, "Choose a response your team can deliver.", You);
             k.Call(a4, a4Choice);
             k.FailIfNone(a4Choice, failure);
-            k.Option(a4Choice, "Assess animals and support prevention", a4ConfirmAssess, D(-15, -1, 6, -3, -2));
-            k.Option(a4Choice, "Targeted short-term support", a4ConfirmTargeted, D(-10, -1, 2, -1, -1));
-            k.Option(a4Choice, "Dismiss the request", a4ConfirmDismiss, D(0, 0, -8, 2, 0));
+            // Blueprint A4: "Before commit, show its cost, all parameter changes and a confirmation prompt."
+            k.Preview(k.Option(a4Choice, "Assess animals and support prevention", a4ConfirmAssess, D(-15, -1, 6, -3, -2)));
+            k.Preview(k.Option(a4Choice, "Targeted short-term support", a4ConfirmTargeted, D(-10, -1, 2, -1, -1)));
+            k.Preview(k.Option(a4Choice, "Dismiss the request", a4ConfirmDismiss, D(0, 0, -8, 2, 0)));
             Confirm(k, a4ConfirmAssess, a4Assess, a4Choice);
             Confirm(k, a4ConfirmTargeted, a4Targeted, a4Choice);
             Confirm(k, a4ConfirmDismiss, a4Dismiss, a4Choice);
@@ -244,8 +263,9 @@ namespace OneHealth.EditorTools
             // ---------------------------------------------------------------- A5 — Heavy rain changes the plan
             k.Music(a5, "Assets/Audio/M03_Tension.wav.mp3");
             k.Say(a5, "Coordinator, heavy rain has made the planned route difficult to use. The team must choose how to continue.", Radio);
-            k.Say(a5, "The disruption changes our options. It does not tell us what caused the reports.", You);
-            k.Say(a5, "FIELD MAP — The planned route is blocked. One site is still accessible.");
+            k.Say(a5, "The disruption changes the team's options. It does not tell you what caused the reports.", You);
+            k.Card(a5, "Field map", "From the team base (dark blue building), the planned route is blocked where the river has flooded (red cross). One site is still accessible (green marker).",
+                AssetDatabase.LoadAllAssetsAtPath(MapPath).OfType<Sprite>().FirstOrDefault());
             k.FailIfNone(a5, failure);
             k.Option(a5, "Redirect the team", a5Redirect, D(-3, -1, 1, 0, -1));
             k.Option(a5, "Restore access", a5Restore, D(-12, 0, 2, 0, -2));
@@ -267,31 +287,27 @@ namespace OneHealth.EditorTools
             k.FailIfNone(a6, a6None);
             k.Option(a6, "Water safety and community prevention", a6Water, D(-12, -1, 5, -3, -1));
             k.Option(a6, "Animal health and responsible-use support", a6Animal, D(-12, -1, 3, -3, -1));
-            k.Option(a6, "Balanced cross-sector package", a6Balanced, D(-20, -1, 7, -5, -3));
+            K.Boost(k.Option(a6, "Balanced cross-sector package", a6Balanced, D(-20, -1, 7, -5, -3)), XS, 0, 1);
             k.Say(a6None, "No response package can be delivered with the resources remaining.");
             k.Flag(a6None, "s04_response_package", "none");
             k.Flag(a6None, "s04_joint_badge", "false");
             k.Call(a6None, a7);
+            k.Flag(a6Water, "s04_joint_badge", "false");
             Decision(k, a6Water, "A6_Water", "Water safety and community prevention", D(-12, -1, 5, -3, -1), "s04_response_package", "water",
                 "Community prevention is strengthened; animal-health questions remain.", null, a7);
+            k.Flag(a6Animal, "s04_joint_badge", "false");
             Decision(k, a6Animal, "A6_Animal", "Animal health and responsible-use support", D(-12, -1, 3, -3, -1), "s04_response_package", "animal",
                 "Animal-health support improves; environmental concerns remain.", null, a7);
-            Decision(k, a6Balanced, "A6_Balanced", "Balanced cross-sector package", D(-20, -1, 7, -5, -3), "s04_response_package", "balanced",
-                "The response covers more of the system, but leaves fewer resources for other needs.", null, a7);
-            InsertBefore(k, a6Water, "s04_joint_badge", "false");
-            InsertBefore(k, a6Animal, "s04_joint_badge", "false");
+            K.Boost(Decision(k, a6Balanced, "A6_Balanced", "Balanced cross-sector package", D(-20, -1, 7, -5, -3), "s04_response_package", "balanced",
+                "The response covers more of the system, but leaves fewer resources for other needs.", null, null), XS, 0, 1);
+            k.CapabilityNote(a6Balanced, "CROSS-SECTOR RESPONSE — Your existing links with the other sectors save the team work. Capacity cost reduced by 1.");
             // Badge only when the balanced package is selected and affordable.
-            int callAt = a6Balanced.CommandList.Count - 1;
-            var badge = E.Insert<AwardBadge>(a6Balanced, callAt);
-            E.Set(badge, "badgeId", "Joint Response");
-            var jf = E.Insert<SetCampaignFlag>(a6Balanced, callAt + 1);
-            E.Set(jf, "key", "s04_joint_badge");
-            E.Set(jf, "value", "true");
-            E.Say(a6Balanced, callAt + 2, "BADGE — JOINT RESPONSE.", null, null);
-            E.Set(a6Balanced.CommandList[callAt + 2], "setSayDialog", k.sayDialog);
+            k.Badge(a6Balanced, "Joint Response", "Your package brings community, animal-health and environmental work together.");
+            k.Flag(a6Balanced, "s04_joint_badge", "true");
+            k.Call(a6Balanced, a7);
 
             // ---------------------------------------------------------------- A7 — Verify, document and hand over
-            k.Say(a7, "Before we close this response, we must record what changed, what remains uncertain and what needs follow-up.", You);
+            k.Say(a7, "Before closing this response, record what changed, what remains uncertain and what needs follow-up.", You);
             k.Say(a7, "A clear handover will help the next team avoid repeating our assumptions.", Amina);
             k.Card(a7, "Draft field report",
                 "Leads checked: {$s04_leads_checked}\nEvidence quality: {$s04_evidence_quality}\nAnimal-health response: {$s04_animal_response}\nRoute decision: {$s04_route_response}\nResponse package: {$s04_response_package}\n" +
@@ -336,7 +352,6 @@ namespace OneHealth.EditorTools
             k.Flag(outcome, "s04_ending", "{$Ending}");
 
             k.IfString(outcome, "Ending", "strong");
-            k.Badge(outcome, "One Health Coordinator");
             k.SetString(outcome, "EndingText", "STRONG RESPONSE. Your team acted on evidence, coordinated across sectors and kept key risks in view. Some uncertainty remains, as it often does in real systems.");
             k.IfString(outcome, "Ending", "partial", true);
             k.SetString(outcome, "EndingText", "PARTIAL SUCCESS. You addressed part of the concern, but important gaps remain. Review the consequences before continuing.");
@@ -346,7 +361,7 @@ namespace OneHealth.EditorTools
             k.Music(outcome, "Assets/Audio/M04_Reflection.wav.mp3");
             k.Say(outcome, "{$EndingText}");
             k.IfString(outcome, "Ending", "strong");
-            k.Say(outcome, "BADGE — ONE HEALTH COORDINATOR.");
+            k.Badge(outcome, "One Health Coordinator", "Your team acted on evidence, coordinated across sectors and kept key risks in view.");
             k.End(outcome);
             k.Knowledge(outcome, "Exposure is a clue, not proof");
             var complete = E.Add<CompleteScenario>(outcome);
@@ -391,21 +406,16 @@ namespace OneHealth.EditorTools
             k.Plain(b, "Choose again", back);
         }
 
-        static void Decision(K k, Block b, string id, string action, StatDelta d, string flagKey, string flagValue,
+        /// <summary>Applies a confirmed decision, records its flag and feedback, then continues (unless next is null).</summary>
+        static ApplyDecision Decision(K k, Block b, string id, string action, StatDelta d, string flagKey, string flagValue,
             string feedback, string notification, Block next)
         {
-            k.Apply(b, id, action, d);
+            var apply = k.Apply(b, id, action, d);
             k.Flag(b, flagKey, flagValue);
             k.Say(b, feedback);
             if (!string.IsNullOrEmpty(notification)) k.Say(b, notification);
-            k.Call(b, next);
-        }
-
-        static void InsertBefore(K k, Block b, string key, string value)
-        {
-            var f = E.Insert<SetCampaignFlag>(b, b.CommandList.Count - 1);
-            E.Set(f, "key", key);
-            E.Set(f, "value", value);
+            if (next != null) k.Call(b, next);
+            return apply;
         }
     }
 }

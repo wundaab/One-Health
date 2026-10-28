@@ -32,6 +32,7 @@ namespace OneHealth.EditorTools
                 c.renderMode = RenderMode.ScreenSpaceCamera;
                 c.worldCamera = cam;
                 c.planeDistance = 1f;   // in front of world sprites; canvases sort by sortingOrder
+                c.sortingOrder += 1000;   // overlay UI always draws above world sprites, whatever their sorting order
                 changed.Add(c);
             }
             Canvas.ForceUpdateCanvases();
@@ -44,7 +45,7 @@ namespace OneHealth.EditorTools
             tex.Apply();
             RenderTexture.active = prev;
 
-            foreach (var c in changed) { c.renderMode = RenderMode.ScreenSpaceOverlay; c.worldCamera = null; }
+            foreach (var c in changed) { c.renderMode = RenderMode.ScreenSpaceOverlay; c.worldCamera = null; c.sortingOrder -= 1000; }
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.WriteAllBytes(path, tex.EncodeToPNG());
             Object.DestroyImmediate(tex);

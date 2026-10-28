@@ -15,14 +15,17 @@ namespace OneHealth.EditorTools
     {
         public const string ScenePath = "Assets/Scenes/SC04.unity";
         const string Title = "Scenario 4 — Kivu’s Turning Point";
-        const string You = "Coordinator (you)";
+        // The player has no voiced dialogue (S01 asset manifest): the blueprint's "Coordinator" lines are
+        // shown as on-screen instructions with no speaker name or portrait.
+        const string You = null;
         const string Radio = "Radio operator";
         const string Amina = "Amina";
         const string Farmer = "Farmer";
         const string Water = "Water collector";
         const string AnimalWorker = "Animal-health worker";
         const string EnvOfficer = "Environmental officer";
-        const string CommunityRep = "Community representative";
+        const string CommunityRep = "Samuel";   // the blueprint's community representative; Samuel speaks for the community in Scenario 1
+        const string CC = GameState.CommunityCoordination, XS = GameState.CrossSectorResponse;
         const string Narrator = "Narrator";
 
         static StatDelta D(int money, int time, int trust, int res, int cap) { return new StatDelta(money, time, trust, res, cap); }
@@ -91,8 +94,12 @@ namespace OneHealth.EditorTools
             // ---------------------------------------------------------------- start & handover (blueprint section 2)
             var begin = E.Add<BeginScenario>(start);
             E.Set(begin, "scenarioId", "S04");
-            E.Set(begin, "timeBudgetWeeks", -1);
-            E.Set(begin, "timeGrantWeeks", 5);
+            // The final response period has its own deadline, and every team receives the same district
+            // allocation. The S05 blueprint forbids resource bonuses for a strong Scenario 3 and requires that a
+            // weak one never makes this scenario impossible; a flat grant satisfies both (all paths verified).
+            E.Set(begin, "timeBudgetWeeks", 8);
+            E.Set(begin, "timeGrantWeeks", 0);
+            E.Set(begin, "moneyGrant", 25);
             E.Set(begin, "showTime", true);
             E.Set(begin, "showCapacity", true);
             k.FadeToBackground(start);
@@ -105,19 +112,20 @@ namespace OneHealth.EditorTools
             var gaps = E.Add<ComposeGaps>(intro);
             E.Set(gaps, "source", (int)ComposeGaps.Source.FieldReportHandover);
             k.IfString(intro, "s04_ending", "strong");
-            k.Say(intro, "Our investigation gives us a stronger starting point. We still need to deliver the plan and verify the results.", You);
+            k.Say(intro, "Your investigation gives the team a stronger starting point. The plan still has to be delivered and its results verified.", You);
             k.IfString(intro, "s04_ending", "partial", true);
-            k.Say(intro, "We made progress, but some gaps remain. We must prioritize carefully and avoid repeating assumptions.", You);
+            k.Say(intro, "The team made progress, but some gaps remain. Prioritize carefully and avoid repeating assumptions.", You);
             k.Card(intro, "Unresolved gap", "{$Gap1}");
             k.Else(intro);
-            k.Say(intro, "The report leaves important gaps. We will start with what is known, make uncertainty visible, and focus on actions we can deliver safely.", You);
+            k.Say(intro, "The report leaves important gaps. Start with what is known, make uncertainty visible, and focus on actions the team can deliver safely.", You);
             k.Card(intro, "Unresolved gaps", "{$Gap1}\n\n{$Gap2}");
             k.End(intro);
+            k.Say(intro, "DISTRICT RESPONSE FUNDS RELEASED — The district has allocated Money +25 to the final response. Final response period: {$Time} weeks.");
             k.Say(intro, "Assign your limited resources, complete all three workstreams, and deliver a final public briefing.");
             k.Plain(intro, "START FINAL RESPONSE", a1);
 
             // ---------------------------------------------------------------- A1 — Read handover and plan
-            k.Say(a1, "We have three workstreams and limited resources. Choose the order in which the team begins, but all three must be completed before the final briefing.", You);
+            k.Say(a1, "There are three workstreams and limited resources. Choose the order in which the team begins; all three must be completed before the final briefing.", You);
             k.Say(a1, "Please make the plan clear to the community. People need to know what is happening and what remains uncertain.", Amina);
             k.FailIfNone(a1, failure);
             k.Option(a1, "Review the handover cards", a1Review, D(0, -1, 0, 0, 1));
@@ -196,13 +204,13 @@ namespace OneHealth.EditorTools
             k.Else(a2Commit);
             k.Call(a2Commit, a2Weak);
             k.End(a2Commit);
-            k.Apply(a2Safe, "A2_Safe", "Complete safe plan", D(-10, -1, 6, -2, -1));
+            K.Boost(k.Apply(a2Safe, "A2_Safe", "Complete safe plan", D(-10, -1, 6, -2, -1)), CC, 2, 0);
             k.Flag(a2Safe, "s05_community_plan", "strong");
             k.Flag(a2Safe, "s05_community_complete", "true");
             k.SetBool(a2Safe, "Done_Community", true);
             k.Say(a2Safe, "COMMUNITY PLAN READY. Practical steps are clear and respectful.");
-            k.Badge(a2Safe, "Community Partner");
-            k.Say(a2Safe, "BADGE — COMMUNITY PARTNER.");
+            k.CapabilityNote(a2Safe, "COMMUNITY COORDINATION — Residents remember how you involved them before. Trust +2.");
+            k.Badge(a2Safe, "Community Partner", "Your plan is practical, respectful and honest about what is known.");
             k.Say(a2Safe, "COMMUNITY FEEDBACK RECEIVED.");
             k.Call(a2Safe, hub);
             k.Apply(a2Weak, "A2_Weak", "Submit unsupported/blaming plan", D(-5, -1, -7, 1, 0));
@@ -225,8 +233,7 @@ namespace OneHealth.EditorTools
             k.Flag(a3Assess, "s05_animal_complete", "true");
             k.SetBool(a3Assess, "Done_Animal", true);
             k.Say(a3Assess, "ANIMAL-HEALTH PLAN READY. The team supports assessment, animal welfare and responsible antimicrobial use. Appropriate treatment remains available when indicated.");
-            k.Badge(a3Assess, "Responsible Stewardship");
-            k.Say(a3Assess, "BADGE — RESPONSIBLE STEWARDSHIP.");
+            k.Badge(a3Assess, "Responsible Stewardship", "You supported assessment, animal welfare and responsible antimicrobial use, with treatment available when indicated.");
             k.Call(a3Assess, hub);
             k.Apply(a3Prevent, "A3_Prevention", "Prevention support only", D(-7, -1, 2, -1, -1));
             k.Flag(a3Prevent, "s05_animal_plan", "prevention_only");
@@ -275,8 +282,7 @@ namespace OneHealth.EditorTools
             k.Flag(a4Full, "s05_water_complete", "true");
             k.SetBool(a4Full, "Done_Water", true);
             k.Say(a4Full, "WATER AND ENVIRONMENT PLAN READY. Immediate precautions are paired with follow-up; the cause has not been assumed.");
-            k.Badge(a4Full, "Precaution With Evidence");
-            k.Say(a4Full, "BADGE — PRECAUTION WITH EVIDENCE.");
+            k.Badge(a4Full, "Precaution With Evidence", "You paired immediate precautions with follow-up, without assuming the cause.");
             k.Call(a4Full, hub);
             k.Apply(a4Guidance, "A4_Guidance", "Guidance only", D(-6, -1, 2, -1, -1));
             k.Flag(a4Guidance, "s05_water_plan", "guidance_only");
@@ -288,11 +294,12 @@ namespace OneHealth.EditorTools
             // ---------------------------------------------------------------- A5 — Resource disruption (after all three workstreams)
             k.Music(a5, "Assets/Audio/M03_Tension.wav.mp3");
             k.Say(a5, "Coordinator, the team has fewer transport and staff hours available than expected. The plan cannot be delivered exactly as written.", Radio);
-            k.Say(a5, "We must adapt without abandoning an essential workstream.", You);
+            k.Say(a5, "Adapt the plan without abandoning an essential workstream.", You);
             k.FailIfNone(a5, failure);
-            k.Option(a5, "Combine visits", a5Combine, D(-4, -1, 1, 0, 1));
-            k.Option(a5, "Pay for extra transport", a5Pay, D(-12, 0, 2, 0, -1));
-            k.Option(a5, "Keep the original plan", a5Keep, D(0, -2, -2, 0, 0));
+            // Blueprint A5: "Show effects before confirmation."
+            k.Preview(k.Option(a5, "Combine visits", a5Combine, D(-4, -1, 1, 0, 1)));
+            k.Preview(k.Option(a5, "Pay for extra transport", a5Pay, D(-12, 0, 2, 0, -1)));
+            k.Preview(k.Option(a5, "Keep the original plan", a5Keep, D(0, -2, -2, 0, 0)));
             Decision(k, a5Combine, "A5_Combine", "Combine visits", D(-4, -1, 1, 0, 1), "s05_resource_response", "combine", "The team shares transport and protects more capacity.", "RESOURCE PLAN UPDATED.", a6);
             Decision(k, a5Pay, "A5_Pay", "Pay for extra transport", D(-12, 0, 2, 0, -1), "s05_resource_response", "pay", "The schedule is protected, but money is reduced.", "RESOURCE PLAN UPDATED.", a6);
             Decision(k, a5Keep, "A5_Keep", "Keep the original plan", D(0, -2, -2, 0, 0), "s05_resource_response", "delay", "The delay leaves less time for verification.", "RESOURCE PLAN UPDATED.", a6);
@@ -323,10 +330,12 @@ namespace OneHealth.EditorTools
             k.Card(a6Final, "Gaps remaining", "{$GapList}");
             k.Say(a6Final, "Choose the final priority package, accounting for completed work and remaining resources.", You);
             k.FailIfNone(a6Final, failure);
-            k.Option(a6Final, "Protect follow-up across all sectors", a6Protect, D(-8, -1, 5, -2, -1));
+            K.Boost(k.Option(a6Final, "Protect follow-up across all sectors", a6Protect, D(-8, -1, 5, -2, -1)), XS, 0, 1);
             k.Option(a6Final, "Prioritize the most incomplete workstream", a6Prioritize, D(-5, -1, 2, -1, 0));
             k.Option(a6Final, "Focus on one visible activity", a6Focus, D(-3, 0, -5, 1, 0));
-            Decision(k, a6Protect, "A6_Protect", "Protect follow-up across all sectors", D(-8, -1, 5, -2, -1), "s05_final_priority", "all_sector", "Stakeholders agree on next steps and responsibilities.", "PRIORITIES CONFIRMED.", a7);
+            K.Boost(Decision(k, a6Protect, "A6_Protect", "Protect follow-up across all sectors", D(-8, -1, 5, -2, -1), "s05_final_priority", "all_sector", "Stakeholders agree on next steps and responsibilities.", "PRIORITIES CONFIRMED.", null), XS, 0, 1);
+            k.CapabilityNote(a6Protect, "CROSS-SECTOR RESPONSE — Your existing links with the other sectors save the team work. Capacity cost reduced by 1.");
+            k.Call(a6Protect, a7);
             Decision(k, a6Prioritize, "A6_Prioritize", "Prioritize most incomplete workstream", D(-5, -1, 2, -1, 0), "s05_final_priority", "most_incomplete", "The largest gap receives attention, but other follow-up remains limited.", "PRIORITIES CONFIRMED.", a7);
             Decision(k, a6Focus, "A6_Focus", "Focus on one visible activity", D(-3, 0, -5, 1, 0), "s05_final_priority", "one_activity", "One visible task is completed, but coordination and trust weaken.", "PRIORITIES CONFIRMED.", a7);
 
@@ -378,13 +387,12 @@ namespace OneHealth.EditorTools
             k.Apply(a7Transparent, "A7_Transparent", "Transparent briefing", D(-2, -1, 5, -1, 0));
             k.Flag(a7Transparent, "s05_briefing", "transparent");
             k.Say(a7Transparent, "The community receives practical next steps and an honest account of the evidence.");
-            k.Badge(a7Transparent, "Kivu Coordinator");
-            k.Say(a7Transparent, "BADGE — KIVU COORDINATOR.");
+            k.Badge(a7Transparent, "Kivu Coordinator", "You gave the community practical next steps and an honest account of the evidence.");
             k.Call(a7Transparent, a8);
 
             // ---------------------------------------------------------------- A8 — Close the response
             k.Music(a8, "Assets/Audio/M04_Reflection.wav.mp3");
-            k.Say(a8, "We completed the response plan. We know what actions were delivered, what the evidence supports, and how the teams will continue coordinating.", You);
+            k.Say(a8, "The response plan is complete. The team knows what actions were delivered, what the evidence supports, and how the teams will continue coordinating.", Narrator);
             k.Say(a8, "Choose a final coordination plan. Each plan assigns a responsible group, a follow-up action and a way to share updates.", You);
             k.FailIfNone(a8, failure);
             k.Option(a8, "Shared coordination plan", a8Shared, D(-3, -1, 4, -1, -1));
@@ -408,8 +416,7 @@ namespace OneHealth.EditorTools
             k.End(ending); k.End(ending); k.End(ending); k.End(ending);
             k.Flag(ending, "s05_ending", "{$Ending}");
             k.IfString(ending, "Ending", "champion");
-            k.Badge(ending, "One Health Champion");
-            k.Say(ending, "ONE HEALTH CHAMPION.");
+            k.Badge(ending, "One Health Champion", "Every workstream completed, a verified report, a transparent briefing and a shared coordination plan.");
             k.SetString(ending, "EndingText", "ONE HEALTH CHAMPION. GAME COMPLETE — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
             k.Else(ending);
             k.Say(ending, "RESPONSE COMPLETED.");
@@ -451,14 +458,16 @@ namespace OneHealth.EditorTools
             k.Call(b, workstream);
         }
 
-        static void Decision(K k, Block b, string id, string action, StatDelta d, string flagKey, string flagValue,
+        /// <summary>Applies a confirmed decision, records its flag and feedback, then continues (unless next is null).</summary>
+        static ApplyDecision Decision(K k, Block b, string id, string action, StatDelta d, string flagKey, string flagValue,
             string feedback, string notification, Block next)
         {
-            k.Apply(b, id, action, d);
+            var apply = k.Apply(b, id, action, d);
             k.Flag(b, flagKey, flagValue);
             k.Say(b, feedback);
             if (!string.IsNullOrEmpty(notification)) k.Say(b, notification);
-            k.Call(b, next);
+            if (next != null) k.Call(b, next);
+            return apply;
         }
     }
 }

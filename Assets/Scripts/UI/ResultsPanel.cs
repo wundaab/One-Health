@@ -97,6 +97,10 @@ namespace OneHealth
             var newBadges = end.badges.FindAll(b => !start.badges.Contains(b));
             if (newBadges.Count > 0)
                 text += "\n<b>Badges:</b> " + string.Join(", ", newBadges.ToArray());
+            // Game Complete: badges are recognition only, so show the campaign total.
+            if (header.text == "Game Complete")
+                text += string.Format("\n<b>Campaign badges: {0} of {1}</b>",
+                    System.Array.FindAll(GameState.AllBadges, end.badges.Contains).Length, GameState.AllBadges.Length);
             unlockedText.text = text;
         }
 

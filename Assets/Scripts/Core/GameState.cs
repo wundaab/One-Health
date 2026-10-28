@@ -24,6 +24,18 @@ namespace OneHealth
         public const int TrustCriticalBelow = 20;
         public const int ResistanceCriticalAbove = 80;
 
+        // Capabilities unlocked in Scenarios 1 and 2 (S01 blueprint: "Trust-related capability").
+        public const string CommunityCoordination = "Community Coordination";
+        public const string CrossSectorResponse = "Cross-Sector Response";
+
+        /// <summary>Every badge the campaign can award, in the order they can be earned.</summary>
+        public static readonly string[] AllBadges =
+        {
+            "Evidence Tracker", "Joint Response", "One Health Coordinator",
+            "Community Partner", "Responsible Stewardship", "Precaution With Evidence",
+            "Kivu Coordinator", "One Health Champion",
+        };
+
         public int money = 100;
         public int timeWeeks = 4;
         public int trust = 50;
@@ -60,6 +72,20 @@ namespace OneHealth
         public bool HasKnowledge(string id) { return knowledge.Contains(id); }
         public bool HasUnlock(string id) { return unlocks.Contains(id); }
         public bool HasCompleted(string scenarioId) { return completedScenarios.Contains(scenarioId); }
+
+        /// <summary>
+        /// A decision's effects including an unlocked capability's bonus, e.g. Community Coordination
+        /// adds Trust to community-engagement choices; Cross-Sector Response lowers a Capacity cost.
+        /// </summary>
+        public StatDelta WithCapability(StatDelta d, string capability, StatDelta bonus)
+        {
+            return CapabilityApplies(capability) ? d + bonus : d;
+        }
+
+        public bool CapabilityApplies(string capability)
+        {
+            return !string.IsNullOrEmpty(capability) && HasUnlock(capability);
+        }
 
         public string GetFlag(string key)
         {
@@ -128,6 +154,33 @@ namespace OneHealth
         }
 
         public bool IsEmpty { get { return money == 0 && timeWeeks == 0 && trust == 0 && resistance == 0 && capacity == 0; } }
+
+        public static StatDelta operator +(StatDelta a, StatDelta b)
+        {
+            return new StatDelta(a.money + b.money, a.timeWeeks + b.timeWeeks, a.trust + b.trust,
+                a.resistance + b.resistance, a.capacity + b.capacity);
+        }
+
+        /// <summary>
+        /// Resource line shown before the player commits, e.g. "Cost: 10 Money, 1 week, 2 Capacity".
+        /// Trust and Resistance Pressure are outcomes and stay hidden until the decision is made
+        /// (Vision: the player should not necessarily know the exact outcome). Matches Scenario 1's labels.
+        /// </summary>
+        public string ToCostString()
+        {
+            var costs = new List<string>();
+            if (money < 0) costs.Add(-money + " Money");
+            if (timeWeeks < 0) costs.Add(-timeWeeks + (timeWeeks == -1 ? " week" : " weeks"));
+            if (capacity < 0) costs.Add(-capacity + " Capacity");
+            var gains = new List<string>();
+            if (money > 0) gains.Add(money + " Money");
+            if (timeWeeks > 0) gains.Add(timeWeeks + (timeWeeks == 1 ? " week" : " weeks"));
+            if (capacity > 0) gains.Add(capacity + " Capacity");
+            var parts = new List<string>();
+            parts.Add(costs.Count > 0 ? "Cost: " + string.Join(", ", costs.ToArray()) : "No direct cost");
+            if (gains.Count > 0) parts.Add("Gain: " + string.Join(", ", gains.ToArray()));
+            return string.Join("  ·  ", parts.ToArray());
+        }
 
         /// <summary>Player-facing summary, e.g. "Money −10 · Time −1 week · Trust +8 · Resistance Pressure −5".</summary>
         public string ToDisplayString()

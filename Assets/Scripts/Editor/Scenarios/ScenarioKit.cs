@@ -31,9 +31,17 @@ namespace OneHealth.EditorTools
         public static ScenarioKit CreateScene(string scenePath, string backgroundSpritePath)
         {
             EditorSceneManager.SaveOpenScenes();
+            const string template = "Assets/Scenes/SC02.unity";
             if (AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath) != null)
-                AssetDatabase.DeleteAsset(scenePath);
-            AssetDatabase.CopyAsset("Assets/Scenes/SC02.unity", scenePath);
+            {
+                // Overwrite the scene file but keep its .meta, so the scene GUID (used by Build Settings
+                // and version control) stays the same across rebuilds.
+                EditorSceneManager.OpenScene(template, OpenSceneMode.Single);
+                System.IO.File.Copy(template, scenePath, true);
+                AssetDatabase.ImportAsset(scenePath, ImportAssetOptions.ForceUpdate);
+            }
+            else
+                AssetDatabase.CopyAsset(template, scenePath);
             EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
 
             var kit = new ScenarioKit();
@@ -71,18 +79,29 @@ namespace OneHealth.EditorTools
             EditorSceneManager.SaveOpenScenes();
         }
 
-        /// <summary>Adds a scene to Build Settings after the given scene (if missing).</summary>
+        /// <summary>Adds a scene to the end of Build Settings, or refreshes its entry (GUID) if already listed.</summary>
         public static void AddToBuild(string scenePath)
         {
             var scenes = EditorBuildSettings.scenes.ToList();
-            if (scenes.Any(s => s.path == scenePath)) return;
-            scenes.Add(new EditorBuildSettingsScene(scenePath, true));
-            EditorBuildSettings.scenes = scenes.ToArray();
+            if (!scenes.Any(s => s.path == scenePath)) scenes.Add(new EditorBuildSettingsScene(scenePath, true));
+            // Re-resolve every GUID from its path. Assigning an edited list keeps a stale GUID for a path that is
+            // already listed, so clear the list first.
+            var fresh = scenes.Select(s => new EditorBuildSettingsScene(new GUID(AssetDatabase.AssetPathToGUID(s.path)), s.enabled)).ToArray();
+            EditorBuildSettings.scenes = new EditorBuildSettingsScene[0];
+            EditorBuildSettings.scenes = fresh;
         }
 
         // ------------------------------------------------------------------ characters
 
-        /// <summary>Character by display name; created from an existing character if missing (no portraits).</summary>
+        /// <summary>Portraits reused for characters the art team has not drawn yet (MVP placeholders).</summary>
+        static readonly Dictionary<string, string> PortraitArt = new Dictionary<string, string>
+        {
+            // Samuel speaks for the community in Scenario 1; he returns as its representative.
+            { "Samuel", "Assets/Art/01_Scenario_1/01_Characters/Samuel/samuel_neutral.png" },
+            { "Animal-health worker", "Assets/Art/02_Scenario_2/sector_contact/Sector_contact.png" },
+        };
+
+        /// <summary>Character by display name; created from an existing character if missing.</summary>
         public Character Who(string name)
         {
             if (string.IsNullOrEmpty(name)) return null;
@@ -97,7 +116,15 @@ namespace OneHealth.EditorTools
                 c = go.GetComponent<Character>();
                 E.Set(c, "nameText", name);
                 var so = new SerializedObject(c);
-                so.FindProperty("portraits").arraySize = 0;
+                var portraits = so.FindProperty("portraits");
+                portraits.arraySize = 0;
+                string path;
+                var sprite = PortraitArt.TryGetValue(name, out path) ? AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().FirstOrDefault() : null;
+                if (sprite != null)
+                {
+                    portraits.arraySize = 1;
+                    portraits.GetArrayElementAtIndex(0).objectReferenceValue = sprite;
+                }
                 so.FindProperty("nameColor").colorValue = NameColor(name);
                 so.ApplyModifiedPropertiesWithoutUndo();
             }
@@ -109,13 +136,12 @@ namespace OneHealth.EditorTools
         {
             switch (name)
             {
-                case "Coordinator (you)": return UITheme.Teal;
                 case "Radio operator": return UITheme.Navy;
                 case "Farmer": return UITheme.Hex("8A5A2B");
                 case "Animal-health worker": return UITheme.LeafGreen;
                 case "Environmental officer": return UITheme.Hex("2F6FB0");
                 case "Water collector": return UITheme.Hex("2F8FB0");
-                case "Community representative": return UITheme.Amber;
+                case "Samuel": return UITheme.Amber;
                 default: return UITheme.TealDark;
             }
         }
@@ -144,8 +170,11 @@ namespace OneHealth.EditorTools
         public Say Say(Block b, string text, string who = null)
         {
             var s = E.Add<Say>(b);
+            var c = Who(who);
             E.Set(s, "storyText", text);
-            E.Set(s, "character", Who(who));
+            E.Set(s, "character", c);
+            // Fungus shows a portrait only when the Say names one: use the character's first (neutral) portrait.
+            if (c != null && c.Portraits != null && c.Portraits.Count > 0) E.Set(s, "portrait", c.Portraits[0]);
             E.Set(s, "setSayDialog", sayDialog);
             return s;
         }
@@ -189,7 +218,7 @@ namespace OneHealth.EditorTools
             E.Set(f, "failureBlock", failure);
         }
 
-        public void Apply(Block b, string id, string action, StatDelta d)
+        public ApplyDecision Apply(Block b, string id, string action, StatDelta d)
         {
             var a = E.Add<ApplyDecision>(b);
             E.Set(a, "decisionId", id);
@@ -199,6 +228,29 @@ namespace OneHealth.EditorTools
             E.Set(a, "trust", d.trust);
             E.Set(a, "resistance", d.resistance);
             E.Set(a, "capacity", d.capacity);
+            return a;
+        }
+
+        /// <summary>Shows Trust and Resistance Pressure before the player commits (only where a blueprint asks for it).</summary>
+        public CostedOption Preview(CostedOption o) { E.Set(o, "previewOutcomes", true); return o; }
+
+        /// <summary>
+        /// Capability bonus on a Costed Option or Apply Decision (same fields on both): Community Coordination
+        /// adds Trust to community-engagement choices; Cross-Sector Response lowers a Capacity cost.
+        /// </summary>
+        public static void Boost(Command c, string capability, int trust, int capacity)
+        {
+            E.Set(c, "capability", capability);
+            E.Set(c, "capabilityTrust", trust);
+            E.Set(c, "capabilityCapacity", capacity);
+        }
+
+        /// <summary>Tells the player when an unlocked capability changed the result of the last decision.</summary>
+        public void CapabilityNote(Block b, string text)
+        {
+            IfBool(b, "CapabilityUsed", true);
+            Say(b, text);
+            End(b);
         }
 
         public void CheckAffordable(Block b, BooleanVariable result, StatDelta d)
@@ -218,10 +270,23 @@ namespace OneHealth.EditorTools
             E.Set(f, "value", value);
         }
 
-        public void Badge(Block b, string id)
+        public const string BadgeIconPath = "Assets/Art/01_Scenario_1/04_UI/Icons/reward_medal_icon.png";
+        public const string NotifySoundPath = "Assets/Fungus/Audio/Click2.wav";
+
+        /// <summary>Awards a badge (recognition only) and announces it on a card with the medal icon.</summary>
+        public void Badge(Block b, string id, string reason)
         {
             var a = E.Add<AwardBadge>(b);
             E.Set(a, "badgeId", id);
+            Sound(b, NotifySoundPath);
+            Card(b, "Badge earned — " + id, reason, AssetDatabase.LoadAllAssetsAtPath(BadgeIconPath).OfType<Sprite>().FirstOrDefault());
+        }
+
+        public void Sound(Block b, string path)
+        {
+            var s = E.Add<PlaySound>(b);
+            E.Set(s, "soundClip", AssetDatabase.LoadAssetAtPath<AudioClip>(path));
+            E.Set(s, "volume", 1f);
         }
 
         public void Knowledge(Block b, string id)
