@@ -194,6 +194,22 @@ namespace OneHealth
             return parts.Count == 0 ? "No change" : string.Join("  ·  ", parts.ToArray());
         }
 
+        /// <summary>
+        /// Detail line on a menu option: signed values with the unit after the number, e.g.
+        /// "−15 Money   −1 week   −2 Capacity". Trust and Resistance Pressure only when outcomes is true
+        /// (blueprint full preview). Display only.
+        /// </summary>
+        public string ToOptionString(bool outcomes)
+        {
+            var parts = new List<string>();
+            if (money != 0) parts.Add(Signed(money) + " Money");
+            if (timeWeeks != 0) parts.Add(Signed(timeWeeks) + (Mathf.Abs(timeWeeks) == 1 ? " week" : " weeks"));
+            if (outcomes && trust != 0) parts.Add(Signed(trust) + " Trust");
+            if (outcomes && resistance != 0) parts.Add(Signed(resistance) + " Resistance Pressure");
+            if (capacity != 0) parts.Add(Signed(capacity) + " Capacity");
+            return parts.Count == 0 ? "No direct cost" : string.Join("   ", parts.ToArray());
+        }
+
         public static string Signed(int v)
         {
             return v > 0 ? "+" + v : (v < 0 ? "−" + (-v) : "0");

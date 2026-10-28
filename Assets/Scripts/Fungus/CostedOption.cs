@@ -33,7 +33,13 @@ namespace OneHealth
         [SerializeField] protected int capabilityTrust;
         [SerializeField] protected int capabilityCapacity;
 
-        const int DetailSize = 28;
+        [Tooltip("Disable the option when Money, Time or Capacity cannot cover it. Off = the cost is shown for "
+            + "information only and the option stays as interactable as its Interactable setting (Scenarios 1 and 2).")]
+        [SerializeField] protected bool gateOnCost = true;
+
+        // Label sizes in pixels on the 1920x1080 menu canvas: legacy UI Text does not understand percentages.
+        const int DetailSize = 23;
+        const int NoteSize = 22;
 
         public StatDelta Delta { get { return new StatDelta(money, timeWeeks, trust, resistance, capacity); } }
 
@@ -43,7 +49,24 @@ namespace OneHealth
             get { return GameSession.State.WithCapability(Delta, capability, new StatDelta(0, 0, capabilityTrust, 0, capabilityCapacity)); }
         }
 
-        public bool Affordable { get { return GameSession.State.CanAfford(Effective); } }
+        /// <summary>
+        /// The resources the player can spend. Scenario 2 keeps its own clinic capacity counter
+        /// (ClinicResponseCapacity) in the flowchart, so read Capacity from there when it exists.
+        /// </summary>
+        GameState Wallet
+        {
+            get
+            {
+                var s = GameSession.State;
+                var fc = GetFlowchart();
+                if (fc == null || !fc.HasVariable(FlowchartSync.ScenarioCapacityKey)) return s;
+                var w = s.Clone();
+                w.capacity = fc.GetIntegerVariable(FlowchartSync.ScenarioCapacityKey);
+                return w;
+            }
+        }
+
+        public bool Affordable { get { return Wallet.CanAfford(Effective); } }
 
         /// <summary>Hidden options (already used) never count as available.</summary>
         public bool Available
@@ -51,26 +74,50 @@ namespace OneHealth
             get
             {
                 bool hidden = hideThisOption.Value || (hideIfVisited && targetBlock != null && targetBlock.GetExecutionCount() > 0);
-                return !hidden && Affordable;
+                return !hidden && (!gateOnCost || Affordable);
             }
         }
 
-        public string Label
+        public string Label { get { return BuildLabel(true); } }
+
+        /// <summary>
+        /// Up to three lines: the action; the cost (or full preview) in teal; then, when it applies, the
+        /// capability bonus or why the option is unavailable, in amber-brown. Same format in every scenario.
+        /// </summary>
+        string BuildLabel(bool enabled)
         {
-            get
-            {
-                // Two lines on a 100px option button: the action, then one smaller detail line. Sizes are in
-                // pixels because the menu buttons use legacy UI Text, which does not understand percentages.
-                var d = Effective;
-                var details = new System.Collections.Generic.List<string>();
-                if (showEffects) details.Add(previewOutcomes ? d.ToDisplayString() : d.ToCostString());
-                if (GameSession.State.CapabilityApplies(capability)) details.Add("<b>" + capability + ": " + BonusText() + "</b>");
-                if (!Affordable) details.Add("<b>Not enough " + GameSession.State.Shortfall(d) + "</b>");
-                var label = GetFlowchart().SubstituteVariables(text);
-                if (details.Count > 0) label += "\n<size=" + DetailSize + ">" + string.Join("  ·  ", details.ToArray()) + "</size>";
-                return label;
-            }
+            var d = Effective;
+            var label = GetFlowchart().SubstituteVariables(text);
+            if (showEffects)
+                label += Line(d.ToOptionString(previewOutcomes), DetailSize, enabled ? UITheme.Teal : UITheme.DisabledInk, false);
+            if (GameSession.State.CapabilityApplies(capability))
+                label += Line(capability + ": " + BonusText(), NoteSize, enabled ? UITheme.Spend : UITheme.DisabledInk, true);
+            if (!enabled && !Affordable)
+                label += Line(ShortfallText(d), NoteSize, UITheme.Hex("8A4B12"), true);
+            return label;
         }
+
+        static string Line(string body, int size, Color color, bool bold)
+        {
+            if (bold) body = "<b>" + body + "</b>";
+            return "\n<size=" + size + "><color=" + UITheme.ToHex(color) + ">" + body + "</color></size>";
+        }
+
+        /// <summary>"Needs 15 Capacity · you have 5" for each resource that cannot cover the cost.</summary>
+        string ShortfallText(StatDelta d)
+        {
+            var w = Wallet;
+            var parts = new System.Collections.Generic.List<string>();
+            if (d.money < 0 && w.money + d.money < GameState.MoneyMin)
+                parts.Add("Needs " + (-d.money) + " Money · you have " + w.money);
+            if (d.timeWeeks < 0 && w.timeWeeks + d.timeWeeks < GameState.TimeMin)
+                parts.Add("Needs " + Weeks(-d.timeWeeks) + " · you have " + Weeks(w.timeWeeks));
+            if (d.capacity < 0 && w.capacity + d.capacity < GameState.CapacityMin)
+                parts.Add("Needs " + (-d.capacity) + " Capacity · you have " + w.capacity);
+            return parts.Count > 0 ? string.Join("   ", parts.ToArray()) : "Not available right now";
+        }
+
+        static string Weeks(int n) { return n + (n == 1 ? " week" : " weeks"); }
 
         string BonusText()
         {
@@ -92,7 +139,8 @@ namespace OneHealth
             if (menuDialog != null)
             {
                 menuDialog.SetActive(true);
-                menuDialog.AddOption(Label, interactable.Value && Affordable, hideOption, targetBlock);
+                bool enabled = interactable.Value && (!gateOnCost || Affordable);
+                menuDialog.AddOption(BuildLabel(enabled), enabled, hideOption, targetBlock);
             }
             Continue();
         }

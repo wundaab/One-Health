@@ -115,7 +115,7 @@ namespace OneHealth.EditorTools
             var card = Object.FindAnyObjectByType<VisualCard>();
             if (card != null && card.gameObject.activeInHierarchy)
             {
-                var title = card.GetComponentsInChildren<TMPro.TMP_Text>(true).First().text;
+                var title = card.FullTitle;
                 Log("CARD: " + title);
                 if (!Running) return;
                 ClickNamed(card.transform, "ContinueButton");

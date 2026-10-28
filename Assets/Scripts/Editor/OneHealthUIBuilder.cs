@@ -25,6 +25,8 @@ namespace OneHealth.EditorTools
         const string KeyArtPath = "Assets/Backgrounds/mainMenuBackgroun.jpeg";
         const string ClickPath = "Assets/Fungus/Audio/Click.wav";
         const string MenuMusicPath = "Assets/Audio/M01_Opening.wav.mp3";
+        /// <summary>The closed lock used for every locked state (the Icons/lock_icon shackle reads as open).</summary>
+        const string LockPath = "Assets/Art/02_Scenario_2/10_General_UI_States/lock_overlay.png";
 
         static TMP_FontAsset bold, regular;
         static AudioClip click;
@@ -75,7 +77,7 @@ namespace OneHealth.EditorTools
         }
 
         /// <summary>9-slice borders so rounded panels and buttons scale without stretching corners.</summary>
-        static void ApplySpriteBorders()
+        internal static void ApplySpriteBorders()
         {
             var borders = new Dictionary<string, int>
             {
@@ -84,6 +86,8 @@ namespace OneHealth.EditorTools
                 { "Panels/info_card_white.png", 44 }, { "Settings/panel.png", 48 },
                 { "Menus/Pause_Menu/panel.png", 48 }, { "HUD/stat_background.png", 40 },
                 { "Settings/slider_background.png", 22 }, { "Settings/slider_fill.png", 22 },
+                { "Choices/choice_normal.png", 40 }, { "Choices/choice_disabled.png", 40 },
+                { "Choices/choice_hover.png", 40 }, { "Choices/choice_selected.png", 40 },
             };
             foreach (var color in new[] { "Blue", "Gold", "Green", "Navy", "Orange", "Slate" })
                 foreach (var state in new[] { "normal", "hover", "pressed", "selected", "disabled" })
@@ -286,8 +290,9 @@ namespace OneHealth.EditorTools
             Img(divider, S("Decorative/divider_line.png"), UITheme.WithAlpha(UITheme.TealLight, 0.9f), false).preserveAspect = false;
 
             TMP_Text musicState, sfxState;
-            var music = ToggleRow(c, "Music", "Settings/music_icon.png", new Vector2(0, 52), out musicState);
-            var sfx = ToggleRow(c, "Sound Effects", "Settings/sfx_icon.png", new Vector2(0, -52), out sfxState);
+            var music = ToggleRow(c, "Music", "Settings/music_icon.png", new Vector2(0, 52), out musicState, Color.white);
+            // The two icon tiles are different blues; this tint brings the SFX tile onto the music tile's colour (U26).
+            var sfx = ToggleRow(c, "Sound Effects", "Settings/sfx_icon.png", new Vector2(0, -52), out sfxState, new Color(0.585f, 0.621f, 0.694f));
             var back = Btn("BackButton", c, "Navy", "Back", "Icons/back_arrow_icon.png", new Vector2(0, -178), new Vector2(320, 96));
 
             var sp = panel.gameObject.AddComponent<SettingsPanel>();
@@ -301,11 +306,11 @@ namespace OneHealth.EditorTools
             return panel.gameObject;
         }
 
-        static Toggle ToggleRow(Transform parent, string label, string icon, Vector2 pos, out TMP_Text state)
+        static Toggle ToggleRow(Transform parent, string label, string icon, Vector2 pos, out TMP_Text state, Color iconTint)
         {
             var row = Center(label.Replace(" ", "") + "Row", parent, pos, new Vector2(560, 88));
             var ic = Center("Icon", row, new Vector2(-236, 0), new Vector2(76, 76));
-            Img(ic, S(icon), Color.white, false);
+            Img(ic, S(icon), iconTint, false);
             Txt("Label", row, label, true, 36, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(-30, 0), new Vector2(300, 60));
             state = Txt("State", row, "On", false, 28, UITheme.Teal, TextAlignmentOptions.MidlineRight, new Vector2(116, 0), new Vector2(76, 60));
 
@@ -399,28 +404,55 @@ namespace OneHealth.EditorTools
 
         static RectTransform Chip(Transform parent, StatKind kind, string label, string icon, string tooltip, int max, bool bar, bool higherIsWorse)
         {
-            var rt = Center(label.Replace(" ", "") + "Chip", parent, Vector2.zero, new Vector2(248, 116));
-            var bg = Img(rt, S("HUD/stat_background.png"), Color.white);
+            // Resistance Pressure is wider so its label fits at the same size as the others (U13).
+            float w = kind == StatKind.Resistance ? 300f : 248f;
+            float dx = (w - 248f) / 2f;   // extra width goes to the text column
+            var rt = Center(label.Replace(" ", "") + "Chip", parent, Vector2.zero, new Vector2(w, 116));
+            var bg = Img(rt, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.SurfaceDark);
+            bg.pixelsPerUnitMultiplier = 1.5f;
             bg.raycastTarget = true;
+            // Selectable so a tap or keyboard selection can show the tooltip; no navigation, so it never takes menu focus.
+            var sel = rt.gameObject.AddComponent<Selectable>();
+            sel.transition = Selectable.Transition.None;
+            sel.navigation = new Navigation { mode = Navigation.Mode.None };
+            sel.targetGraphic = bg;
 
             Sprite iconSprite = S(icon);
-            var ic = Center("Icon", rt, new Vector2(-78, 0), new Vector2(64, 64));
-            Img(ic, iconSprite, Color.white, false).raycastTarget = false;
+            var ic = Center("Icon", rt, new Vector2(-78 - dx, 0), new Vector2(64, 64));
+            var iconImg = Img(ic, iconSprite, Color.white, false);
+            iconImg.raycastTarget = false;
 
-            var labelText = Txt("Label", rt, label.ToUpperInvariant(), true, 17, UITheme.TealLight, TextAlignmentOptions.MidlineLeft, new Vector2(34, 28), new Vector2(150, 26));
+            var labelText = Txt("Label", rt, label.ToUpperInvariant(), true, 15, UITheme.TealLight, TextAlignmentOptions.MidlineLeft, new Vector2(34 - dx + dx, 28), new Vector2(150 + 2 * dx, 24));
             labelText.textWrappingMode = TextWrappingModes.NoWrap;
-            labelText.enableAutoSizing = true;
-            labelText.fontSizeMin = 11;
-            labelText.fontSizeMax = 17;
-            var value = Txt("Value", rt, "0", true, 34, Color.white, TextAlignmentOptions.MidlineLeft, new Vector2(34, -4), new Vector2(150, 42));
-            var status = Txt("Status", rt, "", true, 16, UITheme.Coral, TextAlignmentOptions.MidlineRight, new Vector2(60, 28), new Vector2(98, 24));
-            status.gameObject.SetActive(false);
+            labelText.enableAutoSizing = false;
+            labelText.characterSpacing = 2f;
+            var value = Txt("Value", rt, "0", true, 34, Color.white, TextAlignmentOptions.MidlineLeft, new Vector2(34, -4), new Vector2(150 + 2 * dx, 42));
+
+            // Info hint: the chip has a tooltip (U16).
+            var info = Center("Info", rt, new Vector2(w / 2f - 20f, -38), new Vector2(18, 18));
+            var infoImg = Img(info, S("Icons/information_icon.png"), UITheme.WithAlpha(Color.white, 0.75f), false);
+            infoImg.raycastTarget = false;
+
+            // Status as a small pill on the chip's top edge (no longer clipped at the right edge).
+            var pill = Rect("StatusPill", rt, Vector2.one, Vector2.one, new Vector2(-10, 0), new Vector2(64, 24));
+            pill.pivot = new Vector2(1f, 0.5f);
+            var pillImg = Img(pill, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.Coral);
+            pillImg.pixelsPerUnitMultiplier = 2.2f;
+            pillImg.raycastTarget = false;
+            var pillLayout = pill.gameObject.AddComponent<HorizontalLayoutGroup>();
+            pillLayout.padding = new RectOffset(10, 10, 1, 2);
+            pillLayout.childControlWidth = pillLayout.childControlHeight = true;
+            pillLayout.childForceExpandWidth = pillLayout.childForceExpandHeight = false;
+            pill.gameObject.AddComponent<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            var status = Txt("Status", pill, "", true, 14, Color.white, TextAlignmentOptions.Center, Vector2.zero, new Vector2(48, 20));
+            status.textWrappingMode = TextWrappingModes.NoWrap;
+            pill.gameObject.SetActive(false);
 
             Image fill = null;
             if (bar)
             {
-                var track = Center("Bar", rt, new Vector2(34, -36), new Vector2(150, 10));
-                Img(track, null, UITheme.Sand);
+                var track = Center("Bar", rt, new Vector2(34 - 14, -38), new Vector2(150 + 2 * dx - 28, 6));
+                Img(track, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.WithAlpha(Color.white, 0.14f)).pixelsPerUnitMultiplier = 8f;
                 var f = Stretch("Fill", track);
                 // Filled images need a sprite to render the fill amount.
                 fill = Img(f, AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd"),
@@ -431,14 +463,25 @@ namespace OneHealth.EditorTools
                 fill.raycastTarget = false;
             }
 
-            var delta = Txt("Delta", rt, "", true, 26, UITheme.LeafGreen, TextAlignmentOptions.Center, new Vector2(0, 0), new Vector2(200, 36));
-            var drt = delta.rectTransform;
-            drt.anchorMin = drt.anchorMax = new Vector2(0.5f, 0f);
-            drt.anchoredPosition = new Vector2(0, -24);
+            // Change pill under the chip: white text on navy, so it reads over any background art (U14).
+            var dp = Rect("DeltaPill", rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0, -26), new Vector2(96, 34));
+            var dpImg = Img(dp, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.WithAlpha(UITheme.SurfaceDark, 0.95f));
+            dpImg.pixelsPerUnitMultiplier = 1.6f;
+            dpImg.raycastTarget = false;
+            var dpLayout = dp.gameObject.AddComponent<HorizontalLayoutGroup>();
+            dpLayout.padding = new RectOffset(14, 14, 2, 3);
+            dpLayout.childControlWidth = dpLayout.childControlHeight = true;
+            dpLayout.childForceExpandWidth = dpLayout.childForceExpandHeight = false;
+            dp.gameObject.AddComponent<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            var dpGroup = dp.gameObject.AddComponent<CanvasGroup>();
+            dpGroup.alpha = 0f;
+            dpGroup.blocksRaycasts = false;
+            var delta = Txt("Delta", dp, "", true, 22, Color.white, TextAlignmentOptions.Center, Vector2.zero, new Vector2(80, 30));
+            delta.textWrappingMode = TextWrappingModes.NoWrap;
 
             bool longTip = tooltip.Length > 60;
             var tip = Rect("Tooltip", rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0, longTip ? -100 : -78), longTip ? new Vector2(420, 120) : new Vector2(330, 74));
-            Img(tip, S("Panels/generic_panel_dark.png"), Color.white);
+            Img(tip, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.SurfaceDark).pixelsPerUnitMultiplier = 1.5f;
             var tipText = Txt("Text", tip, tooltip, false, 20, Color.white, TextAlignmentOptions.Center, Vector2.zero, longTip ? new Vector2(384, 104) : new Vector2(296, 60));
             tipText.enableAutoSizing = true;
             tipText.fontSizeMin = 14;
@@ -451,9 +494,22 @@ namespace OneHealth.EditorTools
             Set(chip, "higherIsWorse", higherIsWorse);
             Set(chip, "valueText", value);
             Set(chip, "statusText", status);
+            Set(chip, "statusPill", pill.gameObject);
             Set(chip, "fill", fill);
             Set(chip, "deltaText", delta);
+            Set(chip, "deltaPill", dpGroup);
             Set(chip, "tooltip", tip.gameObject);
+            Set(chip, "icon", iconImg);
+            if (kind == StatKind.Capacity)
+            {
+                var so = new SerializedObject(chip);
+                var p = so.FindProperty("stateIcons");
+                var states = new[] { "normal", "low", "critical" };
+                p.arraySize = 3;
+                for (int i = 0; i < 3; i++)
+                    p.GetArrayElementAtIndex(i).objectReferenceValue = S("Assets/Art/02_Scenario_2/06_HUD/capacity_icon_" + states[i] + ".png");
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
             return rt;
         }
 
@@ -461,24 +517,43 @@ namespace OneHealth.EditorTools
         {
             // Always-active host: PauseMenu must run (Esc key, pause button) while its panel is hidden.
             var host = Stretch("Pause", root);
-            var pb = Btn("PauseButton", host, "Navy", "Pause", "Icons/settings_icon.png", Vector2.zero, new Vector2(196, 84), 28f);
+            // Pause glyph drawn in code (two bars): the gear means Settings (U18).
+            TextMeshProUGUI pauseLabel;
+            var pb = Btn("PauseButton", host, "Navy", "Pause", null, Vector2.zero, new Vector2(168, 72), 26f, out pauseLabel);
             var prt = (RectTransform)pb.transform;
             prt.anchorMin = prt.anchorMax = Vector2.one;
-            prt.anchoredPosition = new Vector2(-122, -76);
+            prt.anchoredPosition = new Vector2(-112, -76);
+            pauseLabel.rectTransform.anchoredPosition = new Vector2(18, 2);
+            pauseLabel.rectTransform.sizeDelta = new Vector2(100, 56);
+            var glyph = Center("Glyph", prt, new Vector2(-44, 1), new Vector2(26, 26));
+            foreach (var x in new[] { -8f, 8f })
+            {
+                var bar = Center("Bar", glyph, new Vector2(x, 0), new Vector2(8, 26));
+                var barImg = Img(bar, GeneratedSprites.Load(GeneratedSprites.RoundFill), Color.white);
+                barImg.pixelsPerUnitMultiplier = 6f;
+                barImg.raycastTarget = false;
+            }
 
+            // Opaque navy panel (no ghosting), short enough to clear the HUD (U19).
             RectTransform c;
-            var panel = PanelRoot("PausePanel", host, out c, new Vector2(560, 870), S("Menus/Pause_Menu/panel.png"), 0.65f);
-            Txt("Title", c, "Paused", true, 54, Color.white, TextAlignmentOptions.Center, new Vector2(0, 360), new Vector2(460, 70));
-            var size = new Vector2(420, 92);
-            var resume = Btn("ResumeButton", c, "Green", "Resume", "Icons/continue_arrow_icon.png", new Vector2(0, 250), size);
-            var settings = Btn("SettingsButton", c, "Navy", "Settings", "Icons/settings_icon.png", new Vector2(0, 146), size);
-            var restart = Btn("RestartButton", c, "Orange", "Restart Scenario", null, new Vector2(0, 42), size);
+            var panel = PanelRoot("PausePanel", host, out c, new Vector2(560, 780), GeneratedSprites.Load(GeneratedSprites.RoundFill), 0.65f);
+            var panelImg = c.GetComponent<Image>();
+            panelImg.color = UITheme.SurfaceDark;
+            panelImg.pixelsPerUnitMultiplier = 0.6f;
+            Txt("Title", c, "Paused", true, 52, Color.white, TextAlignmentOptions.Center, new Vector2(0, 322), new Vector2(460, 70));
+            var size = new Vector2(420, 84);
+            // One primary action (Resume); everything else neutral. Restart is guarded by a confirm dialog.
+            var resume = Btn("ResumeButton", c, "Green", "Resume", null, new Vector2(0, 232), size);
+            var settings = Btn("SettingsButton", c, "Slate", "Settings", "Icons/settings_icon.png", new Vector2(0, 132), size);
+            var restart = Btn("RestartButton", c, "Slate", "Restart Scenario", null, new Vector2(0, 32), size);
             TextMeshProUGUI nextLabel;
-            var next = Btn("NextButton", c, "Gold", "Next", "Icons/lock_icon.png", new Vector2(0, -62), size, 30f, out nextLabel);
+            var next = Btn("NextButton", c, "Gold", "Next", LockPath, new Vector2(0, -68), size, 30f, out nextLabel);
+            nextLabel.textWrappingMode = TextWrappingModes.Normal;
+            nextLabel.lineSpacing = -10f;
             var lockIcon = next.transform.Find("Icon");
-            var menu = Btn("MainMenuButton", c, "Blue", "Main Menu", "Icons/back_arrow_icon.png", new Vector2(0, -166), size);
-            var exit = Btn("ExitButton", c, "Slate", "Exit Game", null, new Vector2(0, -270), size);
-            var hint = Txt("Hint", c, "Press Esc to resume", false, 22, UITheme.TealLight, TextAlignmentOptions.Center, new Vector2(0, -360), new Vector2(460, 60));
+            var menu = Btn("MainMenuButton", c, "Slate", "Main Menu", null, new Vector2(0, -168), size);
+            var exit = Btn("ExitButton", c, "Slate", "Exit Game", null, new Vector2(0, -268), size);
+            var hint = Txt("Hint", c, "Press Esc to resume", false, 22, UITheme.TealLight, TextAlignmentOptions.Center, new Vector2(0, -340), new Vector2(460, 40));
 
             var pm = host.gameObject.AddComponent<PauseMenu>();
             Set(pm, "panel", panel);
@@ -501,19 +576,39 @@ namespace OneHealth.EditorTools
         {
             RectTransform c;
             var panel = PanelRoot("VisualCard", root, out c, new Vector2(1080, 820), S("Panels/rounded_panel_white.png"), 0.55f);
-            var title = Txt("Title", c, "", true, 46, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 334), new Vector2(940, 64));
-            var imgRt = Center("Image", c, new Vector2(0, 70), new Vector2(900, 440));
+            var eyebrow = Txt("Eyebrow", c, "", true, 20, UITheme.Teal, TextAlignmentOptions.Center, new Vector2(0, 350), new Vector2(940, 30));
+            eyebrow.characterSpacing = 6f;
+            var title = Txt("Title", c, "", true, 44, UITheme.Ink, TextAlignmentOptions.Center, new Vector2(0, 310), new Vector2(940, 60));
+            // Image well: a soft frame so an image's own off-white background reads as intentional (U21).
+            var well = Center("ImageWell", c, new Vector2(0, 60), new Vector2(924, 444));
+            Img(well, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.Hex("F3F1EA")).pixelsPerUnitMultiplier = 1.2f;
+            var imgRt = Center("Image", c, new Vector2(0, 60), new Vector2(900, 420));
             var img = Img(imgRt, null, Color.white, false);
             img.preserveAspect = true;
-            var caption = Txt("Caption", c, "", false, 30, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, -230), new Vector2(940, 120));
-            var cont = Btn("ContinueButton", c, "Green", "Continue", "Icons/continue_arrow_icon.png", new Vector2(0, -338), new Vector2(340, 92));
+            // Small celebratory sparkles around badge icons (shown only for small icon cards).
+            var sparkles = Center("Sparkles", c, new Vector2(0, 60), new Vector2(300, 300));
+            var sparkle = S("Decorative/sparkle.png");
+            var spots = new[] { new Vector3(-118, 70, 14), new Vector3(122, 92, -18), new Vector3(104, -86, 32) };
+            foreach (var spot in spots)
+            {
+                var sp = Center("Sparkle", sparkles, new Vector2(spot.x, spot.y), new Vector2(44, 44));
+                sp.localRotation = Quaternion.Euler(0, 0, spot.z);
+                Img(sp, sparkle, UITheme.Amber, false).raycastTarget = false;   // white art: tint so it shows on the white card
+            }
+            var caption = Txt("Caption", c, "", false, 30, UITheme.Ink, TextAlignmentOptions.Center, new Vector2(0, -230), new Vector2(940, 120));
+            var cont = Btn("ContinueButton", c, "Green", "Continue", null, new Vector2(0, -338), new Vector2(340, 92));
 
             var vc = panel.gameObject.AddComponent<VisualCard>();
             Set(vc, "panel", panel);
+            Set(vc, "eyebrow", eyebrow);
             Set(vc, "title", title);
             Set(vc, "image", img);
+            Set(vc, "imageWell", well.GetComponent<Image>());
+            Set(vc, "sparkles", sparkles.gameObject);
             Set(vc, "caption", caption);
             Set(vc, "continueButton", cont);
+            Set(vc, "card", c.GetComponent<Image>());
+            Set(vc, "dim", panel.transform.Find("Dim").GetComponent<Image>());
             panel.gameObject.SetActive(false);
             return vc;
         }
@@ -523,46 +618,54 @@ namespace OneHealth.EditorTools
             RectTransform c;
             var panel = PanelRoot("ResultsPanel", root, out c, new Vector2(1320, 900), S("Panels/rounded_panel_white.png"), 0.7f);
 
-            var ribbon = Center("Header", c, new Vector2(0, 382), new Vector2(560, 100));
-            Img(ribbon, S("Panels/header_panel_green.png"), Color.white);
-            var header = Txt("Text", ribbon, "Scenario Complete", true, 42, Color.white, TextAlignmentOptions.Center, new Vector2(0, 4), new Vector2(520, 70));
-            var title = Txt("ScenarioTitle", c, "", true, 36, UITheme.Teal, TextAlignmentOptions.Center, new Vector2(0, 292), new Vector2(1180, 50));
-            var summary = Txt("Summary", c, "", false, 28, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 198), new Vector2(1160, 130));
+            // Title, not a pill (a green pill reads as a button): heading with a short green rule (U24).
+            var header = Txt("Header", c, "Scenario Complete", true, 48, UITheme.Ink, TextAlignmentOptions.Center, new Vector2(0, 376), new Vector2(900, 64));
+            var rule = Center("Rule", c, new Vector2(0, 336), new Vector2(120, 4));
+            Img(rule, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.LeafGreen).pixelsPerUnitMultiplier = 12f;
+            var title = Txt("ScenarioTitle", c, "", true, 30, UITheme.Teal, TextAlignmentOptions.Center, new Vector2(0, 300), new Vector2(1180, 44));
+            var summary = Txt("Summary", c, "", false, 26, UITheme.Ink, TextAlignmentOptions.Center, new Vector2(0, 232), new Vector2(1160, 96));
             summary.enableAutoSizing = true;
             summary.fontSizeMin = 18;
-            summary.fontSizeMax = 28;
+            summary.fontSizeMax = 26;
             summary.overflowMode = TextOverflowModes.Ellipsis;
 
             // Left column: final state
-            var left = Center("FinalState", c, new Vector2(-300, -66), new Vector2(560, 360));
+            var left = Center("FinalState", c, new Vector2(-300, -40), new Vector2(580, 440));
             Img(left, S("Panels/info_card_white.png"), Color.white);
-            Txt("Heading", left, "Your resources", true, 30, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(10, 140), new Vector2(460, 44));
-            var money = StatRow(left, "Money", "HUD/money_icon.png", 86);
-            var time = StatRow(left, "Time", "HUD/time_icon.png", 32);
-            var trust = StatRow(left, "Trust", "HUD/trust_icon.png", -22);
+            Txt("Heading", left, "Your resources", true, 30, UITheme.Ink, TextAlignmentOptions.MidlineLeft, new Vector2(14, 168), new Vector2(480, 44));
+            var money = StatRow(left, "Money", "HUD/money_icon.png", 104);
+            var time = StatRow(left, "Time", "HUD/time_icon.png", 44);
+            var trust = StatRow(left, "Trust", "HUD/trust_icon.png", -16);
             var res = StatRow(left, "Resistance Pressure", "HUD/resistance_icon.png", -76);
-            var cap = StatRow(left, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png", -130);
+            var cap = StatRow(left, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png", -136);
 
             // Right column: learning and unlocks
-            var right = Center("Learning", c, new Vector2(300, -66), new Vector2(560, 360));
+            var right = Center("Learning", c, new Vector2(300, -40), new Vector2(580, 440));
             Img(right, S("Panels/info_card_white.png"), Color.white);
-            Txt("LearnedHeading", right, "What you learned", true, 30, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(10, 140), new Vector2(460, 44));
-            var learned = Txt("Learned", right, "", false, 26, UITheme.TealDark, TextAlignmentOptions.TopLeft, new Vector2(10, 52), new Vector2(460, 128));
-            Txt("UnlockedHeading", right, "Unlocked & badges", true, 30, UITheme.TealDark, TextAlignmentOptions.MidlineLeft, new Vector2(10, -42), new Vector2(460, 44));
-            var unlocked = Txt("Unlocked", right, "", false, 26, UITheme.TealDark, TextAlignmentOptions.TopLeft, new Vector2(10, -114), new Vector2(460, 96));
+            Txt("LearnedHeading", right, "What you learned", true, 30, UITheme.Ink, TextAlignmentOptions.MidlineLeft, new Vector2(14, 168), new Vector2(480, 44));
+            var learned = Txt("Learned", right, "", false, 26, UITheme.Ink, TextAlignmentOptions.TopLeft, new Vector2(14, 80), new Vector2(480, 130));
+            Txt("UnlockedHeading", right, "Unlocked & badges", true, 30, UITheme.Ink, TextAlignmentOptions.MidlineLeft, new Vector2(14, -16), new Vector2(480, 44));
+            var unlocked = Txt("Unlocked", right, "", false, 26, UITheme.Ink, TextAlignmentOptions.TopLeft, new Vector2(14, -114), new Vector2(480, 150));
             foreach (var t in new[] { learned, unlocked })
             {
                 t.enableAutoSizing = true;
-                t.fontSizeMin = 16;
+                t.fontSizeMin = 18;
                 t.fontSizeMax = 26;
-                t.overflowMode = TextOverflowModes.Truncate;
+                t.overflowMode = TextOverflowModes.Ellipsis;
             }
 
+            // Buttons in a centred row, so they stay centred when Next is hidden (U23).
+            var row = Center("Buttons", c, new Vector2(0, -376), new Vector2(1200, 96));
+            var hl = row.gameObject.AddComponent<HorizontalLayoutGroup>();
+            hl.spacing = 40;
+            hl.childAlignment = TextAnchor.MiddleCenter;
+            hl.childControlWidth = hl.childControlHeight = false;
+            hl.childForceExpandWidth = hl.childForceExpandHeight = false;
             var size = new Vector2(330, 96);
             TextMeshProUGUI replayLabel, nextLabel;
-            var replay = Btn("ReplayButton", c, "Blue", "Replay", null, new Vector2(-380, -362), size, 34f, out replayLabel);
-            var menu = Btn("MainMenuButton", c, "Slate", "Main Menu", null, new Vector2(0, -362), size);
-            var next = Btn("NextButton", c, "Green", "Next", "Icons/continue_arrow_icon.png", new Vector2(380, -362), size, 34f, out nextLabel);
+            var replay = Btn("ReplayButton", row, "Slate", "Replay", null, Vector2.zero, size, 34f, out replayLabel);
+            var menu = Btn("MainMenuButton", row, "Navy", "Main Menu", null, Vector2.zero, size);
+            var next = Btn("NextButton", row, "Green", "Next", null, Vector2.zero, size, 34f, out nextLabel);
 
             var rp = panel.gameObject.AddComponent<ResultsPanel>();
             Set(rp, "panel", panel);
@@ -581,24 +684,36 @@ namespace OneHealth.EditorTools
             Set(rp, "menuButton", menu);
             Set(rp, "nextButton", next);
             Set(rp, "nextLabel", nextLabel);
+            SetSprites(rp, "primarySprites", "Green");
+            SetSprites(rp, "neutralSprites", "Navy");
             panel.gameObject.SetActive(false);
             return rp;
         }
 
+        static void SetSprites(Object target, string field, string color)
+        {
+            var so = new SerializedObject(target);
+            var p = so.FindProperty(field);
+            var states = new[] { "normal", "hover", "pressed", "hover", "disabled" };
+            p.arraySize = states.Length;
+            for (int i = 0; i < states.Length; i++)
+                p.GetArrayElementAtIndex(i).objectReferenceValue = S("Buttons/" + color + "/" + states[i] + ".png");
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>Icon, label (fixed size, may wrap to two lines) and a value laid out on tab stops by ResultsPanel.</summary>
         static TMP_Text StatRow(Transform parent, string label, string icon, float y)
         {
             var id = label.Replace(" ", "");
-            var ic = Center(id + "Icon", parent, new Vector2(-216, y), new Vector2(46, 46));
+            var ic = Center(id + "Icon", parent, new Vector2(-246, y), new Vector2(46, 46));
             Img(ic, S(icon), Color.white, false);
-            var l = Txt(id + "Label", parent, label, true, 24, UITheme.Teal, TextAlignmentOptions.MidlineLeft, new Vector2(-104, y), new Vector2(170, 40));
-            l.textWrappingMode = TextWrappingModes.NoWrap;
-            l.enableAutoSizing = true;
-            l.fontSizeMin = 15;
-            l.fontSizeMax = 24;
-            var v = Txt(id + "Value", parent, "", false, 26, UITheme.TealDark, TextAlignmentOptions.MidlineRight, new Vector2(128, y), new Vector2(264, 40));
+            var l = Txt(id + "Label", parent, label, true, 22, UITheme.Teal, TextAlignmentOptions.MidlineLeft, new Vector2(-142, y), new Vector2(150, 52));
+            l.textWrappingMode = TextWrappingModes.Normal;
+            l.lineSpacing = -14f;
+            var v = Txt(id + "Value", parent, "", false, 24, UITheme.Ink, TextAlignmentOptions.MidlineLeft, new Vector2(106, y), new Vector2(330, 44));
             v.textWrappingMode = TextWrappingModes.NoWrap;
             v.enableAutoSizing = true;
-            v.fontSizeMin = 16;
+            v.fontSizeMin = 18;
             v.fontSizeMax = 24;
             return v;
         }
@@ -627,6 +742,7 @@ namespace OneHealth.EditorTools
             var art = Stretch("KeyArt", root);
             var raw = art.gameObject.AddComponent<RawImage>();
             raw.texture = AssetDatabase.LoadAssetAtPath<Texture2D>(KeyArtPath);
+            raw.color = UITheme.Hex("F0F0F0");   // slightly calmer key art
             float tw = raw.texture.width, th = raw.texture.height;
             float cropH = th * 0.87f, cropW = cropH * 16f / 9f;
             raw.uvRect = new Rect(0.04f, (th - cropH) / 2f / th, cropW / tw, cropH / th);
@@ -635,25 +751,36 @@ namespace OneHealth.EditorTools
             fit.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
             fit.aspectRatio = 16f / 9f;
 
+            // A soft cream wash over the right of the art so the menu card sits on a calmer zone (3.2 item 9).
+            var wash = Rect("Wash", root, new Vector2(0.55f, 0f), Vector2.one, Vector2.zero, Vector2.zero);
+            var washImg = Img(wash, GeneratedSprites.Load(GeneratedSprites.GradientH), UITheme.WithAlpha(UITheme.Cream, 0.35f), false);
+            washImg.preserveAspect = false;
+            washImg.raycastTarget = false;
+
             // Menu card
-            var menuRoot = Rect("Menu", root, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-420, 0), new Vector2(600, 720));
+            var menuRoot = Rect("Menu", root, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-420, 0), new Vector2(600, 760));
             menuRoot.gameObject.AddComponent<CanvasGroup>();
             var card = Stretch("Card", menuRoot);
             Img(card, S("Panels/rounded_panel_white.png"), UITheme.WithAlpha(UITheme.Cream, 0.96f));
             var menuPanel = menuRoot.gameObject.AddComponent<UIPanel>();
             Set(menuPanel, "content", menuRoot);
 
-            Txt("Welcome", menuRoot, "Welcome, Innovator", true, 46, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 282), new Vector2(520, 64));
-            Txt("Tagline", menuRoot, "Your decisions shape what happens next.", false, 27, UITheme.Teal, TextAlignmentOptions.Center, new Vector2(0, 226), new Vector2(520, 44));
-            var divider = Center("Divider", menuRoot, new Vector2(0, 186), new Vector2(440, 6));
+            Txt("Welcome", menuRoot, "Welcome, Innovator", true, 46, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 302), new Vector2(520, 64));
+            Txt("Tagline", menuRoot, "Your decisions shape what happens next.", false, 27, UITheme.Teal, TextAlignmentOptions.Center, new Vector2(0, 246), new Vector2(520, 44));
+            var divider = Center("Divider", menuRoot, new Vector2(0, 206), new Vector2(440, 6));
             Img(divider, S("Decorative/divider_line.png"), UITheme.WithAlpha(UITheme.TealLight, 0.9f), false).preserveAspect = false;
 
+            // Icons only where they add meaning (Settings, Back); text buttons need none (U27).
             var size = new Vector2(460, 104);
-            var newGame = Btn("NewGameButton", menuRoot, "Green", "New Game", "Icons/continue_arrow_icon.png", new Vector2(0, 100), size, 38f);
-            var cont = Btn("ContinueButton", menuRoot, "Blue", "Continue", "Icons/clipboard_icon.png", new Vector2(0, -16), size, 38f);
-            var settingsBtn = Btn("SettingsButton", menuRoot, "Navy", "Settings", "Icons/settings_icon.png", new Vector2(0, -132), size, 38f);
-            var exit = Btn("ExitButton", menuRoot, "Slate", "Exit", "Icons/back_arrow_icon.png", new Vector2(0, -248), size, 38f);
-            Txt("Footer", menuRoot, "An educational game, not medical advice.", false, 20, UITheme.WithAlpha(UITheme.TealDark, 0.6f), TextAlignmentOptions.Center, new Vector2(0, -326), new Vector2(520, 30));
+            var newGame = Btn("NewGameButton", menuRoot, "Green", "New Game", null, new Vector2(0, 116), size, 38f);
+            TextMeshProUGUI contLabel;
+            var cont = Btn("ContinueButton", menuRoot, "Blue", "Continue", null, new Vector2(0, 0), size, 38f, out contLabel);
+            contLabel.textWrappingMode = TextWrappingModes.Normal;
+            contLabel.lineSpacing = -12f;
+            var settingsBtn = Btn("SettingsButton", menuRoot, "Navy", "Settings", "Icons/settings_icon.png", new Vector2(0, -116), size, 38f);
+            var exit = Btn("ExitButton", menuRoot, "Slate", "Exit", null, new Vector2(0, -232), size, 38f);
+            // Disclaimer: opaque muted ink (5.3:1 on cream), clear of the card's bottom edge (U25).
+            Txt("Footer", menuRoot, "An educational game, not medical advice.", false, 22, UITheme.InkMuted, TextAlignmentOptions.Center, new Vector2(0, -334), new Vector2(540, 32));
 
             var settings = InstantiatePrefab("SettingsPanel", root);
             var confirm = InstantiatePrefab("ConfirmDialog", root);
@@ -662,6 +789,7 @@ namespace OneHealth.EditorTools
             Set(controller, "menuMusic", AssetDatabase.LoadAssetAtPath<AudioClip>(MenuMusicPath));
             Set(controller, "newGameButton", newGame);
             Set(controller, "continueButton", cont);
+            Set(controller, "continueLabel", contLabel);
             Set(controller, "settingsButton", settingsBtn);
             Set(controller, "exitButton", exit);
             Set(controller, "settings", settings.GetComponent<SettingsPanel>());

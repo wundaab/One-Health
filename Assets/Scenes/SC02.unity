@@ -145,8 +145,8 @@ Transform:
   m_GameObject: {fileID: 38352361}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.53, y: -1.6, z: 0.00854}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -10.730011, y: -1.6000061, z: 0.00854}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1165612527}
@@ -201,7 +201,7 @@ SpriteRenderer:
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 6396987580193cc4b9a336df523c6195, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.95686275, g: 0.93333334, b: 0.9019608, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -417,6 +417,7 @@ RectTransform:
   m_Children:
   - {fileID: 1196033303}
   - {fileID: 347309224}
+  - {fileID: 1126475945}
   m_Father: {fileID: 1652816978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -591,9 +592,6 @@ GameObject:
   - component: {fileID: 131339530}
   - component: {fileID: 131339529}
   - component: {fileID: 131339528}
-  - component: {fileID: 131339527}
-  - component: {fileID: 131339526}
-  - component: {fileID: 131339525}
   - component: {fileID: 131339524}
   - component: {fileID: 131339523}
   - component: {fileID: 131339522}
@@ -657,9 +655,6 @@ GameObject:
   - component: {fileID: 131339467}
   - component: {fileID: 131339466}
   - component: {fileID: 131339465}
-  - component: {fileID: 131339464}
-  - component: {fileID: 131339463}
-  - component: {fileID: 131339462}
   - component: {fileID: 131339461}
   - component: {fileID: 131339460}
   - component: {fileID: 131339459}
@@ -686,9 +681,6 @@ GameObject:
   - component: {fileID: 131339438}
   - component: {fileID: 131339437}
   - component: {fileID: 131339436}
-  - component: {fileID: 131339435}
-  - component: {fileID: 131339434}
-  - component: {fileID: 131339433}
   - component: {fileID: 131339432}
   - component: {fileID: 131339431}
   - component: {fileID: 131339430}
@@ -718,9 +710,6 @@ GameObject:
   - component: {fileID: 131339406}
   - component: {fileID: 131339405}
   - component: {fileID: 131339404}
-  - component: {fileID: 131339403}
-  - component: {fileID: 131339402}
-  - component: {fileID: 131339401}
   - component: {fileID: 131339400}
   - component: {fileID: 131339399}
   - component: {fileID: 131339398}
@@ -755,9 +744,6 @@ GameObject:
   - component: {fileID: 131339369}
   - component: {fileID: 131339368}
   - component: {fileID: 131339367}
-  - component: {fileID: 131339366}
-  - component: {fileID: 131339365}
-  - component: {fileID: 131339364}
   - component: {fileID: 131339363}
   - component: {fileID: 131339362}
   - component: {fileID: 131339361}
@@ -789,9 +775,6 @@ GameObject:
   - component: {fileID: 131339345}
   - component: {fileID: 131339344}
   - component: {fileID: 131339334}
-  - component: {fileID: 131339323}
-  - component: {fileID: 131339313}
-  - component: {fileID: 131339132}
   - component: {fileID: 131339333}
   - component: {fileID: 131339332}
   - component: {fileID: 131339331}
@@ -858,10 +841,6 @@ GameObject:
   - component: {fileID: 131339277}
   - component: {fileID: 131339276}
   - component: {fileID: 131339275}
-  - component: {fileID: 131339261}
-  - component: {fileID: 131339247}
-  - component: {fileID: 131339229}
-  - component: {fileID: 131339139}
   - component: {fileID: 131339274}
   - component: {fileID: 131339273}
   - component: {fileID: 131339272}
@@ -991,6 +970,28 @@ GameObject:
   - component: {fileID: 131339542}
   - component: {fileID: 131339544}
   - component: {fileID: 131339543}
+  - component: {fileID: 131339567}
+  - component: {fileID: 131339566}
+  - component: {fileID: 131339565}
+  - component: {fileID: 131339564}
+  - component: {fileID: 131339563}
+  - component: {fileID: 131339562}
+  - component: {fileID: 131339561}
+  - component: {fileID: 131339560}
+  - component: {fileID: 131339559}
+  - component: {fileID: 131339558}
+  - component: {fileID: 131339557}
+  - component: {fileID: 131339556}
+  - component: {fileID: 131339555}
+  - component: {fileID: 131339554}
+  - component: {fileID: 131339553}
+  - component: {fileID: 131339552}
+  - component: {fileID: 131339551}
+  - component: {fileID: 131339546}
+  - component: {fileID: 131339550}
+  - component: {fileID: 131339549}
+  - component: {fileID: 131339548}
+  - component: {fileID: 131339547}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -1615,9 +1616,9 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 131338946}
-  - {fileID: 131339527}
-  - {fileID: 131339526}
-  - {fileID: 131339525}
+  - {fileID: 131339567}
+  - {fileID: 131339566}
+  - {fileID: 131339565}
   suppressAllAutoSelections: 0
 --- !u!114 &131338928
 MonoBehaviour:
@@ -1971,7 +1972,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 44
   indentLevel: 0
-  storyText: "NEW OBJECTIVE \u2014 REDUCE UNCERTAINTY WITHOUT WASTING LIMITED CAPACITY"
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>NEW OBJECTIVE</color></b></cspace></size>
+
+    REDUCE
+    UNCERTAINTY WITHOUT WASTING LIMITED CAPACITY'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -1979,8 +1983,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
@@ -2258,9 +2262,9 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
-  - {fileID: 131339464}
-  - {fileID: 131339463}
-  - {fileID: 131339462}
+  - {fileID: 131339564}
+  - {fileID: 131339563}
+  - {fileID: 131339562}
   suppressAllAutoSelections: 0
 --- !u!114 &131338965
 MonoBehaviour:
@@ -2322,9 +2326,9 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
-  - {fileID: 131339435}
-  - {fileID: 131339434}
-  - {fileID: 131339433}
+  - {fileID: 131339561}
+  - {fileID: 131339560}
+  - {fileID: 131339559}
   suppressAllAutoSelections: 0
 --- !u!114 &131338974
 MonoBehaviour:
@@ -2661,8 +2665,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 0}
@@ -2895,9 +2899,9 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
-  - {fileID: 131339403}
-  - {fileID: 131339402}
-  - {fileID: 131339401}
+  - {fileID: 131339558}
+  - {fileID: 131339557}
+  - {fileID: 131339556}
   suppressAllAutoSelections: 0
 --- !u!114 &131339013
 MonoBehaviour:
@@ -3281,9 +3285,9 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 131339367}
-  - {fileID: 131339366}
-  - {fileID: 131339365}
-  - {fileID: 131339364}
+  - {fileID: 131339555}
+  - {fileID: 131339554}
+  - {fileID: 131339553}
   suppressAllAutoSelections: 0
 --- !u!114 &131339044
 MonoBehaviour:
@@ -3345,9 +3349,9 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 131339334}
-  - {fileID: 131339323}
-  - {fileID: 131339313}
-  - {fileID: 131339132}
+  - {fileID: 131339552}
+  - {fileID: 131339551}
+  - {fileID: 131339546}
   suppressAllAutoSelections: 0
 --- !u!114 &131339047
 MonoBehaviour:
@@ -3902,31 +3906,6 @@ MonoBehaviour:
     stringVal: 
   startIndex: 0
   callMode: 0
---- !u!114 &131339132
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 404
-  indentLevel: 0
-  text: "Focus only on the original patient  \xB7  5 capacity"
-  description: 
-  targetBlock: {fileID: 131339044}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339133
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -4104,36 +4083,11 @@ MonoBehaviour:
   - {fileID: 131339277}
   - {fileID: 131339276}
   - {fileID: 131339275}
-  - {fileID: 131339261}
-  - {fileID: 131339247}
-  - {fileID: 131339229}
-  - {fileID: 131339139}
+  - {fileID: 131339550}
+  - {fileID: 131339549}
+  - {fileID: 131339548}
+  - {fileID: 131339547}
   suppressAllAutoSelections: 0
---- !u!114 &131339139
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 468
-  indentLevel: 0
-  text: "Preserve resources for future cases  \xB7  no capacity"
-  description: 
-  targetBlock: {fileID: 131339140}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 131339111}
-    booleanVal: 0
 --- !u!114 &131339140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4596,9 +4550,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 588
   indentLevel: 0
-  storyText: "NEW CAPABILITY UNLOCKED \u2014 CROSS-SECTOR RESPONSE. Coordinate information
-    and actions across human, animal and environmental health settings. Cross-sector
-    actions in later scenarios will need 1 less Capacity."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>NEW CAPABILITY UNLOCKED</color></b></cspace></size>
+
+    CROSS-SECTOR
+    RESPONSE. Coordinate information and actions across human, animal and environmental
+    health settings. Cross-sector actions in later scenarios will need 1 less Capacity.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4926,8 +4882,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -4945,8 +4901,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 572
   indentLevel: 0
-  storyText: "REFLECTION \u2014 Which decision created the biggest later consequence?
-    Think back over your path."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>REFLECTION</color></b></cspace></size>
+
+    Which
+    decision created the biggest later consequence? Think back over your path.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4987,8 +4945,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 569
   indentLevel: 1
-  storyText: "TRY DIFFERENTLY \u2014 Replay and test another strategy to see how
-    the consequences change."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>TRY DIFFERENTLY</color></b></cspace></size>
+
+    Replay
+    and test another strategy to see how the consequences change.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5029,7 +4989,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 567
   indentLevel: 1
-  storyText: "TRY DIFFERENTLY \u2014 Investigate and coordinate beyond the clinic."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>TRY DIFFERENTLY</color></b></cspace></size>
+
+    Investigate
+    and coordinate beyond the clinic.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5329,8 +5292,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 565
   indentLevel: 1
-  storyText: "TRY DIFFERENTLY \u2014 Build a follow-up plan the family can realistically
-    manage."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>TRY DIFFERENTLY</color></b></cspace></size>
+
+    Build
+    a follow-up plan the family can realistically manage.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5630,7 +5595,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 563
   indentLevel: 1
-  storyText: "TRY DIFFERENTLY \u2014 Gather targeted information before acting."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>TRY DIFFERENTLY</color></b></cspace></size>
+
+    Gather
+    targeted information before acting.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5944,8 +5912,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 560
   indentLevel: 1
-  storyText: "WHY IT MATTERED \u2014 Gaps left by earlier choices created pressure
-    later, but your later decisions kept the response going."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>WHY IT MATTERED</color></b></cspace></size>
+
+    Gaps
+    left by earlier choices created pressure later, but your later decisions kept
+    the response going.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5986,8 +5957,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 558
   indentLevel: 1
-  storyText: "WHY IT MATTERED \u2014 Gathering evidence, planning follow-up and looking
-    beyond the clinic gave the team options when the situation changed."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>WHY IT MATTERED</color></b></cspace></size>
+
+    Gathering
+    evidence, planning follow-up and looking beyond the clinic gave the team options
+    when the situation changed.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -6287,8 +6261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 556
   indentLevel: 0
-  storyText: "WHAT CHANGED \u2014 Evidence: {$EvidenceLevel}  \xB7  Follow-up: {$FollowUpLevel} 
-    \xB7  Cross-sector coordination: {$CrossSectorLevel}  \xB7  Capacity left: {$ClinicResponseCapacity}"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>WHAT CHANGED</color></b></cspace></size>\nEvidence:
+    {$EvidenceLevel}  \xB7  Follow-up: {$FollowUpLevel}  \xB7  Cross-sector coordination:
+    {$CrossSectorLevel}  \xB7  Capacity left: {$ClinicResponseCapacity}"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -6359,7 +6334,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 549
   indentLevel: 0
-  storyText: "OUTCOME \u2014 {$Outcome}"
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>OUTCOME</color></b></cspace></size>
+
+    {$Outcome}'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -12095,31 +12072,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339229
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 467
-  indentLevel: 0
-  text: "Investigate the wider AMR signal  \xB7  20 capacity"
-  description: 
-  targetBlock: {fileID: 131339230}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 131339115}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 131339112}
-    booleanVal: 0
 --- !u!114 &131339230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12651,8 +12603,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 553
   indentLevel: 0
-  storyText: "RESPONSE STOPPED \u2014 The team no longer has enough capacity to continue
-    the response as planned."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>RESPONSE STOPPED</color></b></cspace></size>
+
+    The
+    team no longer has enough capacity to continue the response as planned.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -13627,31 +13581,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339247
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 466
-  indentLevel: 0
-  text: "Coordinate community response  \xB7  15 capacity"
-  description: 
-  targetBlock: {fileID: 131339248}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 131339116}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 131339113}
-    booleanVal: 0
 --- !u!114 &131339248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14920,31 +14849,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339261
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 465
-  indentLevel: 0
-  text: "Strengthen patient follow-up  \xB7  15 capacity"
-  description: 
-  targetBlock: {fileID: 131339262}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 131339116}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 131339114}
-    booleanVal: 0
 --- !u!114 &131339262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16241,7 +16145,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 463
   indentLevel: 1
-  storyText: "FINAL ALLOCATION \u2014 Choose your SECOND final action."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>FINAL ALLOCATION</color></b></cspace></size>
+
+    Choose
+    your SECOND final action.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -16249,8 +16156,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -16282,7 +16189,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 461
   indentLevel: 1
-  storyText: "FINAL ALLOCATION \u2014 Choose your FIRST of two final actions."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>FINAL ALLOCATION</color></b></cspace></size>
+
+    Choose
+    your FIRST of two final actions.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -16290,8 +16200,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -17907,7 +17817,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 446
   indentLevel: 0
-  storyText: "RESPONSE CAPACITY: LOW \u2014 {$ClinicResponseCapacity} capacity left."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>RESPONSE CAPACITY: LOW</color></b></cspace></size>
+
+    {$ClinicResponseCapacity}
+    capacity left.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -19894,31 +19807,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339313
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 403
-  indentLevel: 0
-  text: "Keep the response inside the clinic  \xB7  10 capacity"
-  description: 
-  targetBlock: {fileID: 131339047}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339314
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -20791,31 +20679,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339323
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 402
-  indentLevel: 0
-  text: "Coordinate across sectors  \xB7  20 capacity"
-  description: 
-  targetBlock: {fileID: 131339049}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339324
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -21734,8 +21597,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -21795,8 +21658,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 387
   indentLevel: 0
-  storyText: "ANIMALS \u2014 The animal-health contact shares information about antimicrobial
-    use and resistance monitoring in animal production."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>ANIMALS</color></b></cspace></size>
+
+    The
+    animal-health contact shares information about antimicrobial use and resistance
+    monitoring in animal production.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -22543,8 +22409,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 397
   indentLevel: 0
-  storyText: "ENVIRONMENT \u2014 Information about shared water and waste pathways
-    adds another part of the system."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>ENVIRONMENT</color></b></cspace></size>
+
+    Information
+    about shared water and waste pathways adds another part of the system.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -23291,8 +23159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 377
   indentLevel: 0
-  storyText: "PEOPLE \u2014 Human-health teams are monitoring similar signals in
-    the community."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>PEOPLE</color></b></cspace></size>
+
+    Human-health
+    teams are monitoring similar signals in the community.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -23962,81 +23832,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339364
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 370
-  indentLevel: 0
-  text: "Environment \u2014 environmental pathways"
-  description: 
-  targetBlock: {fileID: 131339032}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339365
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 369
-  indentLevel: 0
-  text: "Animals \u2014 animal health"
-  description: 
-  targetBlock: {fileID: 131339031}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339366
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 368
-  indentLevel: 0
-  text: "People \u2014 human health"
-  description: 
-  targetBlock: {fileID: 131339033}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339367
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -24051,8 +23846,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 367
   indentLevel: 0
-  storyText: "KIVU CONNECTION BOARD \u2014 Where do you investigate? Each choice
-    uses 10 capacity."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>KIVU CONNECTION BOARD</color></b></cspace></size>
+
+    Where
+    do you investigate? Each choice uses 10 capacity.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -24060,8 +23857,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -26798,82 +26595,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339401
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 333
-  indentLevel: 0
-  text: "Arrange additional support because follow-up may be difficult  \xB7  15
-    capacity"
-  description: 
-  targetBlock: {fileID: 131339009}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339402
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 332
-  indentLevel: 0
-  text: "Give a quick explanation and end the visit  \xB7  2 capacity"
-  description: 
-  targetBlock: {fileID: 131339005}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339403
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 331
-  indentLevel: 0
-  text: "Explain the plan and arrange follow-up  \xB7  10 capacity"
-  description: 
-  targetBlock: {fileID: 131339010}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339404
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -29369,81 +29090,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339433
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 301
-  indentLevel: 0
-  text: "Escalate / refer for additional clinical support  \xB7  25 capacity"
-  description: 
-  targetBlock: {fileID: 131338983}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339434
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 300
-  indentLevel: 0
-  text: "Clinician-guided antimicrobial treatment when indicated  \xB7  15 capacity"
-  description: 
-  targetBlock: {fileID: 131338984}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339435
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 299
-  indentLevel: 0
-  text: "Supportive care + monitoring where clinically appropriate  \xB7  10 capacity"
-  description: 
-  targetBlock: {fileID: 131338985}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339436
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -29488,8 +29134,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -29674,8 +29320,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 295
   indentLevel: 0
-  storyText: "RESULT AVAILABLE \u2014 The result gives the team a more specific piece
-    of evidence about the illness."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>RESULT AVAILABLE</color></b></cspace></size>
+
+    The
+    result gives the team a more specific piece of evidence about the illness.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -29785,8 +29433,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -30553,8 +30201,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -31382,81 +31030,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339462
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 272
-  indentLevel: 0
-  text: "Proceed with current information  \xB7  no capacity"
-  description: 
-  targetBlock: {fileID: 131338977}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339463
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 271
-  indentLevel: 0
-  text: "Use available diagnostic pathway  \xB7  20 capacity"
-  description: 
-  targetBlock: {fileID: 131338976}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339464
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 270
-  indentLevel: 0
-  text: "Gather additional clinical evidence  \xB7  10 capacity"
-  description: 
-  targetBlock: {fileID: 131338965}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339465
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -37950,81 +37523,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &131339525
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 209
-  indentLevel: 0
-  text: "Gather wider background first  \xB7  7 capacity"
-  description: 
-  targetBlock: {fileID: 131338923}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339526
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 208
-  indentLevel: 0
-  text: "Support a focused assessment  \xB7  8 capacity"
-  description: 
-  targetBlock: {fileID: 131338924}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &131339527
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131338906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 207
-  indentLevel: 0
-  text: "Move directly toward treatment  \xB7  5 capacity"
-  description: 
-  targetBlock: {fileID: 131338925}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 746290407}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &131339528
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -38039,7 +37537,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 206
   indentLevel: 0
-  storyText: "OBJECTIVE \u2014 HELP THE TEAM RESPOND RESPONSIBLY"
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>OBJECTIVE</color></b></cspace></size>
+
+    HELP
+    THE TEAM RESPOND RESPONSIBLY'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -38047,8 +37548,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -38101,9 +37602,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 203
   indentLevel: 1
-  storyText: "COMMUNITY COORDINATION \u2014 UNLOCKED. You earned this capability
-    in Scenario 1 by involving the community. Choices that involve the community
-    earn +2 Trust."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>COMMUNITY COORDINATION</color></b></cspace></size>
+
+    UNLOCKED.
+    You earned this capability in Scenario 1 by involving the community. Choices
+    that involve the community earn +2 Trust.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -38601,8 +38104,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 591
   indentLevel: 1
-  storyText: "RESPONSE CAPACITY: CRITICAL \u2014 Only {$ClinicResponseCapacity} capacity
-    is left. That is not enough to complete the final response."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>RESPONSE CAPACITY: CRITICAL</color></b></cspace></size>
+
+    Only
+    {$ClinicResponseCapacity} capacity is left. That is not enough to complete the
+    final response.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -38931,8 +38437,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 595
   indentLevel: 1
-  storyText: "COMMUNITY COORDINATION \u2014 The family remembers how you involved
-    the community before. Trust +2."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>COMMUNITY COORDINATION</color></b></cspace></size>
+
+    The
+    family remembers how you involved the community before. Trust +2.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -39218,6 +38726,798 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
+--- !u!114 &131339546
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 614
+  indentLevel: 0
+  text: Focus only on the original patient
+  description: 
+  targetBlock: {fileID: 131339044}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -5
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339547
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 618
+  indentLevel: 0
+  text: Preserve resources for future cases
+  description: 
+  targetBlock: {fileID: 131339140}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 131339111}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339548
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 617
+  indentLevel: 0
+  text: Investigate the wider AMR signal
+  description: 
+  targetBlock: {fileID: 131339230}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 131339115}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 131339112}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -20
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339549
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 616
+  indentLevel: 0
+  text: Coordinate community response
+  description: 
+  targetBlock: {fileID: 131339248}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 131339116}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 131339113}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -15
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339550
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 615
+  indentLevel: 0
+  text: Strengthen patient follow-up
+  description: 
+  targetBlock: {fileID: 131339262}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 131339116}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 131339114}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -15
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339551
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 613
+  indentLevel: 0
+  text: Keep the response inside the clinic
+  description: 
+  targetBlock: {fileID: 131339047}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -10
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339552
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 612
+  indentLevel: 0
+  text: Coordinate across sectors
+  description: 
+  targetBlock: {fileID: 131339049}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -20
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339553
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 611
+  indentLevel: 0
+  text: "Environment \u2014 environmental pathways"
+  description: 
+  targetBlock: {fileID: 131339032}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -10
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339554
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 610
+  indentLevel: 0
+  text: "Animals \u2014 animal health"
+  description: 
+  targetBlock: {fileID: 131339031}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -10
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339555
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 609
+  indentLevel: 0
+  text: "People \u2014 human health"
+  description: 
+  targetBlock: {fileID: 131339033}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -10
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339556
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 608
+  indentLevel: 0
+  text: Arrange additional support because follow-up may be difficult
+  description: 
+  targetBlock: {fileID: 131339009}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -15
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339557
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 607
+  indentLevel: 0
+  text: Give a quick explanation and end the visit
+  description: 
+  targetBlock: {fileID: 131339005}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -2
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339558
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 606
+  indentLevel: 0
+  text: Explain the plan and arrange follow-up
+  description: 
+  targetBlock: {fileID: 131339010}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -10
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339559
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 605
+  indentLevel: 0
+  text: Escalate / refer for additional clinical support
+  description: 
+  targetBlock: {fileID: 131338983}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -25
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339560
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 604
+  indentLevel: 0
+  text: Clinician-guided antimicrobial treatment when indicated
+  description: 
+  targetBlock: {fileID: 131338984}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -15
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339561
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 603
+  indentLevel: 0
+  text: Supportive care + monitoring where clinically appropriate
+  description: 
+  targetBlock: {fileID: 131338985}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -10
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339562
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 602
+  indentLevel: 0
+  text: Proceed with current information
+  description: 
+  targetBlock: {fileID: 131338977}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339563
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 601
+  indentLevel: 0
+  text: Use available diagnostic pathway
+  description: 
+  targetBlock: {fileID: 131338976}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -20
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339564
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 600
+  indentLevel: 0
+  text: Gather additional clinical evidence
+  description: 
+  targetBlock: {fileID: 131338965}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -10
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339565
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 599
+  indentLevel: 0
+  text: Gather wider background first
+  description: 
+  targetBlock: {fileID: 131338923}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -7
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339566
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 598
+  indentLevel: 0
+  text: Support a focused assessment
+  description: 
+  targetBlock: {fileID: 131338924}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -8
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &131339567
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131338906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 597
+  indentLevel: 0
+  text: Move directly toward treatment
+  description: 
+  targetBlock: {fileID: 131338925}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 746290407}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: -5
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
 --- !u!1 &152297969
 GameObject:
   m_ObjectHideFlags: 0
@@ -39544,7 +39844,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -1300, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &267706551
 MonoBehaviour:
@@ -39673,8 +39973,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 144}
-  m_SizeDelta: {x: 240, y: 40}
+  m_AnchoredPosition: {x: 0, y: 152}
+  m_SizeDelta: {x: 268, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &313467250
 MonoBehaviour:
@@ -39726,21 +40026,21 @@ MonoBehaviour:
   m_fontSize: 26
   m_fontSizeBase: 26
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 0
-  m_fontSizeMax: 0
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 20
+  m_fontSizeMax: 26
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -12
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -39942,6 +40242,143 @@ Transform:
   - {fileID: 840902630}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &435027292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 435027293}
+  - component: {fileID: 435027295}
+  - component: {fileID: 435027294}
+  m_Layer: 5
+  m_Name: State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &435027293
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435027292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1678937234}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 86}
+  m_SizeDelta: {x: 240, y: 26}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &435027294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435027292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Reviewed
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_sharedMaterial: {fileID: 7734290434250163480, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 0.30980393, g: 0.41568628, b: 0.3882353, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 19
+  m_fontSizeBase: 19
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 00000000
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &435027295
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435027292}
+  m_CullTransparentMesh: 1
 --- !u!1 &467845254
 GameObject:
   m_ObjectHideFlags: 0
@@ -40079,6 +40516,143 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467845254}
   m_CullTransparentMesh: 1
+--- !u!1 &517096404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 517096405}
+  - component: {fileID: 517096407}
+  - component: {fileID: 517096406}
+  m_Layer: 5
+  m_Name: State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &517096405
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517096404}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 586979041}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 76}
+  m_SizeDelta: {x: 240, y: 26}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &517096406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517096404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Not checked
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_sharedMaterial: {fileID: 7734290434250163480, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 0.30980393, g: 0.41568628, b: 0.3882353, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 19
+  m_fontSizeBase: 19
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 00000000
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &517096407
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517096404}
+  m_CullTransparentMesh: 1
 --- !u!1 &524376014
 GameObject:
   m_ObjectHideFlags: 0
@@ -40114,7 +40688,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 1300, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &524376016
 MonoBehaviour:
@@ -40324,6 +40898,7 @@ RectTransform:
   m_Children:
   - {fileID: 892967043}
   - {fileID: 849514129}
+  - {fileID: 517096405}
   - {fileID: 1550933266}
   - {fileID: 1663379776}
   m_Father: {fileID: 1740412777}
@@ -40447,6 +41022,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2822401760759471638, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3035199981192350095, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -40530,6 +41109,30 @@ PrefabInstance:
     - target: {fileID: 4708377983820236573, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
       propertyPath: m_Name
       value: CustomSayDialogBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40703,8 +41306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 144}
-  m_SizeDelta: {x: 240, y: 40}
+  m_AnchoredPosition: {x: 0, y: 152}
+  m_SizeDelta: {x: 268, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &738526537
 MonoBehaviour:
@@ -40756,21 +41359,21 @@ MonoBehaviour:
   m_fontSize: 26
   m_fontSizeBase: 26
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 0
-  m_fontSizeMax: 0
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 20
+  m_fontSizeMax: 26
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -12
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -40994,6 +41597,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658624523978255739, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
       propertyPath: m_Name
       value: CustomSelectionMenuDialog
@@ -41049,7 +41676,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &771767919
 CanvasRenderer:
@@ -41422,6 +42049,143 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849514128}
   m_CullTransparentMesh: 1
+--- !u!1 &871225536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 871225537}
+  - component: {fileID: 871225539}
+  - component: {fileID: 871225538}
+  m_Layer: 5
+  m_Name: State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &871225537
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871225536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1989011965}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 76}
+  m_SizeDelta: {x: 240, y: 26}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &871225538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871225536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Not checked
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_sharedMaterial: {fileID: 7734290434250163480, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 0.30980393, g: 0.41568628, b: 0.3882353, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 19
+  m_fontSizeBase: 19
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 00000000
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &871225539
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871225536}
+  m_CullTransparentMesh: 1
 --- !u!1 &892967042
 GameObject:
   m_ObjectHideFlags: 0
@@ -41588,7 +42352,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -460.43, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1005253446
 MonoBehaviour:
@@ -41672,6 +42436,38 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 461967481433556226, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -41694,6 +42490,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 461967481433556226, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 604893269567350865, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 604893269567350865, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 818828286486574468, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 835716720255313150, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
@@ -41722,6 +42562,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1013327291234455135, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152611575862103161, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187740310529021227, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1203904166554008980, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
@@ -41756,6 +42604,10 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 1469994490877591404, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -41772,6 +42624,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -41786,6 +42646,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2103273104026852780, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
@@ -41797,6 +42665,14 @@ PrefabInstance:
       value: 4291352227
       objectReference: {fileID: 0}
     - target: {fileID: 2141361467051212109, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525807482564253318, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662752876497630313, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -41812,9 +42688,21 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 3112386445022347081, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3225100906918198841, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3246746753299516622, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439214216162226981, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3883608124383615405, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
@@ -41840,7 +42728,47 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4066370857501129072, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138080591562061465, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138080591562061465, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383900748687008687, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383900748687008687, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4387753712093289769, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417974079357384938, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontSize
+      value: 12.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417974079357384938, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417974079357384938, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438994906381820394, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736753048648347402, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -41924,6 +42852,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5037805243938780499, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 5219124180475700572, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4291352227
@@ -41931,6 +42863,38 @@ PrefabInstance:
     - target: {fileID: 5219124180475700572, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5984835277278855895, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
@@ -41960,11 +42924,240 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 6954833981468559386, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291651157635094878, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508408352836994241, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8403043159362426266, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 8403043159362426266, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571999790035539468, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8926079861305910282, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+--- !u!1 &1126475944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1126475945}
+  - component: {fileID: 1126475947}
+  - component: {fileID: 1126475946}
+  m_Layer: 5
+  m_Name: State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1126475945
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126475944}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 104136312}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 86}
+  m_SizeDelta: {x: 240, y: 26}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1126475946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126475944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Reviewed
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_sharedMaterial: {fileID: 7734290434250163480, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 0.30980393, g: 0.41568628, b: 0.3882353, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 19
+  m_fontSizeBase: 19
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 00000000
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1126475947
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126475944}
+  m_CullTransparentMesh: 1
 --- !u!1 &1152123641
 GameObject:
   m_ObjectHideFlags: 0
@@ -42672,6 +43865,7 @@ RectTransform:
   m_Children:
   - {fileID: 1728984866}
   - {fileID: 838777620}
+  - {fileID: 1747147344}
   m_Father: {fileID: 586979041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -42861,6 +44055,7 @@ RectTransform:
   m_Children:
   - {fileID: 632863613}
   - {fileID: 560858909}
+  - {fileID: 2049194695}
   - {fileID: 104136312}
   - {fileID: 738526536}
   m_Father: {fileID: 1740412777}
@@ -43010,8 +44205,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 144}
-  m_SizeDelta: {x: 240, y: 40}
+  m_AnchoredPosition: {x: 0, y: 152}
+  m_SizeDelta: {x: 268, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1663379777
 MonoBehaviour:
@@ -43063,21 +44258,21 @@ MonoBehaviour:
   m_fontSize: 26
   m_fontSizeBase: 26
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 0
-  m_fontSizeMax: 0
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 20
+  m_fontSizeMax: 26
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -12
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -43145,6 +44340,7 @@ RectTransform:
   m_Children:
   - {fileID: 95290978}
   - {fileID: 1629114623}
+  - {fileID: 435027293}
   m_Father: {fileID: 1989011965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -43225,7 +44421,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 460.43, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1709907260
 MonoBehaviour:
@@ -43483,6 +44679,143 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740412776}
   m_CullTransparentMesh: 1
+--- !u!1 &1747147343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1747147344}
+  - component: {fileID: 1747147346}
+  - component: {fileID: 1747147345}
+  m_Layer: 5
+  m_Name: State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1747147344
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747147343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1550933266}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 86}
+  m_SizeDelta: {x: 240, y: 26}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1747147345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747147343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Reviewed
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_sharedMaterial: {fileID: 7734290434250163480, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 0.30980393, g: 0.41568628, b: 0.3882353, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 19
+  m_fontSizeBase: 19
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 00000000
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1747147346
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747147343}
+  m_CullTransparentMesh: 1
 --- !u!1 &1812532653
 GameObject:
   m_ObjectHideFlags: 0
@@ -43540,7 +44873,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CASE BOARD
+  m_text: Case board
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3810f4abb8717a14dba46d9ffbc3f0b3, type: 2}
   m_sharedMaterial: {fileID: -6110908226427383667, guid: 3810f4abb8717a14dba46d9ffbc3f0b3, type: 2}
@@ -43653,6 +44986,7 @@ RectTransform:
   m_Children:
   - {fileID: 152297970}
   - {fileID: 467845255}
+  - {fileID: 871225537}
   - {fileID: 1678937234}
   - {fileID: 313467249}
   m_Father: {fileID: 1740412777}
@@ -43767,6 +45101,143 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1989011964}
+  m_CullTransparentMesh: 1
+--- !u!1 &2049194694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2049194695}
+  - component: {fileID: 2049194697}
+  - component: {fileID: 2049194696}
+  m_Layer: 5
+  m_Name: State
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2049194695
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049194694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1652816978}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 76}
+  m_SizeDelta: {x: 240, y: 26}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2049194696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049194694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Not checked
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_sharedMaterial: {fileID: 7734290434250163480, guid: 5cf9d4540f9403f4ca994a4fba73f61f, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 0.30980393, g: 0.41568628, b: 0.3882353, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 19
+  m_fontSizeBase: 19
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 00000000
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &2049194697
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049194694}
   m_CullTransparentMesh: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -192,8 +192,8 @@ Transform:
   m_GameObject: {fileID: 69783644}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.73, y: -1.75, z: 0.008540408}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.73, y: -2.5166664, z: 0.008540408}
+  m_LocalScale: {x: 1.12, y: 1.12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 324135255}
@@ -248,7 +248,7 @@ SpriteRenderer:
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5983016864706695343, guid: 3752409b178dff544a7e64bd8b8ea217, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.95686275, g: 0.93333334, b: 0.9019608, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -463,6 +463,66 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 818828286486574468, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 835716720255313150, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187740310529021227, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1385797506215543869, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -515,9 +575,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2662752876497630313, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112386445022347081, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3225100906918198841, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439214216162226981, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3883608124383615405, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
@@ -534,6 +606,14 @@ PrefabInstance:
     - target: {fileID: 3883608124383615405, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066370857501129072, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736753048648347402, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 4913622641114600531, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_Pivot.x
@@ -613,6 +693,86 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4913622641114600531, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954833981468559386, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508408352836994241, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -754,7 +914,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &337698085
 CanvasRenderer:
@@ -995,9 +1155,6 @@ GameObject:
   - component: {fileID: 474039077}
   - component: {fileID: 474039073}
   - component: {fileID: 474039080}
-  - component: {fileID: 474039091}
-  - component: {fileID: 474039090}
-  - component: {fileID: 474039089}
   - component: {fileID: 474039088}
   - component: {fileID: 474039087}
   - component: {fileID: 474039086}
@@ -1020,8 +1177,6 @@ GameObject:
   - component: {fileID: 474039127}
   - component: {fileID: 474039126}
   - component: {fileID: 474039125}
-  - component: {fileID: 474039124}
-  - component: {fileID: 474039122}
   - component: {fileID: 474039121}
   - component: {fileID: 474039116}
   - component: {fileID: 474039105}
@@ -1109,7 +1264,6 @@ GameObject:
   - component: {fileID: 474039269}
   - component: {fileID: 474039267}
   - component: {fileID: 474039266}
-  - component: {fileID: 474039265}
   - component: {fileID: 474039263}
   - component: {fileID: 474039262}
   - component: {fileID: 474039260}
@@ -1142,6 +1296,12 @@ GameObject:
   - component: {fileID: 474039301}
   - component: {fileID: 474039300}
   - component: {fileID: 474039312}
+  - component: {fileID: 474039318}
+  - component: {fileID: 474039317}
+  - component: {fileID: 474039316}
+  - component: {fileID: 474039315}
+  - component: {fileID: 474039314}
+  - component: {fileID: 474039313}
   m_Layer: 0
   m_Name: Scenario01_Flowchart
   m_TagString: Untagged
@@ -1362,9 +1522,9 @@ MonoBehaviour:
   commandList:
   - {fileID: 474039288}
   - {fileID: 474039287}
-  - {fileID: 474039091}
-  - {fileID: 474039090}
-  - {fileID: 474039089}
+  - {fileID: 474039318}
+  - {fileID: 474039317}
+  - {fileID: 474039316}
   suppressAllAutoSelections: 0
 --- !u!114 &474039077
 MonoBehaviour:
@@ -1555,81 +1715,6 @@ MonoBehaviour:
     stringVal: 
   startIndex: 0
   callMode: 0
---- !u!114 &474039089
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 17
-  indentLevel: 0
-  text: "Prioritise rapid access to treatment  \xB7  Cost: 20 Money, 1 week"
-  description: 
-  targetBlock: {fileID: 474039085}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 1280895496}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &474039090
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 16
-  indentLevel: 0
-  text: "Strengthen clinic assessment and prescribing  \xB7  Cost: 15 Money, 1 week"
-  description: 
-  targetBlock: {fileID: 474039086}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 1280895496}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &474039091
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 15
-  indentLevel: 0
-  text: "Fund a community information session  \xB7  Cost: 10 Money, 1 week"
-  description: 
-  targetBlock: {fileID: 474039087}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 1280895496}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &474039092
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1756,7 +1841,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 82
   indentLevel: 0
-  storyText: "RESULT \u2014 {$LastChange}"
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>RESULT</color></b></cspace></size>
+
+    {$LastChange}'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -1868,56 +1955,6 @@ MonoBehaviour:
   - {fileID: 474039263}
   - {fileID: 474039262}
   suppressAllAutoSelections: 0
---- !u!114 &474039122
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 62
-  indentLevel: 0
-  text: "Seek expert and community input  \xB7  Cost: 3 Money, 1 week"
-  description: 
-  targetBlock: {fileID: 474039116}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 1280895496}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
---- !u!114 &474039124
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 60
-  indentLevel: 0
-  text: "Consult community leaders  \xB7  Cost: 5 Money, 1 week"
-  description: 
-  targetBlock: {fileID: 474039121}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 1280895496}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &474039125
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1983,9 +2020,9 @@ MonoBehaviour:
   - {fileID: 474039213}
   - {fileID: 474039267}
   - {fileID: 474039266}
-  - {fileID: 474039124}
-  - {fileID: 474039122}
-  - {fileID: 474039265}
+  - {fileID: 474039315}
+  - {fileID: 474039314}
+  - {fileID: 474039313}
   suppressAllAutoSelections: 0
 --- !u!114 &474039127
 MonoBehaviour:
@@ -2939,7 +2976,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 49
   indentLevel: 0
-  storyText: "RESULT \u2014 {$LastChange}"
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>RESULT</color></b></cspace></size>
+
+    {$LastChange}'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3655,8 +3694,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 1681816102}
@@ -4402,8 +4441,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 118
   indentLevel: 0
-  storyText: "COMMUNITY REPORT \u2014 Families are asking the clinic for antibiotics
-    because they believe the medicine will make common illnesses go away faster."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>COMMUNITY REPORT</color></b></cspace></size>
+
+    Families
+    are asking the clinic for antibiotics because they believe the medicine will
+    make common illnesses go away faster.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4996,9 +5038,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 228
   indentLevel: 1
-  storyText: "UNLOCKED \u2014 Community Coordination. Because you involved the community,
-    this capability carries into Scenario 2. Choices that involve the community will
-    earn +2 Trust."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>UNLOCKED</color></b></cspace></size>
+
+    Community
+    Coordination. Because you involved the community, this capability carries into
+    Scenario 2. Choices that involve the community will earn +2 Trust.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -6191,31 +6235,6 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
---- !u!114 &474039265
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474039060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841589fc622bc494aa5405f416fa1301, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fungus::Fungus.Menu
-  itemId: 210
-  indentLevel: 0
-  text: "Delay and take no action  \xB7  No direct cost"
-  description: 
-  targetBlock: {fileID: 474039277}
-  hideIfVisited: 0
-  interactable:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  setMenuDialog: {fileID: 1280895496}
-  hideThisOption:
-    booleanRef: {fileID: 0}
-    booleanVal: 0
 --- !u!114 &474039266
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6230,8 +6249,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 209
   indentLevel: 0
-  storyText: "TIP \u2014 Look at cost, time, trust and likely consequences before
-    acting."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>TIP</color></b></cspace></size>
+
+    Look
+    at cost, time, trust and likely consequences before acting.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -6239,8 +6260,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 1681816102}
@@ -7509,8 +7530,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 188
   indentLevel: 0
-  storyText: "DECISION \u2014 Many people in the community are using antibiotics
-    without proper guidance. You have limited resources. What should you do first?"
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>DECISION</color></b></cspace></size>
+
+    Many
+    people in the community are using antibiotics without proper guidance. You have
+    limited resources. What should you do first?'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -7518,8 +7542,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 1681816102}
@@ -7603,8 +7627,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 182
   indentLevel: 0
-  storyText: "NEW MESSAGE \u2014 You have joined the community response team. A local
-    clinic is seeing more requests for antibiotics without proper assessment."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>NEW MESSAGE</color></b></cspace></size>
+
+    You
+    have joined the community response team. A local clinic is seeing more requests
+    for antibiotics without proper assessment.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -7963,6 +7990,222 @@ MonoBehaviour:
 
 
     Your decisions shape what happens next.'
+--- !u!114 &474039313
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 252
+  indentLevel: 0
+  text: Delay and take no action
+  description: 
+  targetBlock: {fileID: 474039277}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 1280895496}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: 0
+  timeWeeks: 0
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &474039314
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 251
+  indentLevel: 0
+  text: Seek expert and community input
+  description: 
+  targetBlock: {fileID: 474039116}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 1280895496}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: -3
+  timeWeeks: -1
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &474039315
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 250
+  indentLevel: 0
+  text: Consult community leaders
+  description: 
+  targetBlock: {fileID: 474039121}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 1280895496}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: -5
+  timeWeeks: -1
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &474039316
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 249
+  indentLevel: 0
+  text: Prioritise rapid access to treatment
+  description: 
+  targetBlock: {fileID: 474039085}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 1280895496}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: -20
+  timeWeeks: -1
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &474039317
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 248
+  indentLevel: 0
+  text: Strengthen clinic assessment and prescribing
+  description: 
+  targetBlock: {fileID: 474039086}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 1280895496}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: -15
+  timeWeeks: -1
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
+--- !u!114 &474039318
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3def05e66215cae4290a4e3b9359b79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
+  itemId: 247
+  indentLevel: 0
+  text: Fund a community information session
+  description: 
+  targetBlock: {fileID: 474039087}
+  hideIfVisited: 0
+  interactable:
+    booleanRef: {fileID: 0}
+    booleanVal: 1
+  setMenuDialog: {fileID: 1280895496}
+  hideThisOption:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  money: -10
+  timeWeeks: -1
+  trust: 0
+  resistance: 0
+  capacity: 0
+  showEffects: 1
+  previewOutcomes: 0
+  capability: 
+  capabilityTrust: 0
+  capabilityCapacity: 0
+  gateOnCost: 0
 --- !u!1 &527487650
 GameObject:
   m_ObjectHideFlags: 0
@@ -8214,7 +8457,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -1300, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &714634209
 MonoBehaviour:
@@ -8343,7 +8586,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 460.43, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &809579380
 MonoBehaviour:
@@ -8579,7 +8822,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -460.43, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1021895820
 MonoBehaviour:
@@ -8782,8 +9025,8 @@ Transform:
   m_GameObject: {fileID: 1084137160}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.53, y: -1.6, z: 0.008540408}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -10.73, y: -1.6000004, z: 0.008540408}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 324135255}
@@ -8838,7 +9081,7 @@ SpriteRenderer:
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 6396987580193cc4b9a336df523c6195, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.95686275, g: 0.93333334, b: 0.9019608, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -8948,7 +9191,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 1300, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1405053944
 MonoBehaviour:
@@ -9582,6 +9825,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658624523978255739, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
       propertyPath: m_Name
       value: CustomSelectionMenuDialog
@@ -9599,6 +9866,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2822401760759471638, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3035199981192350095, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9682,6 +9953,30 @@ PrefabInstance:
     - target: {fileID: 4708377983820236573, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
       propertyPath: m_Name
       value: CustomSayDialogBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

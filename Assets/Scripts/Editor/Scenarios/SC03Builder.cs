@@ -34,7 +34,7 @@ namespace OneHealth.EditorTools
         [MenuItem("One Health/Build Scenario 3")]
         public static string Build()
         {
-            var k = K.CreateScene(ScenePath, "Assets/Art/01_Scenario_1/02_Environments/Kivu_Community_Outdoor_Meeting_Area.png");
+            var k = K.CreateScene(ScenePath, "Assets/Art/01_Scenario_1/02_Environments/Kivu_Community_Outdoor_Meeting_Area.png", ArtPipeline.OvercastGrade);
 
             foreach (var key in new[] { "Money", "Time", "Trust", "Resistance", "Capacity", "Entry_Resistance" })
                 k.Var<IntegerVariable>(key);

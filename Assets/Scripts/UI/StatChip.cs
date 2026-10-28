@@ -9,10 +9,11 @@ namespace OneHealth
     public enum StatKind { Money, Time, Trust, Resistance, FlowchartInteger, Capacity }
 
     /// <summary>
-    /// One HUD parameter: icon, label, value, optional bar, a +/- change popup and a one-line
-    /// tooltip. Changes are always shown as text and an arrow, never colour alone.
+    /// One HUD parameter: icon, label, value, optional bar, a +/- change pill and a tooltip (hover, tap or
+    /// keyboard select). Changes are always shown as text and an arrow, never colour alone; spending Money,
+    /// Time or Capacity is shown in a neutral colour, green and red are kept for Trust and Resistance.
     /// </summary>
-    public class StatChip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class StatChip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ISelectHandler, IDeselectHandler
     {
         [SerializeField] StatKind kind;
         [Tooltip("For FlowchartInteger: variable key to display, e.g. ClinicResponseCapacity")]
@@ -25,13 +26,26 @@ namespace OneHealth
 
         [SerializeField] TMP_Text valueText;
         [SerializeField] TMP_Text statusText;
+        [Tooltip("Pill behind the status text; shown with it")]
+        [SerializeField] GameObject statusPill;
         [SerializeField] Image fill;
         [SerializeField] TMP_Text deltaText;
+        [Tooltip("Pill behind the change text; faded with it")]
+        [SerializeField] CanvasGroup deltaPill;
         [SerializeField] GameObject tooltip;
+        [Tooltip("Optional icon swapped by state: normal, low, critical (a second, non-colour cue)")]
+        [SerializeField] Image icon;
+        [SerializeField] Sprite[] stateIcons;
+
+        const float DeltaHold = 1.6f, DeltaFade = 0.8f, PulseTime = 0.25f;
 
         int shown = int.MinValue;
-        float deltaTimer;
+        float deltaTimer, pulseTimer = -1f;
+        bool hovered, selected, pinned;
         Flowchart flowchart;
+
+        /// <summary>When the last change pill appeared (unscaled time), so a card can wait until it was seen.</summary>
+        public static float LastDeltaTime = -100f;
 
         public StatKind Kind { get { return kind; } }
 
@@ -45,8 +59,10 @@ namespace OneHealth
 
         void OnEnable()
         {
-            if (tooltip != null) tooltip.SetActive(false);
-            if (deltaText != null) deltaText.alpha = 0f;
+            hovered = selected = pinned = false;
+            UpdateTooltip();
+            SetDeltaAlpha(0f);
+            transform.localScale = Vector3.one;
             Refresh(false);
         }
 
@@ -55,12 +71,26 @@ namespace OneHealth
             if (kind == StatKind.FlowchartInteger || kind == StatKind.Capacity)
                 Refresh(true);
 
-            if (deltaTimer > 0f && deltaText != null)
+            if (deltaTimer > 0f)
             {
                 deltaTimer -= Time.unscaledDeltaTime;
-                deltaText.alpha = Mathf.Clamp01(deltaTimer / 0.6f);
-                deltaText.rectTransform.anchoredPosition = new Vector2(0f, 6f * (2.2f - deltaTimer));
+                // Hold at full strength, then fade, so the change is read before it goes.
+                SetDeltaAlpha(Mathf.Clamp01(deltaTimer / DeltaFade));
             }
+
+            if (pulseTimer >= 0f)
+            {
+                pulseTimer += Time.unscaledDeltaTime;
+                float k = Mathf.Clamp01(pulseTimer / PulseTime);
+                transform.localScale = Vector3.one * (1f + 0.08f * Mathf.Sin(k * Mathf.PI));
+                if (k >= 1f) { pulseTimer = -1f; transform.localScale = Vector3.one; }
+            }
+        }
+
+        void SetDeltaAlpha(float a)
+        {
+            if (deltaPill != null) deltaPill.alpha = a;
+            else if (deltaText != null) deltaText.alpha = a;
         }
 
         int ReadValue()
@@ -108,26 +138,69 @@ namespace OneHealth
             if (kind == StatKind.Resistance && v > GameState.ResistanceCriticalAbove) { status = "Severe"; critical = true; }
             if (kind == StatKind.Money && v <= 0) { status = "No funds"; critical = true; }
             if (kind == StatKind.Time && v <= 0) { status = "Deadline"; critical = true; }
-            if ((kind == StatKind.FlowchartInteger || kind == StatKind.Capacity) && v <= lowThreshold) { status = "Low"; critical = true; }
+            bool low = (kind == StatKind.FlowchartInteger || kind == StatKind.Capacity) && v <= lowThreshold;
+            if (low) { status = "Low"; critical = true; }
             if (statusText != null)
             {
                 statusText.text = status;
                 statusText.gameObject.SetActive(critical);
             }
-            valueText.color = critical ? UITheme.Coral : Color.white;
+            if (statusPill != null) statusPill.SetActive(critical);
+            valueText.color = critical ? UITheme.NegativeOnDark : Color.white;
+
+            if (icon != null && stateIcons != null && stateIcons.Length >= 3)
+            {
+                int state = !low ? 0 : (v <= lowThreshold / 2 ? 2 : 1);
+                if (stateIcons[state] != null) icon.sprite = stateIcons[state];
+            }
         }
 
         void ShowDelta(int d)
         {
             if (deltaText == null || d == 0) return;
-            bool good = higherIsWorse ? d < 0 : d > 0;
-            deltaText.text = (d > 0 ? "▲ " : "▼ ") + StatDelta.Signed(d);
-            deltaText.color = good ? UITheme.LeafGreen : UITheme.Coral;
-            deltaTimer = 2.2f;
-            deltaText.alpha = 1f;
+            Color arrow;
+            if (kind == StatKind.Trust || kind == StatKind.Resistance || kind == StatKind.FlowchartInteger)
+            {
+                bool good = higherIsWorse ? d < 0 : d > 0;
+                arrow = good ? UITheme.PositiveOnDark : UITheme.NegativeOnDark;
+            }
+            else
+            {
+                arrow = UITheme.SpendOnDark;   // spending is not "bad"
+            }
+            deltaText.text = "<color=" + UITheme.ToHex(arrow) + ">" + (d > 0 ? "▲" : "▼") + "</color> " + StatDelta.Signed(d);
+            deltaText.color = Color.white;
+            deltaTimer = DeltaHold + DeltaFade;
+            SetDeltaAlpha(1f);
+            pulseTimer = 0f;
+            LastDeltaTime = Time.unscaledTime;
         }
 
-        public void OnPointerEnter(PointerEventData e) { if (tooltip != null) tooltip.SetActive(true); }
-        public void OnPointerExit(PointerEventData e) { if (tooltip != null) tooltip.SetActive(false); }
+        // Tooltip: hover, tap/click (toggles) or keyboard selection.
+        public void OnPointerEnter(PointerEventData e) { hovered = true; UpdateTooltip(); }
+        public void OnPointerExit(PointerEventData e) { hovered = false; UpdateTooltip(); }
+        public void OnPointerClick(PointerEventData e) { pinned = !pinned; UpdateTooltip(); }
+        public void OnSelect(BaseEventData e) { selected = true; UpdateTooltip(); }
+        public void OnDeselect(BaseEventData e) { selected = false; pinned = false; UpdateTooltip(); }
+
+        /// <summary>Shows the tooltip for a few seconds without input, e.g. the Resistance Pressure disclaimer on first view.</summary>
+        public void ShowTooltipFor(float seconds)
+        {
+            if (tooltip == null || !isActiveAndEnabled) return;
+            StopAllCoroutines();
+            StartCoroutine(TimedTooltip(seconds));
+        }
+
+        System.Collections.IEnumerator TimedTooltip(float seconds)
+        {
+            tooltip.SetActive(true);
+            yield return new WaitForSecondsRealtime(seconds);
+            UpdateTooltip();
+        }
+
+        void UpdateTooltip()
+        {
+            if (tooltip != null) tooltip.SetActive(hovered || selected || pinned);
+        }
     }
 }

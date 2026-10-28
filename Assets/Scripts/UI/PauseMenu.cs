@@ -81,11 +81,10 @@ namespace OneHealth
             nextButton.interactable = unlocked;
             nextLockIcon.SetActive(!unlocked);
             string label = string.IsNullOrEmpty(nextStageLabel) ? "Next" : nextStageLabel;
-            nextLabel.text = unlocked ? label : label + " (locked)";
+            // The reason sits on the locked button itself, so the hint line only explains Esc (U19).
+            nextLabel.text = unlocked ? label : label + "\n<size=65%>Complete this scenario first</size>";
             if (hintText != null)
-                hintText.text = unlocked || string.IsNullOrEmpty(nextScene)
-                    ? "Press Esc to resume"
-                    : "Complete this scenario to unlock Next.\nPress Esc to resume";
+                hintText.text = "Press Esc to resume";
 
             previousTimeScale = Time.timeScale;
             Time.timeScale = 0f;
@@ -112,11 +111,22 @@ namespace OneHealth
             panel.Close();
         }
 
-        // Fungus "click anywhere" input would otherwise advance dialogue behind the pause menu.
+        // Fungus "click anywhere" input would otherwise advance dialogue behind the pause menu. The say and
+        // menu dialogs are hidden too, so their text never shows through behind the pause panel.
         static void SetDialogInput(bool enabled)
         {
             foreach (var input in FindObjectsByType<Fungus.DialogInput>())
                 input.enabled = enabled;
+            foreach (var say in FindObjectsByType<Fungus.SayDialog>(FindObjectsInactive.Include))
+                SetCanvas(say, enabled);
+            foreach (var menu in FindObjectsByType<Fungus.MenuDialog>(FindObjectsInactive.Include))
+                SetCanvas(menu, enabled);
+        }
+
+        static void SetCanvas(Component dialog, bool visible)
+        {
+            var canvas = dialog.GetComponent<Canvas>();
+            if (canvas != null) canvas.enabled = visible;
         }
 
         void OnDestroy()

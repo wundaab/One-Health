@@ -145,8 +145,8 @@ Transform:
   m_GameObject: {fileID: 38352361}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.53, y: -1.6, z: 0.00854}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -10.529999, y: -2.3666687, z: 0.00854}
+  m_LocalScale: {x: 1.12, y: 1.12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1165612527}
@@ -201,7 +201,7 @@ SpriteRenderer:
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -5983016864706695343, guid: 3752409b178dff544a7e64bd8b8ea217, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9137255, b: 0.8117647, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -243,13 +243,13 @@ Transform:
   - {fileID: 1342504418}
   - {fileID: 302914467}
   - {fileID: 956806689}
-  - {fileID: 1860854425}
-  - {fileID: 662217648}
-  - {fileID: 1637738064}
-  - {fileID: 1210442109}
-  - {fileID: 548220615}
-  - {fileID: 2008429226}
-  - {fileID: 1810390825}
+  - {fileID: 1021293639}
+  - {fileID: 1517144036}
+  - {fileID: 180595362}
+  - {fileID: 378338728}
+  - {fileID: 1982991557}
+  - {fileID: 644792857}
+  - {fileID: 883236546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &131338906
@@ -925,9 +925,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 432
   indentLevel: 0
-  storyText: "GAME COMPLETE \u2014 Better outcomes require evidence, appropriate
-    care, prevention, trust and collaboration across human, animal and environmental
-    health."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>GAME COMPLETE</color></b></cspace></size>
+
+    Better
+    outcomes require evidence, appropriate care, prevention, trust and collaboration
+    across human, animal and environmental health.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -1486,7 +1488,7 @@ MonoBehaviour:
   itemId: 419
   indentLevel: 1
   title: "Badge earned \u2014 One Health Champion"
-  image: {fileID: -5694620456087211521, guid: 37c9b0ae006fe1e458a7de6de0ba0967, type: 3}
+  image: {fileID: 2085925066834281718, guid: 0dbd3694368ed1d4e8d1120166b43996, type: 3}
   caption: Every workstream completed, a verified report, a transparent briefing
     and a shared coordination plan.
 --- !u!114 &131338934
@@ -3339,7 +3341,7 @@ MonoBehaviour:
   storyText: One Health works when people act on evidence, adapt to constraints and
     coordinate across connected systems.
   description: 
-  character: {fileID: 1860854426}
+  character: {fileID: 1021293640}
   portrait: {fileID: 0}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -3366,8 +3368,8 @@ MonoBehaviour:
   indentLevel: 0
   storyText: Environmental follow-up has a named responsibility and a clear record.
   description: 
-  character: {fileID: 548220616}
-  portrait: {fileID: 0}
+  character: {fileID: 1982991558}
+  portrait: {fileID: 2123388095054120318, guid: 142bcdb5db3b52c4fba4732662a79bb2, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -3393,7 +3395,7 @@ MonoBehaviour:
   indentLevel: 0
   storyText: Animal health and appropriate treatment remain part of the response.
   description: 
-  character: {fileID: 1637738065}
+  character: {fileID: 180595363}
   portrait: {fileID: -9150440782175201713, guid: a35a66a7b2024504a85761e1360f34a9, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -3658,6 +3660,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131338964
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -3693,6 +3696,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131338965
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -3731,8 +3735,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -3753,7 +3757,7 @@ MonoBehaviour:
   storyText: The response plan is complete. The team knows what actions were delivered,
     what the evidence supports, and how the teams will continue coordinating.
   description: 
-  character: {fileID: 1860854426}
+  character: {fileID: 1021293640}
   portrait: {fileID: 0}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -3818,7 +3822,7 @@ MonoBehaviour:
   itemId: 385
   indentLevel: 0
   title: "Badge earned \u2014 Kivu Coordinator"
-  image: {fileID: -5694620456087211521, guid: 37c9b0ae006fe1e458a7de6de0ba0967, type: 3}
+  image: {fileID: 2085925066834281718, guid: 0dbd3694368ed1d4e8d1120166b43996, type: 3}
   caption: You gave the community practical next steps and an honest account of the
     evidence.
 --- !u!114 &131338971
@@ -4211,6 +4215,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131338982
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -4261,6 +4266,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131338984
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -4298,8 +4304,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -4541,7 +4547,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 362
   indentLevel: 0
-  storyText: "STATEMENT 4 OF 4 \u2014 \u201COne confirmed source caused all the reports.\u201D"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>STATEMENT 4 OF 4</color></b></cspace></size>\n\u201COne
+    confirmed source caused all the reports.\u201D"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4549,8 +4556,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -4768,8 +4775,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 353
   indentLevel: 0
-  storyText: "STATEMENT 3 OF 4 \u2014 \u201CWater and environmental follow-up was
-    completed.\u201D"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>STATEMENT 3 OF 4</color></b></cspace></size>\n\u201CWater
+    and environmental follow-up was completed.\u201D"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -4777,8 +4784,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -4996,7 +5003,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 344
   indentLevel: 0
-  storyText: "STATEMENT 2 OF 4 \u2014 \u201CThe animal-health workstream was completed.\u201D"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>STATEMENT 2 OF 4</color></b></cspace></size>\n\u201CThe
+    animal-health workstream was completed.\u201D"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5004,8 +5012,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -5222,7 +5230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 335
   indentLevel: 0
-  storyText: "STATEMENT 1 OF 4 \u2014 \u201CThe community plan was delivered.\u201D"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>STATEMENT 1 OF 4</color></b></cspace></size>\n\u201CThe
+    community plan was delivered.\u201D"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -5230,8 +5239,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -5355,7 +5364,7 @@ MonoBehaviour:
   storyText: Make clear that appropriate treatment remains available when clinically
     indicated.
   description: 
-  character: {fileID: 1637738065}
+  character: {fileID: 180595363}
   portrait: {fileID: -9150440782175201713, guid: a35a66a7b2024504a85761e1360f34a9, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -5382,8 +5391,8 @@ MonoBehaviour:
   indentLevel: 0
   storyText: Report observations separately from unconfirmed explanations.
   description: 
-  character: {fileID: 548220616}
-  portrait: {fileID: 0}
+  character: {fileID: 1982991558}
+  portrait: {fileID: 2123388095054120318, guid: 142bcdb5db3b52c4fba4732662a79bb2, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -5699,8 +5708,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 315
   indentLevel: 1
-  storyText: "CROSS-SECTOR RESPONSE \u2014 Your existing links with the other sectors
-    save the team work. Capacity cost reduced by 1."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>CROSS-SECTOR RESPONSE</color></b></cspace></size>
+
+    Your
+    existing links with the other sectors save the team work. Capacity cost reduced
+    by 1.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -6130,6 +6142,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339051
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6165,6 +6178,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339052
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6200,6 +6214,7 @@ MonoBehaviour:
   capability: Cross-Sector Response
   capabilityTrust: 0
   capabilityCapacity: 1
+  gateOnCost: 1
 --- !u!114 &131339053
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6238,8 +6253,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -7545,8 +7560,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -8077,8 +8092,8 @@ MonoBehaviour:
   indentLevel: 0
   storyText: The water concern needs follow-up, not assumptions.
   description: 
-  character: {fileID: 548220616}
-  portrait: {fileID: 0}
+  character: {fileID: 1982991558}
+  portrait: {fileID: 2123388095054120318, guid: 142bcdb5db3b52c4fba4732662a79bb2, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -8104,7 +8119,7 @@ MonoBehaviour:
   indentLevel: 0
   storyText: Residents need prevention advice and honest updates.
   description: 
-  character: {fileID: 662217649}
+  character: {fileID: 1517144037}
   portrait: {fileID: 1457417555897646456, guid: 03110e2fb47c1f6439228ebda7595b9f, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -8131,8 +8146,8 @@ MonoBehaviour:
   indentLevel: 0
   storyText: Please do not forget the animals and the people who depend on them.
   description: 
-  character: {fileID: 1210442110}
-  portrait: {fileID: 0}
+  character: {fileID: 378338729}
+  portrait: {fileID: 7831652368550865835, guid: 7339efcf985283642aabb598825a64c6, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -8555,6 +8570,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339104
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -8590,6 +8606,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339105
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -8625,6 +8642,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339106
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -8662,8 +8680,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -8684,8 +8702,8 @@ MonoBehaviour:
   storyText: Coordinator, the team has fewer transport and staff hours available
     than expected. The plan cannot be delivered exactly as written.
   description: 
-  character: {fileID: 1810390826}
-  portrait: {fileID: 0}
+  character: {fileID: 883236547}
+  portrait: {fileID: 172789320484705504, guid: 7e9a043d292c1924b8e6288389018130, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -9020,7 +9038,7 @@ MonoBehaviour:
   itemId: 248
   indentLevel: 0
   title: "Badge earned \u2014 Precaution With Evidence"
-  image: {fileID: -5694620456087211521, guid: 37c9b0ae006fe1e458a7de6de0ba0967, type: 3}
+  image: {fileID: 2085925066834281718, guid: 0dbd3694368ed1d4e8d1120166b43996, type: 3}
   caption: You paired immediate precautions with follow-up, without assuming the
     cause.
 --- !u!114 &131339118
@@ -9371,6 +9389,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339128
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -9406,6 +9425,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339129
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -9443,8 +9463,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -9606,7 +9626,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 230
   indentLevel: 0
-  storyText: "CARD 3 OF 3 \u2014 \u201CDeclare the water the confirmed cause\u201D"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>CARD 3 OF 3</color></b></cspace></size>\n\u201CDeclare
+    the water the confirmed cause\u201D"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -9614,8 +9635,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -9832,7 +9853,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 221
   indentLevel: 0
-  storyText: "CARD 2 OF 3 \u2014 \u201CArrange appropriate water-quality follow-up\u201D"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>CARD 2 OF 3</color></b></cspace></size>\n\u201CArrange
+    appropriate water-quality follow-up\u201D"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -9840,8 +9862,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -10059,7 +10081,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 212
   indentLevel: 0
-  storyText: "CARD 1 OF 3 \u2014 \u201CShare practical safe-water guidance\u201D"
+  storyText: "<size=75%><cspace=0.06em><b><color=#2E7D6B>CARD 1 OF 3</color></b></cspace></size>\n\u201CShare
+    practical safe-water guidance\u201D"
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -10067,8 +10090,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -10191,8 +10214,8 @@ MonoBehaviour:
   indentLevel: 0
   storyText: Tell us what practical steps to take while the concern is checked.
   description: 
-  character: {fileID: 2008429227}
-  portrait: {fileID: 0}
+  character: {fileID: 644792858}
+  portrait: {fileID: 5166592625098732458, guid: 34f5f29a4ece798488baa787479d52ab, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -10220,8 +10243,8 @@ MonoBehaviour:
     It deserves follow-up, but does not prove contamination or explain the animal
     illness.
   description: 
-  character: {fileID: 548220616}
-  portrait: {fileID: 0}
+  character: {fileID: 1982991558}
+  portrait: {fileID: 2123388095054120318, guid: 142bcdb5db3b52c4fba4732662a79bb2, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -10538,7 +10561,7 @@ MonoBehaviour:
   itemId: 198
   indentLevel: 0
   title: "Badge earned \u2014 Responsible Stewardship"
-  image: {fileID: -5694620456087211521, guid: 37c9b0ae006fe1e458a7de6de0ba0967, type: 3}
+  image: {fileID: 2085925066834281718, guid: 0dbd3694368ed1d4e8d1120166b43996, type: 3}
   caption: You supported assessment, animal welfare and responsible antimicrobial
     use, with treatment available when indicated.
 --- !u!114 &131339170
@@ -10890,6 +10913,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339180
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -10925,6 +10949,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339181
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -10962,8 +10987,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -10984,8 +11009,8 @@ MonoBehaviour:
   storyText: I need advice that protects my animals and livelihood. I do not want
     guesswork.
   description: 
-  character: {fileID: 1210442110}
-  portrait: {fileID: 0}
+  character: {fileID: 378338729}
+  portrait: {fileID: 7831652368550865835, guid: 7339efcf985283642aabb598825a64c6, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -11012,7 +11037,7 @@ MonoBehaviour:
   storyText: The field report records animal illness, but it does not identify a
     cause. We need appropriate assessment and practical prevention.
   description: 
-  character: {fileID: 1637738065}
+  character: {fileID: 180595363}
   portrait: {fileID: -9150440782175201713, guid: a35a66a7b2024504a85761e1360f34a9, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -11385,7 +11410,7 @@ MonoBehaviour:
   itemId: 175
   indentLevel: 0
   title: "Badge earned \u2014 Community Partner"
-  image: {fileID: -5694620456087211521, guid: 37c9b0ae006fe1e458a7de6de0ba0967, type: 3}
+  image: {fileID: 2085925066834281718, guid: 0dbd3694368ed1d4e8d1120166b43996, type: 3}
   caption: Your plan is practical, respectful and honest about what is known.
 --- !u!114 &131339195
 MonoBehaviour:
@@ -11447,8 +11472,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 171
   indentLevel: 1
-  storyText: "COMMUNITY COORDINATION \u2014 Residents remember how you involved them
-    before. Trust +2."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>COMMUNITY COORDINATION</color></b></cspace></size>
+
+    Residents
+    remember how you involved them before. Trust +2.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -14424,7 +14451,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 131
   indentLevel: 0
-  storyText: "PLAN STEP 3 OF 3 \u2014 Choose one card."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>PLAN STEP 3 OF 3</color></b></cspace></size>
+
+    Choose
+    one card.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -14432,8 +14462,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -14765,7 +14795,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 123
   indentLevel: 0
-  storyText: "PLAN STEP 2 OF 3 \u2014 Choose one card."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>PLAN STEP 2 OF 3</color></b></cspace></size>
+
+    Choose
+    one card.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -14773,8 +14806,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -15106,7 +15139,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 115
   indentLevel: 0
-  storyText: "PLAN STEP 1 OF 3 \u2014 Choose one card."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>PLAN STEP 1 OF 3</color></b></cspace></size>
+
+    Choose
+    one card.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -15114,8 +15150,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -15394,7 +15430,7 @@ MonoBehaviour:
   storyText: People cooperate when we explain what is known, what is uncertain, and
     how they can help.
   description: 
-  character: {fileID: 662217649}
+  character: {fileID: 1517144037}
   portrait: {fileID: 1457417555897646456, guid: 03110e2fb47c1f6439228ebda7595b9f, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -16598,8 +16634,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -17762,6 +17798,7 @@ MonoBehaviour:
   capability: 
   capabilityTrust: 0
   capabilityCapacity: 0
+  gateOnCost: 1
 --- !u!114 &131339309
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -17800,8 +17837,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -17881,8 +17918,8 @@ MonoBehaviour:
   showAlways: 1
   showCount: 1
   extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
+  fadeWhenDone: 0
+  waitForClick: 0
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 603280957}
@@ -17900,8 +17937,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Fungus::Fungus.Say
   itemId: 71
   indentLevel: 0
-  storyText: "DISTRICT RESPONSE FUNDS RELEASED \u2014 The district has allocated
-    Money +25 to the final response. Final response period: {$Time} weeks."
+  storyText: '<size=75%><cspace=0.06em><b><color=#2E7D6B>DISTRICT RESPONSE FUNDS
+    RELEASED</color></b></cspace></size>
+
+    The district has allocated Money +25
+    to the final response. Final response period: {$Time} weeks.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -18643,7 +18683,7 @@ MonoBehaviour:
     that protects people, supports animal health, and reduces environmental risks
     without assuming a single cause.
   description: 
-  character: {fileID: 1860854426}
+  character: {fileID: 1021293640}
   portrait: {fileID: 0}
   voiceOverClip: {fileID: 0}
   showAlways: 1
@@ -20678,6 +20718,60 @@ MonoBehaviour:
   scope: 0
   key: Money
   value: 0
+--- !u!1 &180595361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180595362}
+  - component: {fileID: 180595363}
+  m_Layer: 0
+  m_Name: Animal-health worker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180595362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180595361}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 84790888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &180595363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180595361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: Animal-health worker
+  nameColor: {r: 0.29803923, g: 0.6862745, b: 0.49019608, a: 1}
+  soundEffect: {fileID: 0}
+  portraits:
+  - {fileID: -9150440782175201713, guid: a35a66a7b2024504a85761e1360f34a9, type: 3}
+  portraitsFace: 0
+  setSayDialog: {fileID: 0}
+  description: 
+  effectAudioSource: {fileID: 0}
+  voiceAudioSource: {fileID: 0}
 --- !u!1 &213120928
 GameObject:
   m_ObjectHideFlags: 0
@@ -20929,7 +21023,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -1300, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &267706551
 MonoBehaviour:
@@ -21056,6 +21150,60 @@ Transform:
   - {fileID: 634271280}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &378338727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 378338728}
+  - component: {fileID: 378338729}
+  m_Layer: 0
+  m_Name: Farmer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &378338728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378338727}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 84790888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &378338729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378338727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: Farmer
+  nameColor: {r: 0.5411765, g: 0.3529412, b: 0.16862746, a: 1}
+  soundEffect: {fileID: 0}
+  portraits:
+  - {fileID: 7831652368550865835, guid: 7339efcf985283642aabb598825a64c6, type: 3}
+  portraitsFace: 0
+  setSayDialog: {fileID: 0}
+  description: 
+  effectAudioSource: {fileID: 0}
+  voiceAudioSource: {fileID: 0}
 --- !u!1 &406739304
 GameObject:
   m_ObjectHideFlags: 0
@@ -21150,7 +21298,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 1300, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &524376016
 MonoBehaviour:
@@ -21190,59 +21338,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524376014}
   m_CullTransparentMesh: 1
---- !u!1 &548220614
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 548220615}
-  - component: {fileID: 548220616}
-  m_Layer: 0
-  m_Name: Environmental officer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &548220615
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548220614}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 84790888}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &548220616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548220614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: Environmental officer
-  nameColor: {r: 0.18431373, g: 0.43529412, b: 0.6901961, a: 1}
-  soundEffect: {fileID: 0}
-  portraits: []
-  portraitsFace: 0
-  setSayDialog: {fileID: 0}
-  description: 
-  effectAudioSource: {fileID: 0}
-  voiceAudioSource: {fileID: 0}
 --- !u!1001 &603280956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21251,6 +21346,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2822401760759471638, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3035199981192350095, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -21335,6 +21434,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: CustomSayDialogBox
       objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369000387637632244, guid: 43d6d8d9bd7c5f640a6ea8b2c7533eef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21398,7 +21521,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 322379092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &662217647
+--- !u!1 &644792856
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21406,22 +21529,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 662217648}
-  - component: {fileID: 662217649}
+  - component: {fileID: 644792857}
+  - component: {fileID: 644792858}
   m_Layer: 0
-  m_Name: Samuel
+  m_Name: Water collector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &662217648
+--- !u!4 &644792857
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662217647}
+  m_GameObject: {fileID: 644792856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -21430,23 +21553,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 84790888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &662217649
+--- !u!114 &644792858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662217647}
+  m_GameObject: {fileID: 644792856}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: Samuel
-  nameColor: {r: 0.9490196, g: 0.654902, b: 0.23137255, a: 1}
+  nameText: Water collector
+  nameColor: {r: 0.18431373, g: 0.56078434, b: 0.6901961, a: 1}
   soundEffect: {fileID: 0}
   portraits:
-  - {fileID: 1457417555897646456, guid: 03110e2fb47c1f6439228ebda7595b9f, type: 3}
+  - {fileID: 5166592625098732458, guid: 34f5f29a4ece798488baa787479d52ab, type: 3}
   portraitsFace: 0
   setSayDialog: {fileID: 0}
   description: 
@@ -21640,6 +21763,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783683730065836792, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658624523978255739, guid: 1771b962395cddb4d83c02c3b101134d, type: 3}
       propertyPath: m_Name
       value: CustomSelectionMenuDialog
@@ -21695,7 +21842,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &771767919
 CanvasRenderer:
@@ -21856,6 +22003,60 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &883236545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 883236546}
+  - component: {fileID: 883236547}
+  m_Layer: 0
+  m_Name: Radio operator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &883236546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883236545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 84790888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &883236547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883236545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: Radio operator
+  nameColor: {r: 0.12156863, g: 0.16470589, b: 0.26666668, a: 1}
+  soundEffect: {fileID: 0}
+  portraits:
+  - {fileID: 172789320484705504, guid: 7e9a043d292c1924b8e6288389018130, type: 3}
+  portraitsFace: 0
+  setSayDialog: {fileID: 0}
+  description: 
+  effectAudioSource: {fileID: 0}
+  voiceAudioSource: {fileID: 0}
 --- !u!1 &956806688
 GameObject:
   m_ObjectHideFlags: 0
@@ -21947,7 +22148,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -460.43, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1005253446
 MonoBehaviour:
@@ -21987,6 +22188,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1005253444}
   m_CullTransparentMesh: 1
+--- !u!1 &1021293638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1021293639}
+  - component: {fileID: 1021293640}
+  m_Layer: 0
+  m_Name: Narrator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1021293639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021293638}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 84790888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1021293640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021293638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: Narrator
+  nameColor: {r: 0.105882354, g: 0.25882354, b: 0.22745098, a: 1}
+  soundEffect: {fileID: 0}
+  portraits: []
+  portraitsFace: 0
+  setSayDialog: {fileID: 0}
+  description: 
+  effectAudioSource: {fileID: 0}
+  voiceAudioSource: {fileID: 0}
 --- !u!1001 &1054946009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22031,6 +22285,38 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364215611525783303, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 461967481433556226, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -22053,6 +22339,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 461967481433556226, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 475872140552667746, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 604893269567350865, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 604893269567350865, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 818828286486574468, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 835716720255313150, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
@@ -22081,6 +22411,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1013327291234455135, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1152611575862103161, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187740310529021227, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1203904166554008980, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
@@ -22115,6 +22453,10 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 1469994490877591404, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -22131,6 +22473,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551873337912634870, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -22145,6 +22495,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864392223913345276, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2103273104026852780, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
@@ -22156,6 +22514,14 @@ PrefabInstance:
       value: 4291352227
       objectReference: {fileID: 0}
     - target: {fileID: 2141361467051212109, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525807482564253318, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662752876497630313, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -22171,9 +22537,21 @@ PrefabInstance:
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
+    - target: {fileID: 3112386445022347081, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3225100906918198841, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3246746753299516622, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439214216162226981, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3883608124383615405, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_AnchorMax.x
@@ -22199,7 +22577,47 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4066370857501129072, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138080591562061465, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4138080591562061465, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383900748687008687, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383900748687008687, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4387753712093289769, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417974079357384938, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontSize
+      value: 12.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417974079357384938, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417974079357384938, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438994906381820394, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736753048648347402, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -22283,6 +22701,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5037805243938780499, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 5219124180475700572, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4291352227
@@ -22290,6 +22712,38 @@ PrefabInstance:
     - target: {fileID: 5219124180475700572, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452724385988086375, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5984835277278855895, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
@@ -22316,6 +22770,98 @@ PrefabInstance:
       value: 4291352227
       objectReference: {fileID: 0}
     - target: {fileID: 6745504147095785556, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954833981468559386, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291651157635094878, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508408352836994241, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7797007649731776204, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8403043159362426266, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291352227
+      objectReference: {fileID: 0}
+    - target: {fileID: 8403043159362426266, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571999790035539468, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8813518907937160342, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8926079861305910282, guid: 8d00fb93eb1eaa84cbddbd6ee8139a78, type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
       objectReference: {fileID: 0}
@@ -22356,59 +22902,6 @@ Transform:
   - {fileID: 38352362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1210442108
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1210442109}
-  - component: {fileID: 1210442110}
-  m_Layer: 0
-  m_Name: Farmer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1210442109
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1210442108}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 84790888}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1210442110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1210442108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: Farmer
-  nameColor: {r: 0.5411765, g: 0.3529412, b: 0.16862746, a: 1}
-  soundEffect: {fileID: 0}
-  portraits: []
-  portraitsFace: 0
-  setSayDialog: {fileID: 0}
-  description: 
-  effectAudioSource: {fileID: 0}
-  voiceAudioSource: {fileID: 0}
 --- !u!1 &1229455111
 GameObject:
   m_ObjectHideFlags: 1
@@ -22508,6 +23001,60 @@ MonoBehaviour:
   description: 
   effectAudioSource: {fileID: 0}
   voiceAudioSource: {fileID: 0}
+--- !u!1 &1517144035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1517144036}
+  - component: {fileID: 1517144037}
+  m_Layer: 0
+  m_Name: Samuel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1517144036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517144035}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 84790888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1517144037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517144035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: Samuel
+  nameColor: {r: 0.9490196, g: 0.654902, b: 0.23137255, a: 1}
+  soundEffect: {fileID: 0}
+  portraits:
+  - {fileID: 1457417555897646456, guid: 03110e2fb47c1f6439228ebda7595b9f, type: 3}
+  portraitsFace: 0
+  setSayDialog: {fileID: 0}
+  description: 
+  effectAudioSource: {fileID: 0}
+  voiceAudioSource: {fileID: 0}
 --- !u!1 &1635155659
 GameObject:
   m_ObjectHideFlags: 0
@@ -22543,60 +23090,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1637738063
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1637738064}
-  - component: {fileID: 1637738065}
-  m_Layer: 0
-  m_Name: Animal-health worker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1637738064
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637738063}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 84790888}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1637738065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1637738063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: Animal-health worker
-  nameColor: {r: 0.29803923, g: 0.6862745, b: 0.49019608, a: 1}
-  soundEffect: {fileID: 0}
-  portraits:
-  - {fileID: -9150440782175201713, guid: a35a66a7b2024504a85761e1360f34a9, type: 3}
-  portraitsFace: 0
-  setSayDialog: {fileID: 0}
-  description: 
-  effectAudioSource: {fileID: 0}
-  voiceAudioSource: {fileID: 0}
 --- !u!1 &1709907258
 GameObject:
   m_ObjectHideFlags: 0
@@ -22632,7 +23125,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 460.43, y: -1000}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 820, y: 820}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1709907260
 MonoBehaviour:
@@ -22672,7 +23165,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709907258}
   m_CullTransparentMesh: 1
---- !u!1 &1810390824
+--- !u!1 &1982991556
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22680,22 +23173,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1810390825}
-  - component: {fileID: 1810390826}
+  - component: {fileID: 1982991557}
+  - component: {fileID: 1982991558}
   m_Layer: 0
-  m_Name: Radio operator
+  m_Name: Environmental officer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1810390825
+--- !u!4 &1982991557
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810390824}
+  m_GameObject: {fileID: 1982991556}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -22704,128 +23197,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 84790888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1810390826
+--- !u!114 &1982991558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810390824}
+  m_GameObject: {fileID: 1982991556}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: Radio operator
-  nameColor: {r: 0.12156863, g: 0.16470589, b: 0.26666668, a: 1}
+  nameText: Environmental officer
+  nameColor: {r: 0.18431373, g: 0.43529412, b: 0.6901961, a: 1}
   soundEffect: {fileID: 0}
-  portraits: []
-  portraitsFace: 0
-  setSayDialog: {fileID: 0}
-  description: 
-  effectAudioSource: {fileID: 0}
-  voiceAudioSource: {fileID: 0}
---- !u!1 &1860854424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1860854425}
-  - component: {fileID: 1860854426}
-  m_Layer: 0
-  m_Name: Narrator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1860854425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860854424}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 84790888}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1860854426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860854424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: Narrator
-  nameColor: {r: 0.105882354, g: 0.25882354, b: 0.22745098, a: 1}
-  soundEffect: {fileID: 0}
-  portraits: []
-  portraitsFace: 0
-  setSayDialog: {fileID: 0}
-  description: 
-  effectAudioSource: {fileID: 0}
-  voiceAudioSource: {fileID: 0}
---- !u!1 &2008429225
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2008429226}
-  - component: {fileID: 2008429227}
-  m_Layer: 0
-  m_Name: Water collector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2008429226
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008429225}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 84790888}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2008429227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008429225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: Water collector
-  nameColor: {r: 0.18431373, g: 0.56078434, b: 0.6901961, a: 1}
-  soundEffect: {fileID: 0}
-  portraits: []
+  portraits:
+  - {fileID: 2123388095054120318, guid: 142bcdb5db3b52c4fba4732662a79bb2, type: 3}
   portraitsFace: 0
   setSayDialog: {fileID: 0}
   description: 

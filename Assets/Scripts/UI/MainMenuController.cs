@@ -1,4 +1,5 @@
 using Fungus;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace OneHealth
 
         [SerializeField] Button newGameButton;
         [SerializeField] Button continueButton;
+        [SerializeField] TMP_Text continueLabel;
         [SerializeField] Button settingsButton;
         [SerializeField] Button exitButton;
 
@@ -24,10 +26,21 @@ namespace OneHealth
             Time.timeScale = 1f;
             newGameButton.onClick.AddListener(OnNewGame);
             continueButton.onClick.AddListener(OnContinue);
-            settingsButton.onClick.AddListener(() => settings.Open(() => settingsButton.Select()));
+            // Settings replaces the menu card while open, so two cards never overlap (U26).
+            settingsButton.onClick.AddListener(() =>
+            {
+                menuPanel.Close();
+                settings.Open(() => { menuPanel.Open(); settingsButton.Select(); });
+            });
             exitButton.onClick.AddListener(GameSession.QuitGame);
 
             continueButton.interactable = CanContinue();
+            if (!CanContinue() && continueLabel != null)
+            {
+                // Say why it is unavailable, in text that stays readable on the grey disabled button (U25).
+                continueLabel.text = "Continue\n<size=55%>No saved game yet</size>";
+                continueLabel.color = UITheme.DisabledInk;
+            }
 #if UNITY_WEBGL
             exitButton.gameObject.SetActive(false);
 #endif

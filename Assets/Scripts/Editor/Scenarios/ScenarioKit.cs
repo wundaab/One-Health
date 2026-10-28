@@ -28,7 +28,8 @@ namespace OneHealth.EditorTools
         // ------------------------------------------------------------------ scene
 
         /// <summary>Creates (or recreates) a scenario scene by copying SC02 and clearing its story.</summary>
-        public static ScenarioKit CreateScene(string scenePath, string backgroundSpritePath)
+        /// <param name="grade">Colour multiplied into the background art (per-scenario mood, UI critique U29).</param>
+        public static ScenarioKit CreateScene(string scenePath, string backgroundSpritePath, Color? grade = null)
         {
             EditorSceneManager.SaveOpenScenes();
             const string template = "Assets/Scenes/SC02.unity";
@@ -66,12 +67,23 @@ namespace OneHealth.EditorTools
             {
                 bg.sprite = sprite;
                 bg.gameObject.name = sprite.name;
+                // Grade and crop about the view the scenario fades to (the scene copies Scenario 2's clinic crop).
+                var view = Object.FindAnyObjectByType<View>(FindObjectsInactive.Include);
+                var centre = view != null ? view.transform.position : bg.transform.position;
+                if (sprite.name.StartsWith("Kivu_Community"))
+                    ArtPipeline.GradeCommunity(bg, centre, grade ?? ArtPipeline.CommunityGrade);
+                else
+                    ArtPipeline.GradeClinic(bg, centre);
             }
             return kit;
         }
 
         public void Save()
         {
+            // Questions stay on screen while their options are shown (UI critique U4).
+            E.KeepPromptsWithMenus(fc);
+            // Inline all-caps headings ("WATER REPORT — ...") shown as a small label line (U31).
+            E.HeadSayLines(fc);
             foreach (var b in fc.GetComponents<Block>()) { b.UpdateIndentLevels(); EditorUtility.SetDirty(b); }
             foreach (var c in fc.GetComponents<Command>()) EditorUtility.SetDirty(c);
             EditorUtility.SetDirty(fc);
@@ -99,6 +111,12 @@ namespace OneHealth.EditorTools
             // Samuel speaks for the community in Scenario 1; he returns as its representative.
             { "Samuel", "Assets/Art/01_Scenario_1/01_Characters/Samuel/samuel_neutral.png" },
             { "Animal-health worker", "Assets/Art/02_Scenario_2/sector_contact/Sector_contact.png" },
+            // No character art yet: a sector icon in the portrait circle tells the player who is speaking
+            // (people, animals, environment) until the art team draws these characters.
+            { "Radio operator", "Assets/Art/01_Scenario_1/04_UI/Icons/information_icon.png" },
+            { "Farmer", "Assets/Art/01_Scenario_1/04_UI/Icons/animals_icon.png" },
+            { "Water collector", "Assets/Art/01_Scenario_1/04_UI/Icons/community_icon.png" },
+            { "Environmental officer", "Assets/Art/01_Scenario_1/04_UI/Icons/environment_icon.png" },
         };
 
         /// <summary>Character by display name; created from an existing character if missing.</summary>
@@ -270,7 +288,8 @@ namespace OneHealth.EditorTools
             E.Set(f, "value", value);
         }
 
-        public const string BadgeIconPath = "Assets/Art/01_Scenario_1/04_UI/Icons/reward_medal_icon.png";
+        // The star from the flat icon family (the medal's ribbon and ring are misaligned).
+        public const string BadgeIconPath = "Assets/Art/01_Scenario_1/04_UI/Icons/star_icon.png";
         public const string NotifySoundPath = "Assets/Fungus/Audio/Click2.wav";
 
         /// <summary>Awards a badge (recognition only) and announces it on a card with the medal icon.</summary>

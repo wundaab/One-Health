@@ -29,6 +29,10 @@ namespace OneHealth
         [SerializeField] Button menuButton;
         [SerializeField] Button nextButton;
         [SerializeField] TMP_Text nextLabel;
+        [Tooltip("Button sprites (normal, hover, pressed, selected, disabled) for the one primary action")]
+        [SerializeField] Sprite[] primarySprites;
+        [Tooltip("Button sprites for Main Menu when it is not the primary action")]
+        [SerializeField] Sprite[] neutralSprites;
 
         string nextScene;
 
@@ -57,8 +61,11 @@ namespace OneHealth
             if (GameSession.IsReplay)
                 summaryText += "\n<i>This was a replay to try a different strategy. Your campaign continues from your original outcome.</i>";
             Fill(title, summaryText);
-            panel.Open();
-            nextButton.Select();
+            // Game Complete has no Next: Main Menu becomes the primary (green) action and takes focus.
+            bool hasNext = nextButton.gameObject.activeSelf;
+            Style(menuButton, hasNext ? neutralSprites : primarySprites);
+            Open();
+            (hasNext ? nextButton : menuButton).Select();
         }
 
         public void ShowNotCompleted(string title, string reason)
@@ -69,8 +76,28 @@ namespace OneHealth
             replayLabel.text = "Retry Scenario";
             nextButton.gameObject.SetActive(false);
             Fill(title, reason);
-            panel.Open();
+            Style(menuButton, neutralSprites);
+            Open();
             replayButton.Select();
+        }
+
+        /// <summary>The panel shows the same numbers as the HUD, so the HUD steps aside instead of overlapping it.</summary>
+        void Open()
+        {
+            var hud = FindAnyObjectByType<StatHUD>();
+            if (hud != null) hud.SetVisible(false);
+            panel.Open();
+        }
+
+        static void Style(Button button, Sprite[] sprites)
+        {
+            if (button == null || sprites == null || sprites.Length < 5) return;
+            var image = button.targetGraphic as Image;
+            if (image != null) image.sprite = sprites[0];
+            button.spriteState = new SpriteState
+            {
+                highlightedSprite = sprites[1], pressedSprite = sprites[2], selectedSprite = sprites[3], disabledSprite = sprites[4],
+            };
         }
 
         void Fill(string title, string summaryText)
@@ -78,19 +105,19 @@ namespace OneHealth
             var end = GameSession.State;
             var start = GameSession.ScenarioStartState ?? end;
             scenarioTitle.text = title;
-            summary.text = summaryText;
-            moneyRow.text = Row(start.money, end.money, "", false);
-            timeRow.text = Row(start.timeWeeks, end.timeWeeks, " weeks", false);
+            summary.text = Eyebrow(summaryText);
+            moneyRow.text = Row(start.money, end.money, "", StatKind.Money);
+            timeRow.text = Row(start.timeWeeks, end.timeWeeks, " weeks", StatKind.Time);
             if (capacityRow != null)
-                capacityRow.text = Row(start.capacity, end.capacity, "", false);
+                capacityRow.text = Row(start.capacity, end.capacity, "", StatKind.Capacity);
             // Rows for parameters the scenario does not use are hidden (e.g. Time in Scenario 2).
             foreach (Transform t in timeRow.transform.parent)
             {
                 if (t.name.StartsWith("Time")) t.gameObject.SetActive(GameSession.ShowTimeStat);
                 if (t.name.StartsWith("Capacity")) t.gameObject.SetActive(GameSession.ShowCapacityStat);
             }
-            trustRow.text = Row(start.trust, end.trust, "", false);
-            resistanceRow.text = Row(start.resistance, end.resistance, "", true);
+            trustRow.text = Row(start.trust, end.trust, "", StatKind.Trust);
+            resistanceRow.text = Row(start.resistance, end.resistance, "", StatKind.Resistance);
 
             learnedText.text = List(end.knowledge, start.knowledge, "Nothing new recorded");
             var text = List(end.unlocks, start.unlocks, "No new capability unlocked");
@@ -104,17 +131,42 @@ namespace OneHealth
             unlockedText.text = text;
         }
 
-        static string Row(int from, int to, string unit, bool higherIsWorse)
+        /// <summary>
+        /// "from → to (change)" on tab stops so the arrows and numbers line up in every row. Spending Money,
+        /// Time or Capacity is neutral (amber-brown); green and red are kept for Trust and Resistance outcomes.
+        /// </summary>
+        static string Row(int from, int to, string unit, StatKind kind)
         {
             int d = to - from;
             string change = "";
             if (d != 0)
+                change = string.Format("<pos=78%><color={0}>({1})</color>", UITheme.ToHex(ChangeColor(kind, d)), StatDelta.Signed(d));
+            return from + unit + "<pos=36%>→<pos=46%><b>" + to + unit + "</b>" + change;
+        }
+
+        public static Color ChangeColor(StatKind kind, int d)
+        {
+            switch (kind)
             {
-                bool good = higherIsWorse ? d < 0 : d > 0;
-                string hex = ColorUtility.ToHtmlStringRGB(good ? UITheme.LeafGreen : UITheme.Coral);
-                change = string.Format("  <color=#{0}>({1})</color>", hex, StatDelta.Signed(d));
+                case StatKind.Trust: return d > 0 ? UITheme.Positive : UITheme.Negative;
+                case StatKind.Resistance: return d < 0 ? UITheme.Positive : UITheme.Negative;
+                default: return UITheme.Spend;
             }
-            return from + unit + "  →  <b>" + to + unit + "</b>" + change;
+        }
+
+        /// <summary>
+        /// A summary that opens with an all-caps rank ("ONE HEALTH CHAMPION. GAME COMPLETE — ...") shows that
+        /// run as a small teal eyebrow line above the sentence instead of shouting inline. Same words.
+        /// </summary>
+        static string Eyebrow(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+            int k = text.IndexOf(" — ");
+            if (k <= 0) return text;
+            var head = text.Substring(0, k);
+            bool caps = head == head.ToUpperInvariant() && head.ToLowerInvariant() != head;
+            if (!caps) return text;
+            return "<size=22><cspace=1.5><b><color=" + UITheme.ToHex(UITheme.Teal) + ">" + head + "</color></b></cspace></size>\n" + text.Substring(k + 3);
         }
 
         /// <summary>New items as bullets; anything carried in from earlier scenarios on one compact line.</summary>
@@ -134,7 +186,7 @@ namespace OneHealth
             else
                 lines.Add("<b>New:</b> " + string.Join(", ", fresh.ToArray()));
             if (earlier.Count > 0)
-                lines.Add("<size=80%><color=#" + ColorUtility.ToHtmlStringRGB(UITheme.Teal) + ">Earlier: " + string.Join(", ", earlier.ToArray()) + "</color></size>");
+                lines.Add("<size=22><color=" + UITheme.ToHex(UITheme.InkMuted) + ">Earlier: " + string.Join(", ", earlier.ToArray()) + "</color></size>");
             return lines.Count == 0 ? empty : string.Join("\n", lines.ToArray());
         }
 

@@ -58,11 +58,23 @@ namespace OneHealth
             }
         }
 
+        /// <summary>The Resistance Pressure disclaimer is shown once, the first time the HUD appears (U16).</summary>
+        static bool introducedResistance;
+
         public void SetVisible(bool visible)
         {
             StopAllCoroutines();
             if (isActiveAndEnabled) StartCoroutine(Fade(visible ? 1f : 0f));
             group.blocksRaycasts = visible;
+            if (visible && !introducedResistance)
+            {
+                foreach (var c in chips)
+                {
+                    if (c.Kind != StatKind.Resistance || !c.isActiveAndEnabled) continue;
+                    introducedResistance = true;
+                    c.ShowTooltipFor(5f);
+                }
+            }
         }
 
         IEnumerator Fade(float to)

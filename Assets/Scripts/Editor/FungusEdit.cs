@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Fungus;
@@ -176,6 +177,104 @@ namespace OneHealth.EditorTools
             foreach (var c in fc.GetComponents<Command>()) EditorUtility.SetDirty(c);
             EditorUtility.SetDirty(fc);
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(fc.gameObject.scene);
+        }
+
+        /// <summary>
+        /// Keeps each question on screen while its options are shown (UI critique U4): a Say that runs
+        /// straight into a menu (possibly through End/Else, silent commands or a Call) stops waiting for a
+        /// click and does not fade, so Fungus leaves the say dialog up under the menu. Choosing an option
+        /// fades it as before (MenuDialog.HideSayDialog). Other Say commands are left untouched.
+        /// Returns the prompts it changed.
+        /// </summary>
+        public static List<string> KeepPromptsWithMenus(Flowchart fc)
+        {
+            var changed = new List<string>();
+            foreach (var b in fc.GetComponents<Block>()) b.UpdateIndentLevels();
+            foreach (var b in fc.GetComponents<Block>())
+            {
+                for (int i = 0; i < b.CommandList.Count; i++)
+                {
+                    var say = b.CommandList[i] as Say;
+                    if (say == null || !LeadsToMenu(b, i + 1, 0)) continue;
+                    if (!(bool)Get(say, "waitForClick") && !(bool)Get(say, "fadeWhenDone")) continue;
+                    Set(say, "waitForClick", false);
+                    Set(say, "fadeWhenDone", false);
+                    EditorUtility.SetDirty(say);
+                    changed.Add(b.BlockName + "[" + i + "] " + say.GetSummary());
+                }
+            }
+            return changed;
+        }
+
+        /// <summary>Whether execution from command index j reaches a menu option before anything that waits or shows.</summary>
+        static bool LeadsToMenu(Block block, int j, int depth)
+        {
+            if (depth > 4) return false;
+            var list = block.CommandList;
+            while (j < list.Count)
+            {
+                var c = list[j];
+                if (c is Fungus.Menu) return true;
+                if (c is End || c is Portrait || c is SetVariable || c is OneHealth.CheckAffordable
+                    || c is OneHealth.FailIfNoneAffordable || c is OneHealth.RecordKnowledge || c is OneHealth.SetCampaignFlag)
+                {
+                    j++;
+                    continue;
+                }
+                if (c is Else || c is ElseIf)
+                {
+                    // The branch before this one has finished: skip to after the matching End.
+                    int k = j + 1;
+                    while (k < list.Count && !(list[k] is End && list[k].IndentLevel == c.IndentLevel)) k++;
+                    j = k + 1;
+                    continue;
+                }
+                var call = c as Call;
+                if (call != null)
+                {
+                    var target = Get(call, "targetBlock") as Block;
+                    var otherFlowchart = Get(call, "targetFlowchart") as Flowchart;
+                    if (target == null || (otherFlowchart != null && otherFlowchart != block.GetFlowchart())) return false;
+                    return LeadsToMenu(target, (int)Get(call, "startIndex"), depth + 1);
+                }
+                return false;
+            }
+            return false;
+        }
+
+        static readonly System.Text.RegularExpressions.Regex HeadPattern =
+            new System.Text.RegularExpressions.Regex(@"^([A-Z0-9][A-Z0-9 ,.'’&/:\-]*?) — (.+)$", System.Text.RegularExpressions.RegexOptions.Singleline);
+
+        /// <summary>
+        /// Presentation only, same words (UI critique U31): an inline all-caps heading such as
+        /// "WATER REPORT — Residents say…" becomes a small teal label on its own line above the sentence,
+        /// so it reads as a label instead of shouting. Lines without such a heading are returned unchanged.
+        /// The say dialog is TextMeshPro, so rich text works.
+        /// </summary>
+        public static string Headed(string text)
+        {
+            if (string.IsNullOrEmpty(text) || text.Contains("<size")) return text;
+            var m = HeadPattern.Match(text);
+            if (!m.Success) return text;
+            var head = m.Groups[1].Value;
+            if (head.Count(char.IsLetter) < 2 || head != head.ToUpperInvariant()) return text;
+            return "<size=75%><cspace=0.06em><b><color=#2E7D6B>" + head + "</color></b></cspace></size>\n" + m.Groups[2].Value;
+        }
+
+        /// <summary>Applies <see cref="Headed"/> to every Say in a flowchart. Returns how many lines changed.</summary>
+        public static int HeadSayLines(Flowchart fc)
+        {
+            int n = 0;
+            foreach (var say in fc.GetComponents<Say>())
+            {
+                var text = (string)Get(say, "storyText");
+                var headed = Headed(text);
+                if (headed == text) continue;
+                Set(say, "storyText", headed);
+                EditorUtility.SetDirty(say);
+                n++;
+            }
+            return n;
         }
 
         /// <summary>Readable dump of a block for verification.</summary>
