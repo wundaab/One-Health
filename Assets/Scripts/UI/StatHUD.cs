@@ -66,7 +66,9 @@ namespace OneHealth
             StopAllCoroutines();
             if (isActiveAndEnabled) StartCoroutine(Fade(visible ? 1f : 0f));
             group.blocksRaycasts = visible;
-            if (visible && !introducedResistance)
+            // The onboarding tour explains Resistance Pressure (including that it is not a clinical measurement),
+            // so the one-time tooltip is only a fallback for scenes without the tutorial overlay.
+            if (visible && !introducedResistance && TutorialOverlay.Instance == null)
             {
                 foreach (var c in chips)
                 {

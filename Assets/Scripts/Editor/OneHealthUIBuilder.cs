@@ -284,16 +284,18 @@ namespace OneHealth.EditorTools
         static GameObject BuildSettingsPanel(Transform parent)
         {
             RectTransform c;
-            var panel = PanelRoot("SettingsPanel", parent, out c, new Vector2(680, 520), S("Settings/panel.png"));
-            Txt("Title", c, "Settings", true, 52, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 178), new Vector2(560, 70));
-            var divider = Center("Divider", c, new Vector2(0, 132), new Vector2(520, 6));
+            var panel = PanelRoot("SettingsPanel", parent, out c, new Vector2(680, 620), S("Settings/panel.png"));
+            Txt("Title", c, "Settings", true, 52, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 228), new Vector2(560, 70));
+            var divider = Center("Divider", c, new Vector2(0, 182), new Vector2(520, 6));
             Img(divider, S("Decorative/divider_line.png"), UITheme.WithAlpha(UITheme.TealLight, 0.9f), false).preserveAspect = false;
 
             TMP_Text musicState, sfxState;
-            var music = ToggleRow(c, "Music", "Settings/music_icon.png", new Vector2(0, 52), out musicState, Color.white);
+            var music = ToggleRow(c, "Music", "Settings/music_icon.png", new Vector2(0, 102), out musicState, Color.white);
             // The two icon tiles are different blues; this tint brings the SFX tile onto the music tile's colour (U26).
-            var sfx = ToggleRow(c, "Sound Effects", "Settings/sfx_icon.png", new Vector2(0, -52), out sfxState, new Color(0.585f, 0.621f, 0.694f));
-            var back = Btn("BackButton", c, "Navy", "Back", "Icons/back_arrow_icon.png", new Vector2(0, -178), new Vector2(320, 96));
+            var sfx = ToggleRow(c, "Sound Effects", "Settings/sfx_icon.png", new Vector2(0, -2), out sfxState, new Color(0.585f, 0.621f, 0.694f));
+            TextMeshProUGUI tipsLabel;
+            var tips = Btn("TipsButton", c, "Slate", "Show tutorial tips again", null, new Vector2(0, -110), new Vector2(520, 80), 28f, out tipsLabel);
+            var back = Btn("BackButton", c, "Navy", "Back", "Icons/back_arrow_icon.png", new Vector2(0, -228), new Vector2(320, 96));
 
             var sp = panel.gameObject.AddComponent<SettingsPanel>();
             Set(sp, "panel", panel);
@@ -302,6 +304,8 @@ namespace OneHealth.EditorTools
             Set(sp, "musicState", musicState);
             Set(sp, "sfxState", sfxState);
             Set(sp, "backButton", back);
+            Set(sp, "tipsButton", tips);
+            Set(sp, "tipsLabel", tipsLabel);
             panel.gameObject.SetActive(false);
             return panel.gameObject;
         }
@@ -376,6 +380,7 @@ namespace OneHealth.EditorTools
 
             card.transform.SetSiblingIndex(1);
             results.transform.SetSiblingIndex(2);
+            BuildTutorial(root).transform.SetAsLastSibling();
             SavePrefab(canvas.gameObject, "GameUI");
         }
 
@@ -570,6 +575,96 @@ namespace OneHealth.EditorTools
 
             panel.gameObject.SetActive(false);
             return pm;
+        }
+
+        /// <summary>
+        /// Onboarding overlay: four dim panels framing a hole around the highlighted element, an amber ring,
+        /// and a white explanation card. Its own canvas sorts above the Fungus dialogs and every panel.
+        /// </summary>
+        static TutorialOverlay BuildTutorial(Transform root)
+        {
+            var rt = Stretch("Tutorial", root);
+            var canvas = rt.gameObject.AddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 500;
+            rt.gameObject.AddComponent<GraphicRaycaster>();
+            rt.gameObject.AddComponent<CanvasGroup>();
+
+            // Blocks every click while a tip is open, including through the highlighted hole.
+            Img(Stretch("Blocker", rt), null, new Color(0f, 0f, 0f, 0f));
+            var dims = new RectTransform[4];
+            string[] names = { "DimTop", "DimBottom", "DimLeft", "DimRight" };
+            for (int i = 0; i < 4; i++)
+            {
+                dims[i] = Center(names[i], rt, Vector2.zero, Vector2.zero);
+                Img(dims[i], null, UITheme.WithAlpha(UITheme.TealDark, 0.62f)).raycastTarget = false;
+            }
+            var ring = Center("Ring", rt, Vector2.zero, Vector2.zero);
+            var ringImg = Img(ring, GeneratedSprites.Load(GeneratedSprites.RoundRing), UITheme.Focus);
+            ringImg.pixelsPerUnitMultiplier = 0.6f;   // thicker stroke
+            ringImg.raycastTarget = false;
+
+            var callout = Center("Callout", rt, Vector2.zero, new Vector2(720, 300));
+            Img(callout, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.Surface).pixelsPerUnitMultiplier = 1.5f;
+            var v = callout.gameObject.AddComponent<VerticalLayoutGroup>();
+            v.padding = new RectOffset(44, 44, 34, 30);
+            v.spacing = 10;
+            v.childControlWidth = v.childControlHeight = true;
+            v.childForceExpandWidth = true;
+            v.childForceExpandHeight = false;
+            callout.gameObject.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            var step = Txt("Step", callout, "HOW TO PLAY  ·  1 OF 8", true, 20, UITheme.Teal, TextAlignmentOptions.Left, Vector2.zero, new Vector2(632, 28));
+            step.characterSpacing = 6f;
+            var title = Txt("Title", callout, "Title", true, 38, UITheme.Ink, TextAlignmentOptions.Left, Vector2.zero, new Vector2(632, 50));
+            var body = Txt("Body", callout, "Body", false, 27, UITheme.Ink, TextAlignmentOptions.TopLeft, Vector2.zero, new Vector2(632, 120));
+            body.lineSpacing = 8f;
+
+            var row = Center("Buttons", callout, Vector2.zero, new Vector2(632, 84));
+            var rowLe = row.gameObject.AddComponent<LayoutElement>();
+            rowLe.preferredHeight = rowLe.minHeight = 84;
+            TextMeshProUGUI nextLabel;
+            var next = Btn("NextButton", row, "Green", "Next", null, Vector2.zero, new Vector2(230, 72), 30f, out nextLabel);
+            Pin(next, new Vector2(1f, 0.5f), Vector2.zero);
+            var back = Btn("BackButton", row, "Slate", "Back", null, Vector2.zero, new Vector2(160, 72), 30f);
+            Pin(back, new Vector2(1f, 0.5f), new Vector2(-246, 0));
+
+            // "Skip tips" is a quiet text button so it never competes with Next.
+            var skipRt = Rect("SkipButton", row, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), Vector2.zero, new Vector2(170, 60));
+            skipRt.pivot = new Vector2(0f, 0.5f);
+            var skipText = Txt("Label", skipRt, "<u>Skip tips</u>", false, 26, UITheme.InkMuted, TextAlignmentOptions.MidlineLeft, Vector2.zero, new Vector2(170, 60));
+            skipText.raycastTarget = true;
+            var skip = skipRt.gameObject.AddComponent<Button>();
+            skip.targetGraphic = skipText;
+            skip.colors = new ColorBlock
+            {
+                normalColor = Color.white, highlightedColor = new Color(0.75f, 0.85f, 0.82f), pressedColor = new Color(0.6f, 0.7f, 0.68f),
+                selectedColor = new Color(0.75f, 0.85f, 0.82f), disabledColor = new Color(1f, 1f, 1f, 0.5f), colorMultiplier = 1f, fadeDuration = 0.1f,
+            };
+            Set(skipRt.gameObject.AddComponent<UIButtonFeedback>(), "clickSound", click);
+
+            var overlay = rt.gameObject.AddComponent<TutorialOverlay>();
+            Set(overlay, "dimTop", dims[0]);
+            Set(overlay, "dimBottom", dims[1]);
+            Set(overlay, "dimLeft", dims[2]);
+            Set(overlay, "dimRight", dims[3]);
+            Set(overlay, "ring", ring);
+            Set(overlay, "callout", callout);
+            Set(overlay, "stepLabel", step);
+            Set(overlay, "title", title);
+            Set(overlay, "body", body);
+            Set(overlay, "backButton", back);
+            Set(overlay, "nextButton", next);
+            Set(overlay, "nextLabel", nextLabel);
+            Set(overlay, "skipButton", skip);
+            return overlay;
+        }
+
+        static void Pin(Component c, Vector2 anchor, Vector2 pos)
+        {
+            var r = (RectTransform)c.transform;
+            r.anchorMin = r.anchorMax = r.pivot = anchor;
+            r.anchoredPosition = pos;
         }
 
         static VisualCard BuildVisualCard(Transform root)

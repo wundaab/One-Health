@@ -1302,6 +1302,7 @@ GameObject:
   - component: {fileID: 474039315}
   - component: {fileID: 474039314}
   - component: {fileID: 474039313}
+  - component: {fileID: 474039319}
   m_Layer: 0
   m_Name: Scenario01_Flowchart
   m_TagString: Untagged
@@ -1476,6 +1477,7 @@ MonoBehaviour:
   - {fileID: 474039164}
   - {fileID: 474039310}
   - {fileID: 474039291}
+  - {fileID: 474039319}
   - {fileID: 474039161}
   - {fileID: 474039177}
   - {fileID: 474039172}
@@ -8206,6 +8208,21 @@ MonoBehaviour:
   capabilityTrust: 0
   capabilityCapacity: 0
   gateOnCost: 0
+--- !u!114 &474039319
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bc84cb5cf0c2d44b256f2cf548555c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OneHealth.ShowTutorial
+  itemId: 253
+  indentLevel: 0
+  tutorialId: hud
 --- !u!1 &527487650
 GameObject:
   m_ObjectHideFlags: 0

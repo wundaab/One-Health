@@ -35,6 +35,14 @@ namespace OneHealth.EditorTools
                 c.sortingOrder += 1000;   // overlay UI always draws above world sprites, whatever their sorting order
                 changed.Add(c);
             }
+            // Nested canvases with their own sorting (e.g. the tutorial overlay) must keep their place above the roots.
+            var nested = new List<Canvas>();
+            foreach (var c in Object.FindObjectsByType<Canvas>())
+            {
+                if (c.isRootCanvas || !c.overrideSorting || !c.gameObject.activeInHierarchy) continue;
+                c.sortingOrder += 1000;
+                nested.Add(c);
+            }
             Canvas.ForceUpdateCanvases();
             cam.Render();
 
@@ -46,6 +54,7 @@ namespace OneHealth.EditorTools
             RenderTexture.active = prev;
 
             foreach (var c in changed) { c.renderMode = RenderMode.ScreenSpaceOverlay; c.worldCamera = null; c.sortingOrder -= 1000; }
+            foreach (var c in nested) c.sortingOrder -= 1000;
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.WriteAllBytes(path, tex.EncodeToPNG());
             Object.DestroyImmediate(tex);

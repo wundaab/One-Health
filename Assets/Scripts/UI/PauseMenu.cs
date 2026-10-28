@@ -62,6 +62,7 @@ namespace OneHealth
 
         void Update()
         {
+            if (Tutorial.IsOpen) return;   // Esc closes the tip instead
 #if ENABLE_INPUT_SYSTEM
             if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
 #else

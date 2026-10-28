@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace OneHealth
 {
-    /// <summary>Music and SFX toggles. Used by both the main menu and the pause menu.</summary>
+    /// <summary>Music and SFX toggles, and replaying the tutorial tips. Used by the main menu and the pause menu.</summary>
     public class SettingsPanel : MonoBehaviour
     {
         [SerializeField] UIPanel panel;
@@ -13,6 +13,8 @@ namespace OneHealth
         [SerializeField] TMP_Text musicState;
         [SerializeField] TMP_Text sfxState;
         [SerializeField] Button backButton;
+        [SerializeField] Button tipsButton;
+        [SerializeField] TMP_Text tipsLabel;
 
         System.Action onClosed;
 
@@ -28,6 +30,14 @@ namespace OneHealth
             musicToggle.onValueChanged.AddListener(v => { AudioPreferences.MusicOn = v; Refresh(); });
             sfxToggle.onValueChanged.AddListener(v => { AudioPreferences.SfxOn = v; Refresh(); });
             backButton.onClick.AddListener(Close);
+            if (tipsButton != null)
+                tipsButton.onClick.AddListener(() =>
+                {
+                    Tutorial.ResetAll();
+                    tipsLabel.text = "Tips will show again";
+                    tipsButton.interactable = false;
+                    backButton.Select();
+                });
         }
 
         public void Open(System.Action closed = null)
@@ -36,6 +46,11 @@ namespace OneHealth
             onClosed = closed;
             musicToggle.SetIsOnWithoutNotify(AudioPreferences.MusicOn);
             sfxToggle.SetIsOnWithoutNotify(AudioPreferences.SfxOn);
+            if (tipsButton != null)
+            {
+                tipsButton.interactable = true;
+                tipsLabel.text = "Show tutorial tips again";
+            }
             Refresh();
             panel.Open();
             backButton.Select();

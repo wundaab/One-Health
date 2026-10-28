@@ -86,6 +86,17 @@ namespace OneHealth.EditorTools
                 }
             }
 
+            // Onboarding tips sit above everything: read each one and press Next.
+            var tutorial = TutorialOverlay.Instance;
+            if (tutorial != null && tutorial.IsOpen)
+            {
+                Log("TUTORIAL: " + tutorial.CurrentTitle);
+                if (!Running) return;
+                ClickNamed(tutorial.transform, "NextButton");
+                nextAction += 0.3;
+                return;
+            }
+
             var results = Object.FindAnyObjectByType<ResultsPanel>();
             if (results != null && results.gameObject.activeInHierarchy)
             {
@@ -126,6 +137,13 @@ namespace OneHealth.EditorTools
             var menu = MenuDialog.ActiveMenuDialog;
             if (menu != null && menu.isActiveAndEnabled && menu.DisplayedOptionsCount > 0)
             {
+                // A first-time tip is about to open over this menu: give it a moment (at most ~3 s) before choosing.
+                if (tutorial != null && tutorial.TipPending && SessionState.GetInt("OHI_TipWait", 0) < 12)
+                {
+                    SessionState.SetInt("OHI_TipWait", SessionState.GetInt("OHI_TipWait", 0) + 1);
+                    return;
+                }
+                SessionState.SetInt("OHI_TipWait", 0);
                 var buttons = menu.CachedButtons.Where(b => b.gameObject.activeSelf).ToList();
                 var shown = string.Join(" | ", buttons.Select(b =>
                 {

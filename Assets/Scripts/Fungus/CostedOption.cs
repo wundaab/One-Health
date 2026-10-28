@@ -68,6 +68,9 @@ namespace OneHealth
 
         public bool Affordable { get { return Wallet.CanAfford(Effective); } }
 
+        /// <summary>Raised for each visible option added to a menu (true = can be chosen). Drives the onboarding tips.</summary>
+        public static event System.Action<bool> OptionShown;
+
         /// <summary>Hidden options (already used) never count as available.</summary>
         public bool Available
         {
@@ -141,6 +144,7 @@ namespace OneHealth
                 menuDialog.SetActive(true);
                 bool enabled = interactable.Value && (!gateOnCost || Affordable);
                 menuDialog.AddOption(BuildLabel(enabled), enabled, hideOption, targetBlock);
+                if (!hideOption && OptionShown != null) OptionShown(enabled);
             }
             Continue();
         }
