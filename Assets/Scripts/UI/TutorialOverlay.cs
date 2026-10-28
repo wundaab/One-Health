@@ -277,7 +277,7 @@ namespace OneHealth
                 case TutorialTarget.Trust: return FindChip(StatKind.Trust);
                 case TutorialTarget.Resistance: return FindChip(StatKind.Resistance);
                 case TutorialTarget.Capacity: return FindChip(StatKind.Capacity);
-                case TutorialTarget.Hud: return Bounds(FindObjectsByType<StatChip>(FindObjectsSortMode.None).Where(c => c.isActiveAndEnabled).Select(c => (RectTransform)c.transform), "~HudBounds");
+                case TutorialTarget.Hud: return Bounds(FindObjectsByType<StatChip>().Where(c => c.isActiveAndEnabled).Select(c => (RectTransform)c.transform), "~HudBounds");
                 case TutorialTarget.Pause:
                     var pause = transform.root.GetComponentsInChildren<Button>(false).FirstOrDefault(b => b.name == "PauseButton");
                     return pause != null ? (RectTransform)pause.transform : null;
@@ -289,7 +289,7 @@ namespace OneHealth
 
         static RectTransform FindChip(StatKind kind)
         {
-            var chip = FindObjectsByType<StatChip>(FindObjectsSortMode.None).FirstOrDefault(c => c.Kind == kind && c.isActiveAndEnabled);
+            var chip = FindObjectsByType<StatChip>().FirstOrDefault(c => c.Kind == kind && c.isActiveAndEnabled);
             return chip != null ? (RectTransform)chip.transform : null;
         }
 
@@ -358,7 +358,7 @@ namespace OneHealth
         /// <summary>Fungus "click anywhere" and keyboard input would otherwise advance dialogue behind the tip.</summary>
         static void SetDialogInput(bool enabled)
         {
-            foreach (var input in FindObjectsByType<Fungus.DialogInput>(FindObjectsSortMode.None))
+            foreach (var input in FindObjectsByType<Fungus.DialogInput>())
                 input.enabled = enabled;
         }
 

@@ -25,6 +25,13 @@ namespace OneHealth.EditorTools
         static PlaythroughDriver()
         {
             EditorApplication.update += Tick;
+            // Setting Application.runInBackground during Play writes Player Settings; put the project value back.
+            EditorApplication.playModeStateChanged += state =>
+            {
+                if (state == PlayModeStateChange.EnteredPlayMode) SessionState.SetBool("OHI_RunInBackground", PlayerSettings.runInBackground);
+                if (state == PlayModeStateChange.EnteredEditMode && SessionState.GetBool("OHI_RunInBackground", PlayerSettings.runInBackground) != PlayerSettings.runInBackground)
+                    PlayerSettings.runInBackground = SessionState.GetBool("OHI_RunInBackground", false);
+            };
         }
 
         /// <param name="stopAt">Optional: stop (leaving that screen up, e.g. for a screenshot) once a logged line contains this text.</param>
