@@ -36,8 +36,10 @@ namespace OneHealth.EditorTools
             var k = K.CreateScene(ScenePath, "Assets/Art/01_Scenario_1/02_Environments/Kivu_Community_Outdoor_Meeting_Area.png", ArtPipeline.LateAfternoonGrade);
             foreach (var key in new[] { "Money", "Time", "Trust", "Resistance", "Capacity", "Entry_Resistance" })
                 k.Var<IntegerVariable>(key);
-            foreach (var key in new[] { "s04_ending", "Gap1", "Gap2", "GapList" })
+            foreach (var key in new[] { "s04_ending", "Gap1", "Gap2", "GapList", "Report_Evidence", "Report_Animal", "Report_Route", "Report_Package" })
                 k.Var<StringVariable>(key);
+            var grantFlag = GameSession.MoneyGrantFlag("S04");
+            k.Var<StringVariable>(grantFlag);
 
             // ---------------------------------------------------------------- blocks
             var start = k.StartBlock("START");
@@ -52,10 +54,12 @@ namespace OneHealth.EditorTools
             var pair = new Block[3];
             for (int i = 0; i < 3; i++) pair[i] = k.Block("A2_Pair_" + (i + 1));
             var a2Review = k.Block("A2_Review_Plan");
+            var a2SafeReview = k.Block("A2_Review_Safe_Plan");
             var a2Revise = k.Block("A2_Revise");
             var a2Commit = k.Block("A2_Commit");
             var a2Safe = k.Block("A2_Safe_Plan");
             var a2Weak = k.Block("A2_Weak_Plan");
+            var a2Guidance = k.Block("A2_Guidance_Plan");
             var a3 = k.Block("A3_Animal_Health");
             var a3Assess = k.Block("A3_Assessment");
             var a3Prevent = k.Block("A3_Prevention_Only");
@@ -83,9 +87,13 @@ namespace OneHealth.EditorTools
             for (int i = 0; i < 4; i++) verify[i] = k.Block("A7_Status_" + (i + 1));
             var a7Verified = k.Block("A7_Report_Verified");
             var a7Brief = k.Block("A7_Briefing");
+            var a7ConfirmTransparent = k.Block("A7_Confirm_Transparent");
+            var a7ConfirmOverconfident = k.Block("A7_Confirm_Overconfident");
             var a7Transparent = k.Block("A7_Transparent");
             var a7Overconfident = k.Block("A7_Overconfident");
             var a8 = k.Block("A8_Close_Response");
+            var a8ConfirmShared = k.Block("A8_Confirm_Shared");
+            var a8ConfirmBasic = k.Block("A8_Confirm_Basic");
             var a8Shared = k.Block("A8_Shared");
             var a8Basic = k.Block("A8_Basic");
             var ending = k.Block("ENDING");
@@ -96,8 +104,9 @@ namespace OneHealth.EditorTools
             E.Set(begin, "scenarioId", "S04");
             // The final response period has its own deadline, and every team receives the same district
             // allocation. The S05 blueprint forbids resource bonuses for a strong Scenario 3 and requires that a
-            // weak one never makes this scenario impossible; a flat grant satisfies both (all paths verified).
-            E.Set(begin, "timeBudgetWeeks", 8);
+            // weak one never makes this scenario impossible; a flat grant satisfies both. Nine weeks cover the
+            // longest schedule (H1/D1).
+            E.Set(begin, "timeBudgetWeeks", 9);
             E.Set(begin, "timeGrantWeeks", 0);
             E.Set(begin, "moneyGrant", 25);
             E.Set(begin, "showTime", true);
@@ -120,7 +129,8 @@ namespace OneHealth.EditorTools
             k.Say(intro, "The report leaves important gaps. Start with what is known, make uncertainty visible, and focus on actions the team can deliver safely.", You);
             k.Card(intro, "Unresolved gaps", "{$Gap1}\n\n{$Gap2}");
             k.End(intro);
-            k.Say(intro, "DISTRICT RESPONSE FUNDS RELEASED — The district has allocated Money +25 to the final response. Final response period: {$Time} weeks.");
+            // D3: the amount actually added, which the Money cap of 100 can reduce.
+            k.Say(intro, "DISTRICT RESPONSE FUNDS RELEASED — The district has allocated Money +{$" + grantFlag + "} to the final response. Final response period: {$Time} weeks.");
             k.Say(intro, "Assign your limited resources, complete all three workstreams, and deliver a final public briefing.");
             k.Plain(intro, "START FINAL RESPONSE", a1);
 
@@ -131,8 +141,9 @@ namespace OneHealth.EditorTools
             k.Option(a1, "Review the handover cards", a1Review, D(0, -1, 0, 0, 1));
             k.Apply(a1Review, "A1", "Review handover", D(0, -1, 0, 0, 1));
             k.Flag(a1Review, "s05_handover_read", "true");
+            // ComposeGaps (intro) wrote the Report_* lines: the recorded decisions in player-facing words (M4).
             k.Card(a1Review, "Field report handover",
-                "Leads checked: {$s04_leads_checked}  ·  Evidence quality: {$s04_evidence_quality}\nAnimal-health response: {$s04_animal_response}\nRoute decision: {$s04_route_response}\nResponse package: {$s04_response_package}\n\n{$GapList}");
+                "Leads checked: {$s04_leads_checked}  ·  Evidence quality: {$Report_Evidence}\nAnimal-health response: {$Report_Animal}\nRoute decision: {$Report_Route}\nResponse package: {$Report_Package}\n\n{$GapList}");
             k.Say(a1Review, "HANDOVER LOADED.");
             k.Call(a1Review, hub);
             foreach (var key in new[] { "s04_leads_checked", "s04_evidence_quality", "s04_animal_response", "s04_route_response", "s04_response_package" })
@@ -177,7 +188,7 @@ namespace OneHealth.EditorTools
             }
             k.IfInt(a2Review, "UnsafeCards", K.Eq, 0);
             k.Say(a2Review, "Your plan is practical, respectful and honest about what is known.");
-            k.Call(a2Review, a2Commit);
+            k.Call(a2Review, a2SafeReview);
             k.Else(a2Review);
             k.Say(a2Review, "This plan may reduce cooperation because it blames people or presents an unconfirmed claim as fact.");
             k.IfBool(a2Review, "RevisionUsed", false);
@@ -190,20 +201,25 @@ namespace OneHealth.EditorTools
             k.SetBool(a2Revise, "RevisionUsed", true);
             k.SetInt(a2Revise, "UnsafeCards", K.Assign, 0);
             k.Call(a2Revise, pair[0]);
-            // Commit: the plan's quality decides its effects; it must be affordable.
-            k.IfInt(a2Commit, "UnsafeCards", K.Eq, 0);
-            k.CheckAffordable(a2Commit, k.Var<BooleanVariable>("CanPayPlan"), D(-10, -1, 0, 0, -1));
-            k.Else(a2Commit);
+            // M1: the safe plan shows its cost before commit and locks when the team cannot pay for it. Then the
+            // player can revise the selection or deliver the cheaper guidance plan; the response fails only if
+            // even the cheaper plan cannot be paid for.
+            k.CheckAffordable(a2SafeReview, k.Var<BooleanVariable>("CanPayPlan"), D(-10, -1, 0, 0, -1));
+            k.IfBool(a2SafeReview, "CanPayPlan", false);
+            k.Say(a2SafeReview, "The team does not have the resources to deliver this full safe plan. Revise your selection or deliver the guidance plan.");
+            k.End(a2SafeReview);
+            k.FailIfNone(a2SafeReview, failure);
+            K.Boost(k.Option(a2SafeReview, "Commit the safe community plan", a2Safe, D(-10, -1, 6, -2, -1)), CC, 2, 0);
+            k.IfBool(a2SafeReview, "CanPayPlan", false);
+            k.Plain(a2SafeReview, "Revise the plan", a2Revise);
+            k.Option(a2SafeReview, "Deliver the guidance plan", a2Guidance, D(-5, -1, -7, 1, 0));
+            k.End(a2SafeReview);
+            // Commit an unsupported or blaming plan: it must be affordable.
             k.CheckAffordable(a2Commit, k.Var<BooleanVariable>("CanPayPlan"), D(-5, -1, 0, 0, 0));
-            k.End(a2Commit);
             k.IfBool(a2Commit, "CanPayPlan", false);
             k.Call(a2Commit, failure);
             k.End(a2Commit);
-            k.IfInt(a2Commit, "UnsafeCards", K.Eq, 0);
-            k.Call(a2Commit, a2Safe);
-            k.Else(a2Commit);
             k.Call(a2Commit, a2Weak);
-            k.End(a2Commit);
             K.Boost(k.Apply(a2Safe, "A2_Safe", "Complete safe plan", D(-10, -1, 6, -2, -1)), CC, 2, 0);
             k.Flag(a2Safe, "s05_community_plan", "strong");
             k.Flag(a2Safe, "s05_community_complete", "true");
@@ -220,6 +236,14 @@ namespace OneHealth.EditorTools
             k.Say(a2Weak, "This message may reduce cooperation because it blames people or presents an unconfirmed claim as fact.");
             k.Say(a2Weak, "COMMUNITY FEEDBACK RECEIVED.");
             k.Call(a2Weak, hub);
+            // M1 fallback: the cheaper plan's costs and effects (the only cheaper community plan the blueprint defines).
+            k.Apply(a2Guidance, "A2_Guidance", "Deliver the guidance plan", D(-5, -1, -7, 1, 0));
+            k.Flag(a2Guidance, "s05_community_plan", "guidance");
+            k.Flag(a2Guidance, "s05_community_complete", "true");
+            k.SetBool(a2Guidance, "Done_Community", true);
+            k.Say(a2Guidance, "The team shares basic guidance only. Without the full plan behind it, fewer people are reached and cooperation is weaker.");
+            k.Say(a2Guidance, "COMMUNITY FEEDBACK RECEIVED.");
+            k.Call(a2Guidance, hub);
 
             // ---------------------------------------------------------------- A3 — Animal-health assessment and responsible use
             k.Say(a3, "The field report records animal illness, but it does not identify a cause. We need appropriate assessment and practical prevention.", AnimalWorker);
@@ -352,25 +376,47 @@ namespace OneHealth.EditorTools
                 "Water and environmental follow-up was completed.",
                 "One confirmed source caused all the reports.",
             };
-            int[] statusAnswer = { 0, 0, 1, 2 }; // 0 COMPLETED, 1 FOLLOW-UP REQUIRED, 2 NOT ESTABLISHED
-            string[] statusFix =
-            {
-                "The community plan was delivered in this response. Mark it COMPLETED.",
-                "The animal-health workstream was completed in this response. Mark it COMPLETED.",
-                "Follow-up has been arranged, but it has not been completed yet. Mark it FOLLOW-UP REQUIRED.",
-                "No single source has been confirmed. Mark it NOT ESTABLISHED.",
-            };
+            const int Completed = 0, FollowUp = 1, NotEstablished = 2;
             for (int i = 0; i < 4; i++)
             {
                 var next = i < 3 ? verify[i + 1] : a7Verified;
                 var right = k.Block("A7_Status_" + (i + 1) + "_Right");
                 var wrong = k.Block("A7_Status_" + (i + 1) + "_Wrong");
-                k.Say(verify[i], "STATEMENT " + (i + 1) + " OF 4 — “" + statusText[i] + "”");
-                k.Plain(verify[i], "COMPLETED", statusAnswer[i] == 0 ? right : wrong);
-                k.Plain(verify[i], "FOLLOW-UP REQUIRED", statusAnswer[i] == 1 ? right : wrong);
-                k.Plain(verify[i], "NOT ESTABLISHED", statusAnswer[i] == 2 ? right : wrong);
+                string prompt = "STATEMENT " + (i + 1) + " OF 4 — “" + statusText[i] + "”";
                 k.Call(right, next);
-                k.Say(wrong, statusFix[i]);
+                if (i == 1)
+                {
+                    // W2/C7: the expected status depends on the animal-health plan delivered in A3.
+                    var wrongPrevention = k.Block("A7_Status_2_Wrong_Prevention");
+                    k.IfString(verify[i], "s05_animal_plan", "assessment");
+                    Status(k, verify[i], prompt, Completed, right, wrong);
+                    k.Else(verify[i]);
+                    Status(k, verify[i], prompt, FollowUp, right, wrongPrevention);
+                    k.End(verify[i]);
+                    k.Say(wrong, "COMPLETED: Animal health assessment and preventive guidance were delivered together.");
+                    k.Say(wrongPrevention, "FOLLOW-UP REQUIRED: Prevention advice was shared, but clinical animal assessment remains an outstanding need.");
+                    k.Call(wrongPrevention, verify[i]);
+                }
+                else if (i == 2)
+                {
+                    // M6: the water correction depends on the water plan delivered in A4.
+                    Status(k, verify[i], prompt, FollowUp, right, wrong);
+                    k.IfString(wrong, "s05_water_plan", "guidance_only");
+                    k.Say(wrong, "FOLLOW-UP REQUIRED: Practical advice was shared, but formal environmental follow-up was not arranged.");
+                    k.Else(wrong);
+                    k.Say(wrong, "FOLLOW-UP REQUIRED: Follow-up has been arranged, but environmental testing is still underway.");
+                    k.End(wrong);
+                }
+                else if (i == 0)
+                {
+                    Status(k, verify[i], prompt, Completed, right, wrong);
+                    k.Say(wrong, "The community plan was delivered in this response. Mark it COMPLETED.");
+                }
+                else
+                {
+                    Status(k, verify[i], prompt, NotEstablished, right, wrong);
+                    k.Say(wrong, "No single source has been confirmed. Mark it NOT ESTABLISHED.");
+                }
                 k.Call(wrong, verify[i]);
             }
             k.Flag(a7Verified, "s05_report_verified", "true");
@@ -378,8 +424,11 @@ namespace OneHealth.EditorTools
             k.Call(a7Verified, a7Brief);
             k.Say(a7Brief, "Choose the tone of the public briefing.", You);
             k.FailIfNone(a7Brief, failure);
-            k.Option(a7Brief, "Transparent briefing", a7Transparent, D(-2, -1, 5, -1, 0));
-            k.Option(a7Brief, "Overconfident briefing", a7Overconfident, D(0, 0, -8, 0, 0), k.Var<BooleanVariable>("OverconfidentTried"));
+            k.Option(a7Brief, "Transparent briefing", a7ConfirmTransparent, D(-2, -1, 5, -1, 0));
+            k.Option(a7Brief, "Overconfident briefing", a7ConfirmOverconfident, D(0, 0, -8, 0, 0), k.Var<BooleanVariable>("OverconfidentTried"));
+            // D6: the briefing is confirmed before it is delivered.
+            k.Confirm(a7ConfirmTransparent, a7Transparent, a7Brief, "Deliver this briefing?");
+            k.Confirm(a7ConfirmOverconfident, a7Overconfident, a7Brief, "Deliver this briefing?");
             k.Apply(a7Overconfident, "A7_Overconfident", "Overconfident briefing", D(0, 0, -8, 0, 0));
             k.SetBool(a7Overconfident, "OverconfidentTried", true);
             k.Say(a7Overconfident, "This briefing presents unconfirmed claims as fact, so it cannot be delivered. Revise it.");
@@ -395,10 +444,14 @@ namespace OneHealth.EditorTools
             k.Say(a8, "The response plan is complete. The team knows what actions were delivered, what the evidence supports, and how the teams will continue coordinating.", Narrator);
             k.Say(a8, "Choose a final coordination plan. Each plan assigns a responsible group, a follow-up action and a way to share updates.", You);
             k.FailIfNone(a8, failure);
-            k.Option(a8, "Shared coordination plan", a8Shared, D(-3, -1, 4, -1, -1));
-            k.Option(a8, "Basic handover plan", a8Basic, D(-1, -1, 1, 0, 0));
+            // H1: the basic plan takes no Time, so the final step can always be closed.
+            k.Option(a8, "Shared coordination plan", a8ConfirmShared, D(-3, -1, 4, -1, -1));
+            k.Option(a8, "Basic handover plan", a8ConfirmBasic, D(-1, 0, 1, 0, 0));
+            // D6: the final plan is confirmed before it is applied.
+            k.Confirm(a8ConfirmShared, a8Shared, a8);
+            k.Confirm(a8ConfirmBasic, a8Basic, a8);
             Decision(k, a8Shared, "A8_Shared", "Shared coordination plan", D(-3, -1, 4, -1, -1), "s05_final_plan", "shared", "SUSTAINABLE RESPONSE ESTABLISHED.", null, ending);
-            Decision(k, a8Basic, "A8_Basic", "Basic handover plan", D(-1, -1, 1, 0, 0), "s05_final_plan", "basic", "RESPONSE COMPLETED. The plan is feasible, though coordination is more limited.", null, ending);
+            Decision(k, a8Basic, "A8_Basic", "Basic handover plan", D(-1, 0, 1, 0, 0), "s05_final_plan", "basic", "RESPONSE COMPLETED. The plan is feasible, though coordination is more limited.", null, ending);
 
             // ---------------------------------------------------------------- Ending, debrief, GAME COMPLETE (sections 4-5)
             k.Say(ending, "The community knows the practical steps and where to receive updates.", Amina);
@@ -419,7 +472,7 @@ namespace OneHealth.EditorTools
             k.Badge(ending, "One Health Champion", "Every workstream completed, a verified report, a transparent briefing and a shared coordination plan.");
             k.SetString(ending, "EndingText", "ONE HEALTH CHAMPION — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
             k.Else(ending);
-            k.Say(ending, "RESPONSE COMPLETED.");
+            // L1: no separate "RESPONSE COMPLETED." line; the A8 feedback and the results summary already say it.
             k.SetString(ending, "EndingText", "RESPONSE COMPLETED — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
             k.End(ending);
             k.Card(ending, "Debrief — Evidence", "You learned to separate observations from explanations. A possible connection is not proof of a common cause.");
@@ -430,6 +483,8 @@ namespace OneHealth.EditorTools
             k.Card(ending, "One Health", "One Health is a way of working: use evidence, respect people, protect health, and coordinate across human, animal and environmental systems.");
             k.Knowledge(ending, "One Health is a way of working");
             k.Say(ending, "GAME COMPLETE — Better outcomes require evidence, appropriate care, prevention, trust and collaboration across human, animal and environmental health.");
+            // M11: the main menu offers Review Campaign / Scenario Select from now on.
+            k.Flag(ending, GameSession.CampaignCompletedFlag, "true");
             var complete = E.Add<CompleteScenario>(ending);
             E.Set(complete, "scenarioId", "S04");
             E.Set(complete, "scenarioTitle", Title);
@@ -456,6 +511,15 @@ namespace OneHealth.EditorTools
             k.End(b);
             k.Flag(b, "s05_workstream_order", "{$s05_workstream_order} " + name);
             k.Call(b, workstream);
+        }
+
+        /// <summary>One A7 status statement: the prompt and the three status buttons (answer leads to right).</summary>
+        static void Status(K k, Block b, string prompt, int answer, Block right, Block wrong)
+        {
+            k.Say(b, prompt);
+            k.Plain(b, "COMPLETED", answer == 0 ? right : wrong);
+            k.Plain(b, "FOLLOW-UP REQUIRED", answer == 1 ? right : wrong);
+            k.Plain(b, "NOT ESTABLISHED", answer == 2 ? right : wrong);
         }
 
         /// <summary>Applies a confirmed decision, records its flag and feedback, then continues (unless next is null).</summary>

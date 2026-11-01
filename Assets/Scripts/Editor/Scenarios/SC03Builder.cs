@@ -38,6 +38,8 @@ namespace OneHealth.EditorTools
 
             foreach (var key in new[] { "Money", "Time", "Trust", "Resistance", "Capacity", "Entry_Resistance" })
                 k.Var<IntegerVariable>(key);
+            foreach (var key in new[] { "Report_Evidence", "Report_Animal", "Report_Route", "Report_Package" })
+                k.Var<StringVariable>(key);
 
             // ---------------------------------------------------------------- blocks
             var start = k.StartBlock("START");
@@ -96,10 +98,12 @@ namespace OneHealth.EditorTools
             // A new response period with its own deadline, as Scenario 1 does. Scenario 2's 0-100 clinic
             // capacity converts to the field-team scale used from here on (S04 blueprint allows rescaling):
             // a clinic that kept its workload under control gives the field team more room.
+            // D2: Clamp(12 + Floor(leftover / 10), 12, 22).
             E.Set(begin, "timeBudgetWeeks", 7);
             E.Set(begin, "timeGrantWeeks", 0);
             E.Set(begin, "capacityRescaleBase", 12);
             E.Set(begin, "capacityRescaleDivisor", 10);
+            E.Set(begin, "capacityRescaleMax", 22);
             E.Set(begin, "showTime", true);
             E.Set(begin, "showCapacity", true);
             k.FadeToBackground(start);
@@ -205,10 +209,9 @@ namespace OneHealth.EditorTools
                 if (observed[i])
                     k.Say(wrong, "This was reported directly. Move it to OBSERVED.");
                 else
-                {
                     k.Say(wrong, "That conclusion goes beyond the evidence. Move it to NOT YET KNOWN.");
-                    k.SetBool(wrong, "Overclaimed", true);
-                }
+                // Any correction costs the badge (D7: flawless first-try sorting); the evidence still counts.
+                k.SetBool(wrong, "Overclaimed", true);
                 k.Call(wrong, b);
             }
 
@@ -225,14 +228,9 @@ namespace OneHealth.EditorTools
             k.Option(a3Leads, "Investigate two leads", a3Two, D(-10, -1, 2, -2, -2));
             k.Option(a3Leads, "Investigate one lead", a3One, D(-5, 0, 0, 0, 0));
             k.Apply(a3Two, "A3_Two", "Investigate two leads", D(-10, -1, 2, -2, -2));
-            // Strong evidence needs reasoning as well as resources: two leads checked AND both unsupported
-            // statements kept out of the evidence first time (the Evidence Tracker standard).
-            k.IfBool(a3Two, "Overclaimed", false);
+            // D7: two leads checked and all four statements correctly sorted at submission (corrections allowed,
+            // and the sort cannot be left wrong) give strong evidence. First-try sorting only affects the badge.
             k.Flag(a3Two, "s04_evidence_quality", "strong");
-            k.Else(a3Two);
-            k.Flag(a3Two, "s04_evidence_quality", "partial");
-            k.Say(a3Two, "Two leads are checked, but an unsupported statement was first treated as evidence. The evidence is recorded as partial.");
-            k.End(a3Two);
             k.Flag(a3Two, "s04_leads_checked", "2");
             k.Call(a3Two, a4);
             k.Apply(a3One, "A3_One", "Investigate one lead", D(-5, 0, 0, 0, 0));
@@ -250,9 +248,9 @@ namespace OneHealth.EditorTools
             k.Preview(k.Option(a4Choice, "Assess animals and support prevention", a4ConfirmAssess, D(-15, -1, 6, -3, -2)));
             k.Preview(k.Option(a4Choice, "Targeted short-term support", a4ConfirmTargeted, D(-10, -1, 2, -1, -1)));
             k.Preview(k.Option(a4Choice, "Dismiss the request", a4ConfirmDismiss, D(0, 0, -8, 2, 0)));
-            Confirm(k, a4ConfirmAssess, a4Assess, a4Choice);
-            Confirm(k, a4ConfirmTargeted, a4Targeted, a4Choice);
-            Confirm(k, a4ConfirmDismiss, a4Dismiss, a4Choice);
+            k.Confirm(a4ConfirmAssess, a4Assess, a4Choice);
+            k.Confirm(a4ConfirmTargeted, a4Targeted, a4Choice);
+            k.Confirm(a4ConfirmDismiss, a4Dismiss, a4Choice);
             Decision(k, a4Assess, "A4_Assess", "Assess animals and support prevention", D(-15, -1, 6, -3, -2), "s04_animal_response", "assess",
                 "The team can investigate animal health and reduce avoidable risks while keeping appropriate treatment available when needed.", "DECISION RECORDED. RESOURCES UPDATED.", a5);
             Decision(k, a4Targeted, "A4_Targeted", "Targeted short-term support", D(-10, -1, 2, -1, -1), "s04_animal_response", "targeted",
@@ -285,9 +283,10 @@ namespace OneHealth.EditorTools
             k.Say(a6, "Choose the package your team can realistically deliver.", You);
             // No affordable package -> no package delivered (Unresolved), not a failure (blueprint A6 / section 4).
             k.FailIfNone(a6, a6None);
-            k.Option(a6, "Water safety and community prevention", a6Water, D(-12, -1, 5, -3, -1));
-            k.Option(a6, "Animal health and responsible-use support", a6Animal, D(-12, -1, 3, -3, -1));
-            K.Boost(k.Option(a6, "Balanced cross-sector package", a6Balanced, D(-20, -1, 7, -5, -3)), XS, 0, 1);
+            // D6: the package choice shows its full preview (Trust and Resistance Pressure too).
+            k.Preview(k.Option(a6, "Water safety and community prevention", a6Water, D(-12, -1, 5, -3, -1)));
+            k.Preview(k.Option(a6, "Animal health and responsible-use support", a6Animal, D(-12, -1, 3, -3, -1)));
+            K.Boost(k.Preview(k.Option(a6, "Balanced cross-sector package", a6Balanced, D(-20, -1, 7, -5, -3))), XS, 0, 1);
             k.Say(a6None, "No response package can be delivered with the resources remaining.");
             k.Flag(a6None, "s04_response_package", "none");
             k.Flag(a6None, "s04_joint_badge", "false");
@@ -309,9 +308,13 @@ namespace OneHealth.EditorTools
             // ---------------------------------------------------------------- A7 — Verify, document and hand over
             k.Say(a7, "Before closing this response, record what changed, what remains uncertain and what needs follow-up.", You);
             k.Say(a7, "A clear handover will help the next team avoid repeating our assumptions.", Amina);
+            // Player-facing wording for the recorded decisions (M4), and the disclaimer on the report (L5).
+            var report = E.Add<ComposeGaps>(a7);
+            E.Set(report, "source", (int)ComposeGaps.Source.FieldReportHandover);
             k.Card(a7, "Draft field report",
-                "Leads checked: {$s04_leads_checked}\nEvidence quality: {$s04_evidence_quality}\nAnimal-health response: {$s04_animal_response}\nRoute decision: {$s04_route_response}\nResponse package: {$s04_response_package}\n" +
-                "Remaining: Money {$Money}  ·  Time {$Time} weeks  ·  Capacity {$Capacity}\nStill unanswered: whether the three reports share a cause.");
+                "Leads checked: {$s04_leads_checked}\nEvidence quality: {$Report_Evidence}\nAnimal-health response: {$Report_Animal}\nRoute decision: {$Report_Route}\nResponse package: {$Report_Package}\n" +
+                "Remaining: Money {$Money}  ·  Time {$Time} weeks  ·  Capacity {$Capacity}\nStill unanswered: whether the three reports share a cause.\n\n" +
+                "<size=80%>One Health Innovator is an educational game, not medical advice.</size>");
             // Unresolved also covers closing with gaps when no feasible intervention could be paid for.
             k.CheckAffordable(a7, k.Var<BooleanVariable>("CanVerify"), D(-3, -1, 0, 0, 0));
             k.CheckAffordable(a7, k.Var<BooleanVariable>("CanAdd"), D(-8, -1, 0, 0, -1));
@@ -396,14 +399,6 @@ namespace OneHealth.EditorTools
             k.Say(b, answer, who);
             k.Say(b, "This adds context. It does not prove what caused the reports.");
             k.Call(b, next);
-        }
-
-        /// <summary>"Commit to this plan?" before effects are applied (blueprint A4).</summary>
-        static void Confirm(K k, Block b, Block commit, Block back)
-        {
-            k.Say(b, "Commit to this plan?");
-            k.Plain(b, "Commit", commit);
-            k.Plain(b, "Choose again", back);
         }
 
         /// <summary>Applies a confirmed decision, records its flag and feedback, then continues (unless next is null).</summary>

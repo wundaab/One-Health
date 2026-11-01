@@ -30,11 +30,14 @@ namespace OneHealth
         [Tooltip("Set Capacity to this value at the start (-1 keeps the carried value). Scenario 2 starts at 100.")]
         [SerializeField] protected int capacityStart = -1;
 
-        [Tooltip("Convert the carried Capacity to this scenario's scale: base + carried / divisor (-1 = off). " +
-                 "Scenario 3 converts Scenario 2's 0-100 clinic capacity to a field-team scale (S04 blueprint allows rescaling).")]
+        [Tooltip("Convert the carried Capacity to this scenario's scale: base + floor(carried / divisor), clamped to " +
+                 "base..max (-1 = off). Scenario 3 converts Scenario 2's 0-100 clinic capacity to a field-team scale (D2).")]
         [SerializeField] protected int capacityRescaleBase = -1;
 
         [SerializeField] protected int capacityRescaleDivisor = 10;
+
+        [Tooltip("Upper limit of the converted Capacity (-1 = the Capacity maximum).")]
+        [SerializeField] protected int capacityRescaleMax = -1;
 
         [Tooltip("Money added once when this scenario starts, the same for every player (e.g. district response funds). " +
                  "Explain it in the story; the S05 blueprint forbids resource bonuses tied to a previous result.")]
@@ -45,7 +48,7 @@ namespace OneHealth
             GameSession.ShowTimeStat = showTime;
             GameSession.ShowCapacityStat = showCapacity;
             GameSession.BeginScenario(scenarioId, timeBudgetWeeks, timeGrantWeeks, capacityStart,
-                capacityRescaleBase, capacityRescaleDivisor, moneyGrant);
+                capacityRescaleBase, capacityRescaleDivisor, moneyGrant, capacityRescaleMax);
             FlowchartSync.Push(GetFlowchart());
             Continue();
         }
@@ -54,7 +57,8 @@ namespace OneHealth
         {
             return scenarioId + (timeBudgetWeeks >= 0 ? " (" + timeBudgetWeeks + " weeks)" : " (inherit time)")
                 + (timeGrantWeeks > 0 ? " +" + timeGrantWeeks + " weeks" : "")
-                + (capacityRescaleBase >= 0 ? ", Capacity " + capacityRescaleBase + " + carried/" + capacityRescaleDivisor : "")
+                + (capacityRescaleBase >= 0 ? ", Capacity " + capacityRescaleBase + " + carried/" + capacityRescaleDivisor
+                    + (capacityRescaleMax >= 0 ? " (max " + capacityRescaleMax + ")" : "") : "")
                 + (moneyGrant != 0 ? ", Money " + StatDelta.Signed(moneyGrant) : "");
         }
 

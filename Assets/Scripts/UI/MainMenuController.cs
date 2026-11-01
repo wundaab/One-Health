@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 namespace OneHealth
 {
-    /// <summary>Title screen: New Game, Continue (only with a save), Settings, Exit.</summary>
+    /// <summary>
+    /// Title screen: New Game, Continue (only with a save), Settings, Exit. After Game Complete, Continue
+    /// becomes Review Campaign / Scenario Select (M11).
+    /// </summary>
     public class MainMenuController : MonoBehaviour
     {
         [SerializeField] string firstScenarioScene = "SC01";
@@ -20,6 +23,7 @@ namespace OneHealth
         [SerializeField] SettingsPanel settings;
         [SerializeField] ConfirmDialog confirm;
         [SerializeField] UIPanel menuPanel;
+        [SerializeField] ScenarioSelectPanel scenarioSelect;
 
         void Start()
         {
@@ -34,8 +38,10 @@ namespace OneHealth
             });
             exitButton.onClick.AddListener(GameSession.QuitGame);
 
-            continueButton.interactable = CanContinue();
-            if (!CanContinue() && continueLabel != null)
+            continueButton.interactable = CanContinue() || CanReview();
+            if (CanReview() && continueLabel != null)
+                continueLabel.text = "Review Campaign\n<size=55%>Scenario Select</size>";
+            else if (!CanContinue() && continueLabel != null)
             {
                 // Say why it is unavailable, in text that stays readable on the grey disabled button (U25).
                 continueLabel.text = "Continue\n<size=55%>No saved game yet</size>";
@@ -48,7 +54,7 @@ namespace OneHealth
                 FungusManager.Instance.MusicManager.PlayMusic(menuMusic, true, 1f, 0f);
 
             menuPanel.Open();
-            (CanContinue() ? continueButton : newGameButton).Select();
+            (continueButton.interactable ? continueButton : newGameButton).Select();
         }
 
         static bool CanContinue()
@@ -56,12 +62,18 @@ namespace OneHealth
             return GameSession.HasSave && !string.IsNullOrEmpty(GameSession.State.checkpointScene);
         }
 
+        /// <summary>The saved campaign is complete: Continue opens Scenario Select instead.</summary>
+        bool CanReview()
+        {
+            return scenarioSelect != null && GameSession.HasSave && GameSession.CampaignCompleted;
+        }
+
         void OnNewGame()
         {
-            if (CanContinue())
+            if (GameSession.HasSave)
             {
-                confirm.Show("Start a new game?",
-                    "Your saved progress will be replaced. Your decisions so far will not carry forward.",
+                confirm.Show("Start a new campaign?",
+                    "Your completed campaign history will be reset.",
                     "New Game", StartNewGame);
             }
             else
@@ -78,6 +90,13 @@ namespace OneHealth
 
         void OnContinue()
         {
+            if (CanReview())
+            {
+                // Scenario Select replaces the menu card while open, as Settings does (U26).
+                menuPanel.Close();
+                scenarioSelect.Open(() => { menuPanel.Open(); continueButton.Select(); });
+                return;
+            }
             GameSession.LoadSavedCampaign();
             GameSession.LoadScene(GameSession.State.checkpointScene);
         }

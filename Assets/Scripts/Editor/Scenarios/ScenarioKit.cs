@@ -230,6 +230,17 @@ namespace OneHealth.EditorTools
             return m;
         }
 
+        /// <summary>
+        /// Confirmation step before a decision's effects are applied (S3 A4, S4 A7 and A8): the prompt, then
+        /// Commit (runs commit) or Choose again (back to the options).
+        /// </summary>
+        public void Confirm(Block b, Block commit, Block back, string prompt = "Commit to this plan?")
+        {
+            Say(b, prompt);
+            Plain(b, "Commit", commit);
+            Plain(b, "Choose again", back);
+        }
+
         public void FailIfNone(Block b, Block failure)
         {
             var f = E.Add<FailIfNoneAffordable>(b);

@@ -119,21 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!115 &23449982
-MonoScript:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 7
-  m_DefaultReferences: {}
-  m_Icon: {fileID: 0}
-  m_Type: 0
-  m_ExecutionOrder: 0
-  m_ClassName: ShowVisualCard
-  m_Namespace: OneHealth
-  m_AssemblyName: Assembly-CSharp
 --- !u!1 &56058746
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,21 +812,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1501314136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!115 &248298665
-MonoScript:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 7
-  m_DefaultReferences: {}
-  m_Icon: {fileID: 0}
-  m_Type: 0
-  m_ExecutionOrder: 0
-  m_ClassName: CompleteScenario
-  m_Namespace: OneHealth
-  m_AssemblyName: Assembly-CSharp
 --- !u!1 &324135254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,6 +1273,8 @@ GameObject:
   - component: {fileID: 474039314}
   - component: {fileID: 474039313}
   - component: {fileID: 474039319}
+  - component: {fileID: 474039321}
+  - component: {fileID: 474039320}
   m_Layer: 0
   m_Name: Scenario01_Flowchart
   m_TagString: Untagged
@@ -1888,6 +1860,7 @@ MonoBehaviour:
   - {fileID: 474039212}
   - {fileID: 474039211}
   - {fileID: 474039210}
+  - {fileID: 474039320}
   - {fileID: 474039209}
   - {fileID: 474039256}
   - {fileID: 474039255}
@@ -1926,6 +1899,7 @@ MonoBehaviour:
   eventHandler: {fileID: 0}
   commandList:
   - {fileID: 474039301}
+  - {fileID: 474039321}
   - {fileID: 474039260}
   suppressAllAutoSelections: 0
 --- !u!114 &474039121
@@ -4940,7 +4914,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 474039060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 248298665}
+  m_Script: {fileID: 11500000, guid: c40866f5a06c41d4cbec921824a25912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CompleteScenario
   itemId: 233
@@ -4950,8 +4924,8 @@ MonoBehaviour:
   nextScene: SC02
   nextLabel: Continue to Scenario 2
   summary: You learned what AMR and resistance mean, made two decisions with limited
-    resources, and saw how each one changed Money, Time, Trust and Resistance. Scenario
-    2 gives less guidance and stronger trade-offs.
+    resources, and saw how each one changed Money, Time, Trust and Resistance Pressure.
+    Scenario 2 gives less guidance and stronger trade-offs.
 --- !u!114 &474039243
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6304,7 +6278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 474039060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 23449982}
+  m_Script: {fileID: 11500000, guid: ed413638dc688554fb795da575df2789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OneHealth.ShowVisualCard
   itemId: 206
@@ -7275,7 +7249,7 @@ MonoBehaviour:
   itemId: 196
   indentLevel: 0
   storyText: Using an antimicrobial when it is not needed can contribute to conditions
-    that favour resistance.
+    that favor resistance.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -7576,7 +7550,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 474039060}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 23449982}
+  m_Script: {fileID: 11500000, guid: ed413638dc688554fb795da575df2789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OneHealth.ShowVisualCard
   itemId: 185
@@ -7601,8 +7575,8 @@ MonoBehaviour:
   itemId: 184
   indentLevel: 0
   storyText: "This is your dashboard. Money and Time are what you can spend. Trust
-    shows how willing people are to work with you. Resistance shows the pressure
-    from antimicrobial resistance \u2014 higher is worse."
+    shows how willing people are to work with you. Resistance Pressure shows the
+    pressure from antimicrobial resistance \u2014 higher is worse."
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -7971,6 +7945,7 @@ MonoBehaviour:
   capacityStart: -1
   capacityRescaleBase: -1
   capacityRescaleDivisor: 10
+  capacityRescaleMax: -1
   moneyGrant: 0
 --- !u!114 &474039312
 MonoBehaviour:
@@ -8114,7 +8089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OneHealth.CostedOption
   itemId: 249
   indentLevel: 0
-  text: Prioritise rapid access to treatment
+  text: Prioritize rapid access to treatment
   description: 
   targetBlock: {fileID: 474039085}
   hideIfVisited: 0
@@ -8223,6 +8198,201 @@ MonoBehaviour:
   itemId: 253
   indentLevel: 0
   tutorialId: hud
+--- !u!114 &474039320
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fungus::Fungus.Say
+  itemId: 255
+  indentLevel: 1
+  storyText: You consulted both technical experts and local leaders. Community members
+    appreciate having their perspectives heard.
+  description: 
+  character: {fileID: 0}
+  portrait: {fileID: 0}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &474039321
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474039060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb77d0ce495044f6e9feb91b31798e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fungus::Fungus.SetVariable
+  itemId: 254
+  indentLevel: 0
+  anyVar:
+    variable: {fileID: 474039298}
+    data:
+      animatorData:
+        animatorRef: {fileID: 0}
+        animatorVal: {fileID: 0}
+      audioSourceData:
+        audioSourceRef: {fileID: 0}
+        audioSourceVal: {fileID: 0}
+      booleanData:
+        booleanRef: {fileID: 0}
+        booleanVal: 1
+      collectionData:
+        collectionRef: {fileID: 0}
+        collectionVal: {fileID: 0}
+      collider2DData:
+        collider2DRef: {fileID: 0}
+        collider2DVal: {fileID: 0}
+      colliderData:
+        colliderRef: {fileID: 0}
+        colliderVal: {fileID: 0}
+      colorData:
+        colorRef: {fileID: 0}
+        colorVal: {r: 0, g: 0, b: 0, a: 0}
+      floatData:
+        floatRef: {fileID: 0}
+        floatVal: 0
+      gameObjectData:
+        gameObjectRef: {fileID: 0}
+        gameObjectVal: {fileID: 0}
+      integerData:
+        integerRef: {fileID: 0}
+        integerVal: 0
+      materialData:
+        materialRef: {fileID: 0}
+        materialVal: {fileID: 0}
+      matrix4x4Data:
+        matrix4x4Ref: {fileID: 0}
+        matrix4x4Val:
+          e00: 0
+          e01: 0
+          e02: 0
+          e03: 0
+          e10: 0
+          e11: 0
+          e12: 0
+          e13: 0
+          e20: 0
+          e21: 0
+          e22: 0
+          e23: 0
+          e30: 0
+          e31: 0
+          e32: 0
+          e33: 0
+      objectData:
+        objectRef: {fileID: 0}
+        objectVal: {fileID: 0}
+      quaternionData:
+        quaternionRef: {fileID: 0}
+        quaternionVal: {x: 0, y: 0, z: 0, w: 0}
+      rigidbody2DData:
+        rigidbody2DRef: {fileID: 0}
+        rigidbody2DVal: {fileID: 0}
+      rigidbodyData:
+        rigidbodyRef: {fileID: 0}
+        rigidbodyVal: {fileID: 0}
+      spriteData:
+        spriteRef: {fileID: 0}
+        spriteVal: {fileID: 0}
+      stringData:
+        stringRef: {fileID: 0}
+        stringVal: 
+      textureData:
+        textureRef: {fileID: 0}
+        textureVal: {fileID: 0}
+      transformData:
+        transformRef: {fileID: 0}
+        transformVal: {fileID: 0}
+      vector2Data:
+        vector2Ref: {fileID: 0}
+        vector2Val: {x: 0, y: 0}
+      vector3Data:
+        vector3Ref: {fileID: 0}
+        vector3Val: {x: 0, y: 0, z: 0}
+      vector4Data:
+        vector4Ref: {fileID: 0}
+        vector4Val: {x: 0, y: 0, z: 0, w: 0}
+      audioClipData:
+        audioClipRef: {fileID: 0}
+        audioClipVal: {fileID: 0}
+      audioMixerGroupData:
+        audioMixerGroupRef: {fileID: 0}
+        audioMixerGroupVal: {fileID: 0}
+      audioMixerSnapshotData:
+        audioMixerSnapshotRef: {fileID: 0}
+        audioMixerSnapshotVal: {fileID: 0}
+      audioMixerData:
+        audioMixerRef: {fileID: 0}
+        audioMixerVal: {fileID: 0}
+      characterData:
+        characterRef: {fileID: 0}
+        characterVal: {fileID: 0}
+  setOperator: 0
+  variable: {fileID: 0}
+  booleanData:
+    booleanRef: {fileID: 0}
+    booleanVal: 0
+  integerData:
+    integerRef: {fileID: 0}
+    integerVal: 0
+  floatData:
+    floatRef: {fileID: 0}
+    floatVal: 0
+  stringData:
+    stringRef: {fileID: 0}
+    stringVal: 
+  animatorData:
+    animatorRef: {fileID: 0}
+    animatorVal: {fileID: 0}
+  audioSourceData:
+    audioSourceRef: {fileID: 0}
+    audioSourceVal: {fileID: 0}
+  colorData:
+    colorRef: {fileID: 0}
+    colorVal: {r: 0, g: 0, b: 0, a: 0}
+  gameObjectData:
+    gameObjectRef: {fileID: 0}
+    gameObjectVal: {fileID: 0}
+  materialData:
+    materialRef: {fileID: 0}
+    materialVal: {fileID: 0}
+  objectData:
+    objectRef: {fileID: 0}
+    objectVal: {fileID: 0}
+  rigidbody2DData:
+    rigidbody2DRef: {fileID: 0}
+    rigidbody2DVal: {fileID: 0}
+  spriteData:
+    spriteRef: {fileID: 0}
+    spriteVal: {fileID: 0}
+  textureData:
+    textureRef: {fileID: 0}
+    textureVal: {fileID: 0}
+  transformData:
+    transformRef: {fileID: 0}
+    transformVal: {fileID: 0}
+  vector2Data:
+    vector2Ref: {fileID: 0}
+    vector2Val: {x: 0, y: 0}
+  vector3Data:
+    vector3Ref: {fileID: 0}
+    vector3Val: {x: 0, y: 0, z: 0}
 --- !u!1 &527487650
 GameObject:
   m_ObjectHideFlags: 0

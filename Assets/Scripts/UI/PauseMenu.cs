@@ -46,7 +46,7 @@ namespace OneHealth
             exitButton.onClick.AddListener(() => confirm.Show("Exit the game?",
                 "Progress in this scenario since it started will not be saved.",
                 "Exit", GameSession.QuitGame));
-            nextButton.onClick.AddListener(() => GameSession.LoadScene(nextScene));
+            nextButton.onClick.AddListener(Next);
             if (restartButton != null)
                 restartButton.onClick.AddListener(() => confirm.Show("Restart this scenario?",
                     "You will return to the start of this scenario with the values you entered it with. Progress and badges from this attempt will be lost.",
@@ -102,6 +102,15 @@ namespace OneHealth
             if (complete == null) return;
             nextScene = complete.NextScene;
             nextStageLabel = complete.NextLabel;
+        }
+
+        void Next()
+        {
+            // During a replay the campaign continues from the saved (original) outcome, so the replay's
+            // progress never reaches the next scenario's checkpoint save (H3; same rule as the results Next).
+            if (GameSession.IsReplay)
+                GameSession.LoadSavedCampaign();
+            GameSession.LoadScene(nextScene);
         }
 
         public void Resume()

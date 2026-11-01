@@ -11,6 +11,26 @@ namespace OneHealth
     public static class GameSession
     {
         const string SaveKey = "OHI_Save_v1";
+        const string EntryKeyPrefix = "OHI_Entry_v1_";
+
+        // L6: minimum Money and Capacity at the start of every scenario.
+        public const int StartMoneyFloor = 15;
+        public const int StartCapacityFloor = 5;
+
+        /// <summary>The campaign's scenarios in order: ID, scene and title (Scenario Select lists these).</summary>
+        public static readonly ScenarioInfo[] Scenarios =
+        {
+            new ScenarioInfo("S01", "SC01", "Scenario 1 — The First Response"),
+            new ScenarioInfo("S02", "SC02", "Scenario 2 — The Fever That Won’t Wait"),
+            new ScenarioInfo("S03", "SC03", "Scenario 3 — The Warning Signs"),
+            new ScenarioInfo("S04", "SC04", "Scenario 4 — Kivu’s Turning Point"),
+        };
+
+        /// <summary>Story flag set when the final scenario is completed (main menu offers Scenario Select).</summary>
+        public const string CampaignCompletedFlag = "campaign_completed";
+
+        /// <summary>Story flag holding the Money actually added by a scenario's entry grant, e.g. money_grant_S04.</summary>
+        public static string MoneyGrantFlag(string scenarioId) { return "money_grant_" + scenarioId; }
 
         public const string MainMenuScene = "MainMenu";
 
@@ -44,6 +64,9 @@ namespace OneHealth
 
         public static bool HasSave { get { return PlayerPrefs.HasKey(SaveKey); } }
 
+        /// <summary>True once the saved campaign has completed Scenario 4.</summary>
+        public static bool CampaignCompleted { get { return State.GetFlag(CampaignCompletedFlag) == "true"; } }
+
         // ---------------------------------------------------------------- campaign
 
         public static void StartNewCampaign()
@@ -52,7 +75,28 @@ namespace OneHealth
             scenarioStart = null;
             IsReplay = false;
             PlayerPrefs.DeleteKey(SaveKey);
+            foreach (var info in Scenarios) PlayerPrefs.DeleteKey(EntryKeyPrefix + info.id);
             if (StateReset != null) StateReset();
+        }
+
+        /// <summary>
+        /// Scenario Select: replays a completed scenario from the state the player entered it with. Completions,
+        /// knowledge and unlocks earned since are kept (as for Retry), and replays never write the save.
+        /// </summary>
+        public static void ReplayScenario(ScenarioInfo info)
+        {
+            LoadSavedCampaign();
+            var json = PlayerPrefs.GetString(EntryKeyPrefix + info.id, "");
+            if (!string.IsNullOrEmpty(json))
+            {
+                var saved = current;
+                current = JsonUtility.FromJson<GameState>(json);
+                foreach (var id in saved.completedScenarios) current.AddUnique(current.completedScenarios, id);
+                foreach (var id in saved.knowledge) current.AddUnique(current.knowledge, id);
+                foreach (var id in saved.unlocks) current.AddUnique(current.unlocks, id);
+                if (StateReset != null) StateReset();
+            }
+            LoadScene(info.scene);
         }
 
         public static void LoadSavedCampaign()
@@ -66,7 +110,7 @@ namespace OneHealth
         /// state so Retry/Replay restore exactly what the player entered with.
         /// </summary>
         public static void BeginScenario(string id, int timeBudgetWeeks, int timeGrantWeeks = 0, int capacityStart = -1,
-            int capacityRescaleBase = -1, int capacityRescaleDivisor = 10, int moneyGrant = 0)
+            int capacityRescaleBase = -1, int capacityRescaleDivisor = 10, int moneyGrant = 0, int capacityRescaleMax = -1)
         {
             var s = State;
             if (timeBudgetWeeks >= 0)
@@ -80,12 +124,25 @@ namespace OneHealth
                 if (timeGrantWeeks > 0)
                     s.timeWeeks = Mathf.Clamp(s.timeWeeks + timeGrantWeeks, GameState.TimeMin, GameState.TimeMax);
                 if (capacityRescaleBase >= 0)
-                    s.capacity = Mathf.Clamp(capacityRescaleBase + Mathf.RoundToInt(s.capacity / (float)Mathf.Max(1, capacityRescaleDivisor)),
-                        GameState.CapacityMin, GameState.CapacityMax);
+                {
+                    // D2: base + floor(carried / divisor), never below the base nor above the maximum.
+                    int max = capacityRescaleMax >= 0 ? capacityRescaleMax : GameState.CapacityMax;
+                    s.capacity = Mathf.Clamp(capacityRescaleBase + s.capacity / Mathf.Max(1, capacityRescaleDivisor),
+                        Mathf.Max(GameState.CapacityMin, capacityRescaleBase), Mathf.Min(GameState.CapacityMax, max));
+                }
                 if (moneyGrant != 0)
+                {
+                    // The story shows the amount actually added, which the Money cap can reduce (D3).
+                    int before = s.money;
                     s.money = Mathf.Clamp(s.money + moneyGrant, GameState.MoneyMin, GameState.MoneyMax);
+                    s.SetFlag(MoneyGrantFlag(id), (s.money - before).ToString());
+                }
                 s.SetFlag("entry_applied_" + id, "1");
             }
+            // L6: every scenario starts with a minimum of Money and Capacity, so an earlier scenario can
+            // never leave the player unable to act. Idempotent, so Retry and Continue give the same values.
+            s.money = Mathf.Max(s.money, Mathf.Min(StartMoneyFloor, GameState.MoneyMax));
+            s.capacity = Mathf.Max(s.capacity, Mathf.Min(StartCapacityFloor, GameState.CapacityMax));
             scenarioId = id;
             scenarioStart = s.Clone();
 
@@ -96,6 +153,9 @@ namespace OneHealth
                 s.checkpointScene = SceneManager.GetActiveScene().name;
                 scenarioStart.checkpointScene = s.checkpointScene;
                 Save();
+                // Kept so Scenario Select can replay this scenario from the state the player entered it with.
+                PlayerPrefs.SetString(EntryKeyPrefix + id, JsonUtility.ToJson(scenarioStart));
+                PlayerPrefs.Save();
             }
             Debug.Log(string.Format("[OHI] Begin {0}{6}: Money {1}, Time {2}w, Trust {3}, Resistance {4}, Capacity {5}",
                 id, s.money, s.timeWeeks, s.trust, s.resistance, s.capacity, IsReplay ? " (replay)" : ""));
@@ -234,6 +294,22 @@ namespace OneHealth
 #else
             Application.Quit();
 #endif
+        }
+    }
+
+    /// <summary>One scenario of the campaign: its ID (S01), scene (SC01) and player-facing title.</summary>
+    [Serializable]
+    public struct ScenarioInfo
+    {
+        public string id;
+        public string scene;
+        public string title;
+
+        public ScenarioInfo(string id, string scene, string title)
+        {
+            this.id = id;
+            this.scene = scene;
+            this.title = title;
         }
     }
 }

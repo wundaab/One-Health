@@ -248,6 +248,15 @@ namespace OneHealth.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        static void SetArray(Object target, string field, Object[] values)
+        {
+            var so = new SerializedObject(target);
+            var p = so.FindProperty(field);
+            p.arraySize = values.Length;
+            for (int i = 0; i < values.Length; i++) p.GetArrayElementAtIndex(i).objectReferenceValue = values[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         static Canvas MakeCanvas(string name, Transform parent, int sortingOrder)
         {
             var go = new GameObject(name, typeof(RectTransform));
@@ -890,6 +899,7 @@ namespace OneHealth.EditorTools
             Set(controller, "settings", settings.GetComponent<SettingsPanel>());
             Set(controller, "confirm", confirm.GetComponent<ConfirmDialog>());
             Set(controller, "menuPanel", menuPanel);
+            Set(controller, "scenarioSelect", BuildScenarioSelect(root));
 
             if (Object.FindAnyObjectByType<EventSystem>() == null)
             {
@@ -898,6 +908,62 @@ namespace OneHealth.EditorTools
             }
 
             EditorSceneManager.MarkSceneDirty(scene);
+        }
+
+        /// <summary>
+        /// Adds (or rebuilds) only the Scenario Select panel in the open MainMenu scene and wires it to the
+        /// MainMenuController, leaving the rest of the menu as it is.
+        /// </summary>
+        [MenuItem("One Health/Build UI/Scenario Select (Main Menu)")]
+        public static void BuildScenarioSelectInOpenScene()
+        {
+            var controller = Object.FindAnyObjectByType<MainMenuController>(FindObjectsInactive.Include);
+            if (controller == null)
+            {
+                Debug.LogError("[OHI] Open the MainMenu scene to add Scenario Select.");
+                return;
+            }
+            bold = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BoldFontPath);
+            regular = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(RegularFontPath);
+            click = AssetDatabase.LoadAssetAtPath<AudioClip>(ClickPath);
+            var root = controller.transform;
+            var old = root.Find("ScenarioSelect");
+            if (old != null) Object.DestroyImmediate(old.gameObject);
+            Set(controller, "scenarioSelect", BuildScenarioSelect(root));
+            EditorSceneManager.MarkSceneDirty(controller.gameObject.scene);
+        }
+
+        /// <summary>Scenario Select (M11): one button per scenario (completed ones replay) and Back.</summary>
+        static ScenarioSelectPanel BuildScenarioSelect(Transform parent)
+        {
+            RectTransform c;
+            var panel = PanelRoot("ScenarioSelect", parent, out c, new Vector2(820, 860), S("Panels/rounded_panel_white.png"), 0.6f);
+            Txt("Title", c, "Review Campaign", true, 46, UITheme.TealDark, TextAlignmentOptions.Center, new Vector2(0, 350), new Vector2(720, 64));
+            Txt("Subtitle", c, "Replay a completed scenario to try another approach. Your completed campaign is not changed.", false, 26,
+                UITheme.Teal, TextAlignmentOptions.Center, new Vector2(0, 280), new Vector2(720, 76));
+
+            int n = GameSession.Scenarios.Length;
+            var buttons = new Button[n];
+            var labels = new TMP_Text[n];
+            var size = new Vector2(700, 112);
+            for (int i = 0; i < n; i++)
+            {
+                TextMeshProUGUI label;
+                buttons[i] = Btn("Scenario" + (i + 1) + "Button", c, "Blue", GameSession.Scenarios[i].title, null,
+                    new Vector2(0, 176 - i * 128), size, 32f, out label);
+                label.textWrappingMode = TextWrappingModes.Normal;
+                label.lineSpacing = -12f;
+                labels[i] = label;
+            }
+            var back = Btn("BackButton", c, "Navy", "Back", "Icons/back_arrow_icon.png", new Vector2(0, -346), new Vector2(320, 96));
+
+            var select = panel.gameObject.AddComponent<ScenarioSelectPanel>();
+            Set(select, "panel", panel);
+            SetArray(select, "scenarioButtons", buttons);
+            SetArray(select, "scenarioLabels", labels);
+            Set(select, "backButton", back);
+            panel.gameObject.SetActive(false);
+            return select;
         }
     }
 }

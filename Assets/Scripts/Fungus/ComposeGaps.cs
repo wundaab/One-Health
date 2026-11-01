@@ -8,9 +8,10 @@ namespace OneHealth
     /// Builds player-facing "gap" lines from recorded story flags: the unresolved items handed over
     /// from Scenario 3's field report, or the workstreams still incomplete in Scenario 4. Writes
     /// Gap1, Gap2 and GapList string variables (blueprint: "Show one/two unresolved gap cards",
-    /// "Show gaps remaining").
+    /// "Show gaps remaining"), and the field report's decisions in player-facing words
+    /// (Report_Evidence, Report_Animal, Report_Route, Report_Package) for the report cards.
     /// </summary>
-    [CommandInfo("One Health", "Compose Gaps", "Write Gap1, Gap2 and GapList from recorded story flags.")]
+    [CommandInfo("One Health", "Compose Gaps", "Write Gap1, Gap2, GapList and the Report_* lines from recorded story flags.")]
     [AddComponentMenu("")]
     public class ComposeGaps : Command
     {
@@ -51,7 +52,34 @@ namespace OneHealth
             FlowchartSync.SetString(fc, "Gap1", gaps.Count > 0 ? gaps[0] : "");
             FlowchartSync.SetString(fc, "Gap2", gaps.Count > 1 ? gaps[1] : "");
             FlowchartSync.SetString(fc, "GapList", "• " + string.Join("\n• ", gaps.ToArray()));
+
+            // Report cards print these instead of the internal flag values (M4).
+            FlowchartSync.SetString(fc, "Report_Evidence", Describe(s.GetFlag("s04_evidence_quality")));
+            FlowchartSync.SetString(fc, "Report_Animal", Describe(s.GetFlag("s04_animal_response")));
+            FlowchartSync.SetString(fc, "Report_Route", Describe(s.GetFlag("s04_route_response")));
+            FlowchartSync.SetString(fc, "Report_Package", Describe(s.GetFlag("s04_response_package")));
             Continue();
+        }
+
+        /// <summary>Player-facing wording for a Scenario 3 field-report flag value, e.g. "redirect".</summary>
+        public static string Describe(string flagValue)
+        {
+            switch (flagValue)
+            {
+                case "assess": return "Animal assessment and prevention plan delivered";
+                case "targeted": return "Short-term targeted animal support provided";
+                case "dismiss": return "Farmer request dismissed without action";
+                case "redirect": return "Field team redirected via accessible route";
+                case "restore": return "Access restored at higher resource investment";
+                case "continue": return "Continued along original disrupted route";
+                case "water": return "Water safety and community prevention package";
+                case "animal": return "Animal health and responsible-use support package";
+                case "balanced": return "Balanced cross-sector coordination package";
+                case "none": return "No package delivered";
+                case "strong": return "Strong evidence base established";
+                case "partial": return "Partial evidence base with remaining gaps";
+                default: return string.IsNullOrEmpty(flagValue) ? "Not recorded" : flagValue;
+            }
         }
 
         public override string GetSummary() { return source.ToString(); }

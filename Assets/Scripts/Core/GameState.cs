@@ -177,7 +177,7 @@ namespace OneHealth
             if (timeWeeks > 0) gains.Add(timeWeeks + (timeWeeks == 1 ? " week" : " weeks"));
             if (capacity > 0) gains.Add(capacity + " Capacity");
             var parts = new List<string>();
-            parts.Add(costs.Count > 0 ? "Cost: " + string.Join(", ", costs.ToArray()) : "No direct cost");
+            parts.Add(costs.Count > 0 ? "Cost: " + string.Join(", ", costs.ToArray()) : "No resource cost (Operational trade-offs apply)");
             if (gains.Count > 0) parts.Add("Gain: " + string.Join(", ", gains.ToArray()));
             return string.Join("  ·  ", parts.ToArray());
         }
@@ -207,7 +207,7 @@ namespace OneHealth
             if (outcomes && trust != 0) parts.Add(Signed(trust) + " Trust");
             if (outcomes && resistance != 0) parts.Add(Signed(resistance) + " Resistance Pressure");
             if (capacity != 0) parts.Add(Signed(capacity) + " Capacity");
-            return parts.Count == 0 ? "No direct cost" : string.Join("   ", parts.ToArray());
+            return parts.Count == 0 ? "No resource cost (Operational trade-offs apply)" : string.Join("   ", parts.ToArray());
         }
 
         public static string Signed(int v)
