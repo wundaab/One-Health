@@ -46,7 +46,8 @@ namespace OneHealth
             // A named speaker who is not standing on the stage still gets a face: their first portrait as a bust.
             // (Scenarios 1 and 2 stage most speakers; Samuel and others talk from off stage.)
             var who = sayDialog != null ? sayDialog.SpeakingCharacter : null;
-            if (!portrait && characterImage != null && who != null && !who.State.onScreen
+            // While the stage is faded out for a menu or card (StagePortraitFit), on-stage speakers get the bust too.
+            if (!portrait && characterImage != null && who != null && (!who.State.onScreen || StagePortraitFit.Hidden)
                 && who.Portraits != null && who.Portraits.Count > 0 && who.Portraits[0] != null)
             {
                 characterImage.overrideSprite = who.Portraits[0];

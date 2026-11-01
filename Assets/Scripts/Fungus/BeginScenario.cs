@@ -27,6 +27,12 @@ namespace OneHealth
         [Tooltip("Show Capacity on the HUD.")]
         [SerializeField] protected bool showCapacity = false;
 
+        [Tooltip("HUD Capacity scale: the bar's maximum (M7). Scenarios 1 and 2 use 100, Scenarios 3 and 4 use 25.")]
+        [SerializeField] protected int capacityScaleMax = 100;
+
+        [Tooltip("At or below this Capacity the HUD chip shows Low (M7). Scenarios 1 and 2 use 20, Scenarios 3 and 4 use 5.")]
+        [SerializeField] protected int capacityLowThreshold = 20;
+
         [Tooltip("Set Capacity to this value at the start (-1 keeps the carried value). Scenario 2 starts at 100.")]
         [SerializeField] protected int capacityStart = -1;
 
@@ -47,6 +53,8 @@ namespace OneHealth
         {
             GameSession.ShowTimeStat = showTime;
             GameSession.ShowCapacityStat = showCapacity;
+            GameSession.CapacityScaleMax = capacityScaleMax;
+            GameSession.CapacityLowThreshold = capacityLowThreshold;
             GameSession.BeginScenario(scenarioId, timeBudgetWeeks, timeGrantWeeks, capacityStart,
                 capacityRescaleBase, capacityRescaleDivisor, moneyGrant, capacityRescaleMax);
             FlowchartSync.Push(GetFlowchart());

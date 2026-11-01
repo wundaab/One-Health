@@ -376,16 +376,24 @@ namespace OneHealth.EditorTools
         {
             var canvas = MakeCanvas("GameUI", null, 100);
             var root = canvas.transform;
+            // While paused, nothing under the pause menu takes clicks (M2).
+            var gameUiGroup = canvas.gameObject.AddComponent<CanvasGroup>();
 
-            BuildHUD(root);
+            var hud = BuildHUD(root);
             var card = BuildVisualCard(root);
             var results = BuildResults(root);
             var pause = BuildPause(root);
+            Set(hud, "reserveRight", pause.transform.Find("PauseButton"));
 
-            var settings = InstantiatePrefab("SettingsPanel", root);
-            var confirm = InstantiatePrefab("ConfirmDialog", root);
+            // The pause panel and the dialogs it opens sit on their own canvas above everything else, so cards
+            // and the results screen can never cover them (M2). It ignores the GameUI group, which stops
+            // taking clicks while paused.
+            var pauseCanvas = (RectTransform)pause.transform.Find("PauseCanvas");
+            var settings = InstantiatePrefab("SettingsPanel", pauseCanvas);
+            var confirm = InstantiatePrefab("ConfirmDialog", pauseCanvas);
             Set(pause, "settings", settings.GetComponent<SettingsPanel>());
             Set(pause, "confirm", confirm.GetComponent<ConfirmDialog>());
+            Set(pause, "gameUiGroup", gameUiGroup);
 
             card.transform.SetSiblingIndex(1);
             results.transform.SetSiblingIndex(2);
@@ -393,7 +401,7 @@ namespace OneHealth.EditorTools
             SavePrefab(canvas.gameObject, "GameUI");
         }
 
-        static void BuildHUD(Transform root)
+        static StatHUD BuildHUD(Transform root)
         {
             var hud = Rect("HUD", root, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0, -76), new Vector2(1320, 128));
             hud.gameObject.AddComponent<CanvasGroup>();
@@ -408,18 +416,19 @@ namespace OneHealth.EditorTools
             Chip(hud, StatKind.Trust, "Trust", "HUD/trust_icon.png", "Will people work with me? (0–100)", GameState.TrustMax, true, false);
             // Tooltip wording from the Scenario 3 blueprint.
             Chip(hud, StatKind.Resistance, "Resistance Pressure", "HUD/resistance_icon.png", "A simplified gameplay indicator of conditions that can increase or reduce AMR risk. It is not a clinical measurement and does not show whether a person or animal has a resistant infection.", GameState.ResistanceMax, true, true);
-            var capacity = Chip(hud, StatKind.Capacity, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png", "How much work your team can still take on. (0–100)", GameState.CapacityMax, true, false);
-            // Scenario 3/4 outcome rules use Capacity >= 10 and >= 5; warn at 10 and below.
-            Set(capacity.GetComponent<StatChip>(), "lowThreshold", 10);
+            // The tooltip opens with "Capacity: current/max" (StatChip); the scale is set per scenario by Begin Scenario (M7).
+            var capacity = Chip(hud, StatKind.Capacity, "Capacity", "Assets/Art/02_Scenario_2/06_HUD/capacity_icon_normal.png", "How much work your team can still take on.", GameState.CapacityMax, true, false);
+            Set(capacity.GetComponent<StatChip>(), "lowThreshold", 20);
 
             var h = hud.gameObject.AddComponent<StatHUD>();
             Set(h, "visibleOnStart", false);
+            return h;
         }
 
         static RectTransform Chip(Transform parent, StatKind kind, string label, string icon, string tooltip, int max, bool bar, bool higherIsWorse)
         {
             // Resistance Pressure is wider so its label fits at the same size as the others (U13).
-            float w = kind == StatKind.Resistance ? 300f : 248f;
+            float w = kind == StatKind.Resistance ? 320f : 248f;
             float dx = (w - 248f) / 2f;   // extra width goes to the text column
             var rt = Center(label.Replace(" ", "") + "Chip", parent, Vector2.zero, new Vector2(w, 116));
             var bg = Img(rt, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.SurfaceDark);
@@ -431,16 +440,24 @@ namespace OneHealth.EditorTools
             sel.navigation = new Navigation { mode = Navigation.Mode.None };
             sel.targetGraphic = bg;
 
+            // In a critical state (Low, Severe...) an outline rings the whole chip, so it is obvious at a glance (QA S4).
+            var alert = Stretch("Alert", rt);
+            var alertImg = Img(alert, GeneratedSprites.Load(GeneratedSprites.RoundRing), UITheme.NegativeOnDark);
+            alertImg.pixelsPerUnitMultiplier = 0.9f;
+            alertImg.raycastTarget = false;
+            alertImg.enabled = false;
+
             Sprite iconSprite = S(icon);
             var ic = Center("Icon", rt, new Vector2(-78 - dx, 0), new Vector2(64, 64));
             var iconImg = Img(ic, iconSprite, Color.white, false);
             iconImg.raycastTarget = false;
 
-            var labelText = Txt("Label", rt, label.ToUpperInvariant(), true, 15, UITheme.TealLight, TextAlignmentOptions.MidlineLeft, new Vector2(34 - dx + dx, 28), new Vector2(150 + 2 * dx, 24));
+            // L4 / QA S1: labels 18 pt bold in title case (the 15 pt spaced capitals were too small to read),
+            // pale teal on navy at 8.8:1.
+            var labelText = Txt("Label", rt, label, true, 18, UITheme.TealLight, TextAlignmentOptions.MidlineLeft, new Vector2(34, 30), new Vector2(150 + 2 * dx, 28));
             labelText.textWrappingMode = TextWrappingModes.NoWrap;
             labelText.enableAutoSizing = false;
-            labelText.characterSpacing = 2f;
-            var value = Txt("Value", rt, "0", true, 34, Color.white, TextAlignmentOptions.MidlineLeft, new Vector2(34, -4), new Vector2(150 + 2 * dx, 42));
+            var value = Txt("Value", rt, "0", true, 34, Color.white, TextAlignmentOptions.MidlineLeft, new Vector2(34, -6), new Vector2(150 + 2 * dx, 42));
 
             // Info hint: the chip has a tooltip (U16).
             var info = Center("Info", rt, new Vector2(w / 2f - 20f, -38), new Vector2(18, 18));
@@ -448,17 +465,18 @@ namespace OneHealth.EditorTools
             infoImg.raycastTarget = false;
 
             // Status as a small pill on the chip's top edge (no longer clipped at the right edge).
-            var pill = Rect("StatusPill", rt, Vector2.one, Vector2.one, new Vector2(-10, 0), new Vector2(64, 24));
+            // L4: status tags 16 pt bold, white on the status red (5.6:1; the coral was 3.8:1).
+            var pill = Rect("StatusPill", rt, Vector2.one, Vector2.one, new Vector2(-10, 0), new Vector2(72, 28));
             pill.pivot = new Vector2(1f, 0.5f);
-            var pillImg = Img(pill, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.Coral);
-            pillImg.pixelsPerUnitMultiplier = 2.2f;
+            var pillImg = Img(pill, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.Status);
+            pillImg.pixelsPerUnitMultiplier = 2f;
             pillImg.raycastTarget = false;
             var pillLayout = pill.gameObject.AddComponent<HorizontalLayoutGroup>();
-            pillLayout.padding = new RectOffset(10, 10, 1, 2);
+            pillLayout.padding = new RectOffset(12, 12, 2, 3);
             pillLayout.childControlWidth = pillLayout.childControlHeight = true;
             pillLayout.childForceExpandWidth = pillLayout.childForceExpandHeight = false;
             pill.gameObject.AddComponent<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-            var status = Txt("Status", pill, "", true, 14, Color.white, TextAlignmentOptions.Center, Vector2.zero, new Vector2(48, 20));
+            var status = Txt("Status", pill, "", true, 16, Color.white, TextAlignmentOptions.Center, Vector2.zero, new Vector2(52, 23));
             status.textWrappingMode = TextWrappingModes.NoWrap;
             pill.gameObject.SetActive(false);
 
@@ -493,7 +511,8 @@ namespace OneHealth.EditorTools
             var delta = Txt("Delta", dp, "", true, 22, Color.white, TextAlignmentOptions.Center, Vector2.zero, new Vector2(80, 30));
             delta.textWrappingMode = TextWrappingModes.NoWrap;
 
-            bool longTip = tooltip.Length > 60;
+            // Capacity's tooltip gains a "Capacity: current/max" line at run time.
+            bool longTip = tooltip.Length > 60 || kind == StatKind.Capacity;
             var tip = Rect("Tooltip", rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0, longTip ? -100 : -78), longTip ? new Vector2(420, 120) : new Vector2(330, 74));
             Img(tip, GeneratedSprites.Load(GeneratedSprites.RoundFill), UITheme.SurfaceDark).pixelsPerUnitMultiplier = 1.5f;
             var tipText = Txt("Text", tip, tooltip, false, 20, Color.white, TextAlignmentOptions.Center, Vector2.zero, longTip ? new Vector2(384, 104) : new Vector2(296, 60));
@@ -513,6 +532,8 @@ namespace OneHealth.EditorTools
             Set(chip, "deltaText", delta);
             Set(chip, "deltaPill", dpGroup);
             Set(chip, "tooltip", tip.gameObject);
+            Set(chip, "tooltipText", tipText);
+            Set(chip, "alertRing", alertImg);
             Set(chip, "icon", iconImg);
             if (kind == StatKind.Capacity)
             {
@@ -548,9 +569,19 @@ namespace OneHealth.EditorTools
                 barImg.raycastTarget = false;
             }
 
+            // M2: the panel (and the Settings and Confirm dialogs added beside it) on its own canvas, sorting order
+            // 999: above the cards, results, tutorial (500) and Fungus dialogs. Its own CanvasGroup ignores GameUI's,
+            // which stops taking clicks while paused.
+            var pauseCanvas = Stretch("PauseCanvas", host);
+            var pc = pauseCanvas.gameObject.AddComponent<Canvas>();
+            pc.overrideSorting = true;
+            pc.sortingOrder = 999;
+            pauseCanvas.gameObject.AddComponent<GraphicRaycaster>();
+            pauseCanvas.gameObject.AddComponent<CanvasGroup>().ignoreParentGroups = true;
+
             // Opaque navy panel (no ghosting), short enough to clear the HUD (U19).
             RectTransform c;
-            var panel = PanelRoot("PausePanel", host, out c, new Vector2(560, 780), GeneratedSprites.Load(GeneratedSprites.RoundFill), 0.65f);
+            var panel = PanelRoot("PausePanel", pauseCanvas, out c, new Vector2(560, 780), GeneratedSprites.Load(GeneratedSprites.RoundFill), 0.65f);
             var panelImg = c.GetComponent<Image>();
             panelImg.color = UITheme.SurfaceDark;
             panelImg.pixelsPerUnitMultiplier = 0.6f;

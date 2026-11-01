@@ -37,6 +37,26 @@ namespace OneHealth.EditorTools
             AssetDatabase.SaveAssets();
         }
 
+        /// <summary>
+        /// Adds StagePortraitFit to the open scene's Fungus Stage (QA S3): portraits fit between the HUD and the
+        /// say dialog at every aspect ratio, and fade out while options or cards are up. Run on SC01 and SC02;
+        /// SC03 and SC04 copy SC02's stage when they are rebuilt.
+        /// </summary>
+        [MenuItem("One Health/Build UI/Fit Fungus Stage (open scene)")]
+        public static string FitStageInOpenScene()
+        {
+            var stage = Object.FindAnyObjectByType<Fungus.Stage>(FindObjectsInactive.Include);
+            if (stage == null) return "no stage";
+            // Re-added on every run so the scene picks up the component's current defaults.
+            var old = stage.GetComponent<StagePortraitFit>();
+            if (old != null) Object.DestroyImmediate(old);
+            var fit = stage.gameObject.AddComponent<StagePortraitFit>();
+            Set(fit, "stage", stage);
+            EditorUtility.SetDirty(fit);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(stage.gameObject.scene);
+            return stage.gameObject.scene.name + ": " + stage.name + " fitted";
+        }
+
         // ------------------------------------------------------------------ helpers
 
         static Sprite S(string path)

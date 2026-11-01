@@ -62,6 +62,12 @@ namespace OneHealth
         /// <summary>Whether the current scenario shows Capacity on the HUD (set by Begin Scenario).</summary>
         public static bool ShowCapacityStat { get; set; }
 
+        /// <summary>Capacity scale of the current scenario (M7, set by Begin Scenario): the HUD bar's maximum...</summary>
+        public static int CapacityScaleMax { get; set; } = 100;
+
+        /// <summary>...and the value at or below which the Capacity chip shows Low.</summary>
+        public static int CapacityLowThreshold { get; set; } = 20;
+
         public static bool HasSave { get { return PlayerPrefs.HasKey(SaveKey); } }
 
         /// <summary>True once the saved campaign has completed Scenario 4.</summary>

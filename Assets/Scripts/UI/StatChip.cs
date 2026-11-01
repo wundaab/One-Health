@@ -33,6 +33,10 @@ namespace OneHealth
         [Tooltip("Pill behind the change text; faded with it")]
         [SerializeField] CanvasGroup deltaPill;
         [SerializeField] GameObject tooltip;
+        [Tooltip("Tooltip text; the Capacity chip prefixes it with \"Capacity: current/max\"")]
+        [SerializeField] TMP_Text tooltipText;
+        [Tooltip("Outline shown while the chip is in a Low/critical state, so it is obvious at a glance")]
+        [SerializeField] Graphic alertRing;
         [Tooltip("Optional icon swapped by state: normal, low, critical (a second, non-colour cue)")]
         [SerializeField] Image icon;
         [SerializeField] Sprite[] stateIcons;
@@ -42,7 +46,10 @@ namespace OneHealth
         int shown = int.MinValue;
         float deltaTimer, pulseTimer = -1f;
         bool hovered, selected, pinned;
+        // The flowchart holding this chip's variable, looked up once per scene (L7), not every frame.
         Flowchart flowchart;
+        bool flowchartSearched;
+        string tooltipBase;
 
         /// <summary>When the last change pill appeared (unscaled time), so a card can wait until it was seen.</summary>
         public static float LastDeltaTime = -100f;
@@ -50,11 +57,28 @@ namespace OneHealth
         public StatKind Kind { get { return kind; } }
 
         /// <summary>For FlowchartInteger chips: whether any flowchart in the scene has the variable.</summary>
-        public bool HasSource()
+        public bool HasSource() { return Source() != null; }
+
+        /// <summary>
+        /// Capacity scale for this scenario (M7): the bar fills against max, and at or below lowThreshold the chip
+        /// shows Low. Scenarios 1 and 2 use 100 / 20, Scenarios 3 and 4 use 25 / 5.
+        /// </summary>
+        public void SetCapacityRange(float max, float lowThreshold)
         {
-            foreach (var f in FindObjectsByType<Flowchart>())
-                if (f.HasVariable(variableKey)) return true;
-            return false;
+            maxValue = Mathf.Max(1, Mathf.RoundToInt(max));
+            this.lowThreshold = Mathf.RoundToInt(lowThreshold);
+            shown = int.MinValue;   // redraw the bar, status and tooltip on the new scale
+            Refresh(false);
+        }
+
+        Flowchart Source()
+        {
+            string key = kind == StatKind.Capacity ? FlowchartSync.ScenarioCapacityKey : variableKey;
+            if (flowchart != null || flowchartSearched) return flowchart;
+            flowchartSearched = true;
+            foreach (var f in FindObjectsByType<Flowchart>(FindObjectsInactive.Include))
+                if (f.HasVariable(key)) { flowchart = f; break; }
+            return flowchart;
         }
 
         void OnEnable()
@@ -104,18 +128,11 @@ namespace OneHealth
                 case StatKind.Resistance: return s.resistance;
                 case StatKind.Capacity:
                     // Scenario 2 keeps its own live counter; elsewhere Capacity is the campaign value.
-                    foreach (var f in FindObjectsByType<Flowchart>())
-                        if (f.HasVariable(FlowchartSync.ScenarioCapacityKey))
-                            return f.GetIntegerVariable(FlowchartSync.ScenarioCapacityKey);
-                    return s.capacity;
+                    var clinic = Source();
+                    return clinic != null ? clinic.GetIntegerVariable(FlowchartSync.ScenarioCapacityKey) : s.capacity;
                 default:
-                    if (flowchart == null || !flowchart.HasVariable(variableKey))
-                    {
-                        flowchart = null;
-                        foreach (var f in FindObjectsByType<Flowchart>())
-                            if (f.HasVariable(variableKey)) { flowchart = f; break; }
-                    }
-                    return flowchart != null ? flowchart.GetIntegerVariable(variableKey) : 0;
+                    var source = Source();
+                    return source != null ? source.GetIntegerVariable(variableKey) : 0;
             }
         }
 
@@ -146,7 +163,13 @@ namespace OneHealth
                 statusText.gameObject.SetActive(critical);
             }
             if (statusPill != null) statusPill.SetActive(critical);
+            if (alertRing != null) alertRing.enabled = critical;
             valueText.color = critical ? UITheme.NegativeOnDark : Color.white;
+            if (kind == StatKind.Capacity && tooltipText != null)
+            {
+                if (tooltipBase == null) tooltipBase = tooltipText.text;
+                tooltipText.text = "<b>Capacity: " + v + "/" + maxValue + "</b>\n" + tooltipBase;
+            }
 
             if (icon != null && stateIcons != null && stateIcons.Length >= 3)
             {

@@ -22,8 +22,14 @@ namespace OneHealth
 
         Button button;
         bool hovered, selected;
+        // Sibling options, collected once (L7) for the A/B/C lettering.
+        MenuOptionStyle[] siblings;
 
-        void Awake() { button = GetComponent<Button>(); }
+        void Awake()
+        {
+            button = GetComponent<Button>();
+            siblings = transform.parent != null ? transform.parent.GetComponentsInChildren<MenuOptionStyle>(true) : new[] { this };
+        }
 
         void OnDisable() { hovered = selected = false; }
 
@@ -42,12 +48,10 @@ namespace OneHealth
         int VisibleIndex()
         {
             int index = 0;
-            var parent = transform.parent;
-            for (int i = 0; i < parent.childCount; i++)
+            foreach (var sibling in siblings)
             {
-                var sibling = parent.GetChild(i);
-                if (sibling == transform) return index;
-                if (sibling.gameObject.activeSelf && sibling.GetComponent<MenuOptionStyle>() != null) index++;
+                if (sibling == this) return index;
+                if (sibling != null && sibling.gameObject.activeSelf) index++;
             }
             return index;
         }

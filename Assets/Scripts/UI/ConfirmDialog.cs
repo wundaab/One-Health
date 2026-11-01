@@ -25,9 +25,23 @@ namespace OneHealth
         {
             if (wired) return;
             wired = true;
-            confirmButton.onClick.AddListener(() => { panel.Close(); if (onConfirm != null) onConfirm(); });
-            cancelButton.onClick.AddListener(() => panel.Close());
+            confirmButton.onClick.AddListener(() => { Close(); if (onConfirm != null) onConfirm(); });
+            cancelButton.onClick.AddListener(Close);
         }
+
+        void Close()
+        {
+            ModalStack.Remove(this);
+            panel.Close();
+        }
+
+        // Esc cancels when this is the topmost dialog (M3); the dialog beneath stays open.
+        void Update()
+        {
+            if (panel.IsOpen && ModalStack.TryConsumeEscape(this)) Close();
+        }
+
+        void OnDisable() { ModalStack.Remove(this); }
 
         public void Show(string titleText, string messageText, string confirmText, System.Action confirmed)
         {
@@ -37,6 +51,7 @@ namespace OneHealth
             confirmLabel.text = confirmText;
             onConfirm = confirmed;
             panel.Open();
+            ModalStack.Push(this);
             cancelButton.Select();
         }
     }

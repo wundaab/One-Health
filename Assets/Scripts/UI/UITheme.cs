@@ -30,13 +30,18 @@ namespace OneHealth
         public static readonly Color SurfaceDark = Navy;
         /// <summary>Dim behind modal overlays.</summary>
         public static readonly Color Scrim = WithAlpha(TealDark, 0.55f);
-        /// <summary>Good outcome (Trust up, Resistance Pressure down). Outcomes only, never spending.</summary>
-        public static readonly Color Positive = LeafGreen;
-        /// <summary>Bad outcome (Trust down, Resistance Pressure up). Outcomes only, never spending.</summary>
-        public static readonly Color Negative = Coral;
-        /// <summary>Lighter outcome colours for text on SurfaceDark (at least 6:1).</summary>
+        /// <summary>Good outcome (Trust up, Resistance Pressure down) on light surfaces: 5.1:1 on white (L4). Outcomes only, never spending.</summary>
+        public static readonly Color Positive = Hex("1E7E34");
+        /// <summary>Bad outcome (Trust down, Resistance Pressure up) on light surfaces: 5.6:1 on white (L4). Outcomes only, never spending.</summary>
+        public static readonly Color Negative = Hex("C82333");
+        /// <summary>
+        /// Lighter outcome colours for text on SurfaceDark. Positive and Negative fail there (2.8:1 and 2.5:1 on
+        /// navy), so dark surfaces use these: 8.2:1 and 6.3:1.
+        /// </summary>
         public static readonly Color PositiveOnDark = Hex("7FD6A4");
         public static readonly Color NegativeOnDark = Hex("FF8A80");
+        /// <summary>Status tag fill (Low, Severe...) behind white text: 5.6:1 (L4).</summary>
+        public static readonly Color Status = Negative;
         /// <summary>Spending Money, Time or Capacity: neutral, not "bad" (5.7:1 on white).</summary>
         public static readonly Color Spend = Hex("9A5516");
         public static readonly Color SpendOnDark = Hex("F2C27B");

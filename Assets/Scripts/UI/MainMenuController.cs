@@ -43,9 +43,10 @@ namespace OneHealth
                 continueLabel.text = "Review Campaign\n<size=55%>Scenario Select</size>";
             else if (!CanContinue() && continueLabel != null)
             {
-                // Say why it is unavailable, in text that stays readable on the grey disabled button (U25).
+                // Say why it is unavailable, in text that stays readable on the grey disabled button (U25):
+                // navy is 5.5:1 there (DisabledInk was 2.3:1).
                 continueLabel.text = "Continue\n<size=55%>No saved game yet</size>";
-                continueLabel.color = UITheme.DisabledInk;
+                continueLabel.color = UITheme.SurfaceDark;
             }
 #if UNITY_WEBGL
             exitButton.gameObject.SetActive(false);

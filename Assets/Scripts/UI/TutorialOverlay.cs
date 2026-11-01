@@ -6,9 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 namespace OneHealth
 {
@@ -62,6 +59,14 @@ namespace OneHealth
         float menuVisibleSince = -1f;
         bool wired;
 
+        // The rest of the game UI, found once (L7): the trigger checks run every frame.
+        VisualCard card;
+        ResultsPanel results;
+        PauseMenu pause;
+        CanvasGroup hudGroup;
+        StatChip[] chips = new StatChip[0];
+        Button pauseButton;
+
         void Awake()
         {
             Instance = this;
@@ -71,6 +76,26 @@ namespace OneHealth
             // Stays active (so it can watch for its triggers) but invisible and click-through until a tip opens.
             group.alpha = 0f;
             group.blocksRaycasts = group.interactable = false;
+        }
+
+        void Start() { CacheReferences(); }
+
+        bool cached;
+
+        void CacheReferences()
+        {
+            if (cached) return;
+            cached = true;
+            card = FindAnyObjectByType<VisualCard>(FindObjectsInactive.Include);
+            results = FindAnyObjectByType<ResultsPanel>(FindObjectsInactive.Include);
+            pause = FindAnyObjectByType<PauseMenu>(FindObjectsInactive.Include);
+            var hud = FindAnyObjectByType<StatHUD>(FindObjectsInactive.Include);
+            if (hud != null)
+            {
+                hudGroup = hud.GetComponent<CanvasGroup>();
+                chips = hud.GetComponentsInChildren<StatChip>(true);
+            }
+            pauseButton = transform.root.GetComponentsInChildren<Button>(true).FirstOrDefault(b => b.name == "PauseButton");
         }
 
         void OnEnable() { CostedOption.OptionShown += NoteOptionShown; }
@@ -89,6 +114,7 @@ namespace OneHealth
         {
             if (Instance == this) Instance = null;
             if (IsOpen) Tutorial.IsOpen = false;
+            ModalStack.Remove(this);
         }
 
         void NoteOptionShown(bool enabled)
@@ -127,11 +153,13 @@ namespace OneHealth
                 if (onDone != null) onDone();
                 return;
             }
+            CacheReferences();
             sequence = id;
             steps = Tutorial.Steps(id);
             done = onDone;
             previousSelection = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
             Tutorial.IsOpen = true;
+            ModalStack.Push(this);
             SetDialogInput(false);
             group.blocksRaycasts = group.interactable = true;
             StopAllCoroutines();
@@ -171,6 +199,7 @@ namespace OneHealth
             steps = null;
             target = null;
             Tutorial.IsOpen = false;
+            ModalStack.Remove(this);
             SetDialogInput(true);
             var cb = done;
             done = null;
@@ -185,11 +214,8 @@ namespace OneHealth
         void Update()
         {
             if (!IsOpen) { CheckTriggers(); return; }
-#if ENABLE_INPUT_SYSTEM
-            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) Close();
-#else
-            if (Input.GetKeyDown(KeyCode.Escape)) Close();
-#endif
+            // Esc closes the tip and is consumed, so the pause menu does not also open this frame (M3).
+            if (ModalStack.TryConsumeEscape(this)) Close();
         }
 
         void LateUpdate()
@@ -277,20 +303,20 @@ namespace OneHealth
                 case TutorialTarget.Trust: return FindChip(StatKind.Trust);
                 case TutorialTarget.Resistance: return FindChip(StatKind.Resistance);
                 case TutorialTarget.Capacity: return FindChip(StatKind.Capacity);
-                case TutorialTarget.Hud: return Bounds(FindObjectsByType<StatChip>().Where(c => c.isActiveAndEnabled).Select(c => (RectTransform)c.transform), "~HudBounds");
+                case TutorialTarget.Hud: return Bounds(chips.Where(c => c != null && c.isActiveAndEnabled).Select(c => (RectTransform)c.transform), "~HudBounds");
                 case TutorialTarget.Pause:
-                    var pause = transform.root.GetComponentsInChildren<Button>(false).FirstOrDefault(b => b.name == "PauseButton");
-                    return pause != null ? (RectTransform)pause.transform : null;
+                    return pauseButton != null && pauseButton.gameObject.activeInHierarchy ? (RectTransform)pauseButton.transform : null;
                 case TutorialTarget.Options: return Bounds(VisibleOptions().Select(b => (RectTransform)b.transform), "~OptionBounds");
                 case TutorialTarget.LockedOption: return FindLockedOption();
                 default: return null;
             }
         }
 
-        static RectTransform FindChip(StatKind kind)
+        RectTransform FindChip(StatKind kind)
         {
-            var chip = FindObjectsByType<StatChip>().FirstOrDefault(c => c.Kind == kind && c.isActiveAndEnabled);
-            return chip != null ? (RectTransform)chip.transform : null;
+            foreach (var chip in chips)
+                if (chip != null && chip.Kind == kind && chip.isActiveAndEnabled) return (RectTransform)chip.transform;
+            return null;
         }
 
         static IEnumerable<Button> VisibleOptions()
@@ -336,23 +362,17 @@ namespace OneHealth
         // ------------------------------------------------------------------ state of the rest of the UI
 
         /// <summary>No card, results screen or pause menu is up, so a tip would not cover something else.</summary>
-        static bool QuietScreen()
+        bool QuietScreen()
         {
-            var card = FindAnyObjectByType<VisualCard>();
             if (card != null && card.gameObject.activeInHierarchy) return false;
-            var results = FindAnyObjectByType<ResultsPanel>();
             if (results != null && results.gameObject.activeInHierarchy) return false;
-            var pause = FindAnyObjectByType<PauseMenu>();
             if (pause != null && pause.IsPaused) return false;
             return true;
         }
 
-        static bool HudVisible()
+        bool HudVisible()
         {
-            var hud = FindAnyObjectByType<StatHUD>();
-            if (hud == null) return false;
-            var g = hud.GetComponent<CanvasGroup>();
-            return g != null && g.alpha > 0.99f;
+            return hudGroup != null && hudGroup.isActiveAndEnabled && hudGroup.alpha > 0.99f;
         }
 
         /// <summary>Fungus "click anywhere" and keyboard input would otherwise advance dialogue behind the tip.</summary>

@@ -1,15 +1,14 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 namespace OneHealth
 {
     /// <summary>
     /// Always-available navigation (S01 blueprint): Resume, Settings, Main Menu, Exit.
-    /// NEXT is shown but locked until the scenario is completed.
+    /// NEXT is shown but locked until the scenario is completed. The panel and the Settings and Confirm dialogs it
+    /// opens live on their own canvas (PauseCanvas, sorting order 999), so cards and the results screen can never
+    /// cover them (M2); while paused, the rest of the game UI ignores clicks.
     /// </summary>
     public class PauseMenu : MonoBehaviour
     {
@@ -26,6 +25,8 @@ namespace OneHealth
         [SerializeField] TMP_Text hintText;
         [SerializeField] SettingsPanel settings;
         [SerializeField] ConfirmDialog confirm;
+        [Tooltip("CanvasGroup on the GameUI root: stops clicks reaching the HUD, cards and results while paused")]
+        [SerializeField] CanvasGroup gameUiGroup;
 
         [Tooltip("Scene NEXT leads to once this scenario is completed")]
         [SerializeField] string nextScene = "";
@@ -60,16 +61,19 @@ namespace OneHealth
 #endif
         }
 
+        // Esc is a LIFO stack (M3): a tip, Settings or Confirm above the pause menu takes Esc first and closes
+        // alone; the pause menu resumes only when it is the topmost modal, and opens only when nothing is open.
         void Update()
         {
             if (Tutorial.IsOpen) return;   // Esc closes the tip instead
-#if ENABLE_INPUT_SYSTEM
-            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
-#else
-            if (Input.GetKeyDown(KeyCode.Escape))
-#endif
+            if (IsPaused)
             {
-                if (IsPaused) Resume(); else Pause();
+                if (ModalStack.TryConsumeEscape(this)) Resume();
+            }
+            else if (ModalStack.Top == null && ModalStack.EscapePressed)
+            {
+                ModalStack.ConsumeEscape();
+                Pause();
             }
         }
 
@@ -90,7 +94,9 @@ namespace OneHealth
             previousTimeScale = Time.timeScale;
             Time.timeScale = 0f;
             SetDialogInput(false);
+            if (gameUiGroup != null) gameUiGroup.blocksRaycasts = false;
             panel.Open();
+            ModalStack.Push(this);
             resumeButton.Select();
         }
 
@@ -118,6 +124,8 @@ namespace OneHealth
             if (!IsPaused) return;
             Time.timeScale = previousTimeScale <= 0f ? 1f : previousTimeScale;
             SetDialogInput(true);
+            if (gameUiGroup != null) gameUiGroup.blocksRaycasts = true;
+            ModalStack.Remove(this);
             panel.Close();
         }
 
@@ -142,6 +150,7 @@ namespace OneHealth
         void OnDestroy()
         {
             if (IsPaused) Time.timeScale = 1f;
+            ModalStack.Remove(this);
         }
     }
 }

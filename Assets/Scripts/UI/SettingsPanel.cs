@@ -53,15 +53,25 @@ namespace OneHealth
             }
             Refresh();
             panel.Open();
+            ModalStack.Push(this);
             backButton.Select();
         }
 
         public void Close()
         {
+            ModalStack.Remove(this);
             panel.Close();
             if (onClosed != null) onClosed();
             onClosed = null;
         }
+
+        // Esc closes Settings when it is the topmost dialog (M3), like Back.
+        void Update()
+        {
+            if (panel.IsOpen && ModalStack.TryConsumeEscape(this)) Close();
+        }
+
+        void OnDisable() { ModalStack.Remove(this); }
 
         void Refresh()
         {

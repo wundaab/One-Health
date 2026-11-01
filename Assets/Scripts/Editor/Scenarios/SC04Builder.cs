@@ -109,6 +109,9 @@ namespace OneHealth.EditorTools
             E.Set(begin, "timeBudgetWeeks", 9);
             E.Set(begin, "timeGrantWeeks", 0);
             E.Set(begin, "moneyGrant", 25);
+            // M7: the field-team Capacity scale (12-22 at entry) shows against 25 on the HUD, Low at 5.
+            E.Set(begin, "capacityScaleMax", 25);
+            E.Set(begin, "capacityLowThreshold", 5);
             E.Set(begin, "showTime", true);
             E.Set(begin, "showCapacity", true);
             k.FadeToBackground(start);

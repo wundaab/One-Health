@@ -48,19 +48,31 @@ namespace OneHealth
                 var info = GameSession.Scenarios[i];
                 bool done = state.HasCompleted(info.id);
                 scenarioButtons[i].interactable = done;
-                // The reason sits on the button itself, in text that stays readable when disabled (U25).
-                scenarioLabels[i].text = info.title + "\n<size=60%>" + (done ? "Completed · Replay" : "Not completed yet") + "</size>";
-                scenarioLabels[i].color = done ? Color.white : UITheme.DisabledInk;
+                // The reason sits on the button itself, in text that stays readable when disabled (U25). L4: the
+                // status line is 22 px (not a percentage), and navy on the grey disabled button is 5.5:1
+                // (DisabledInk there was 2.3:1); white on the blue button is 8.2:1.
+                scenarioLabels[i].text = info.title + "\n<size=22>" + (done ? "Completed · Replay" : "Not completed yet") + "</size>";
+                scenarioLabels[i].color = done ? Color.white : UITheme.SurfaceDark;
                 if (done && first == null) first = scenarioButtons[i];
             }
             panel.Open();
+            ModalStack.Push(this);
             (first != null ? first : backButton).Select();
         }
 
         public void Close()
         {
+            ModalStack.Remove(this);
             panel.Close();
             if (onClosed != null) onClosed();
         }
+
+        // Esc goes back to the main menu, like Back (M3).
+        void Update()
+        {
+            if (panel.IsOpen && ModalStack.TryConsumeEscape(this)) Close();
+        }
+
+        void OnDisable() { ModalStack.Remove(this); }
     }
 }
