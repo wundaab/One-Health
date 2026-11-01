@@ -119,6 +119,16 @@ namespace OneHealth.EditorTools
             var caseBoard = GameObject.Find("CaseBoardPanel");
             if (caseBoard != null && caseBoard.activeInHierarchy)
             {
+                foreach (var b in caseBoard.GetComponentsInChildren<Button>().Where(b => b.name.EndsWith("Card") || b.name == "ContinueButton"))
+                {
+                    // onClick.Invoke bypasses the event system, so first check a real click would land on the button.
+                    if (!ClickReaches(b))
+                    {
+                        Log("ERROR: " + b.name + " on the case board cannot be clicked (something blocks or disables pointer input).");
+                        Stop();
+                        return;
+                    }
+                }
                 foreach (var b in caseBoard.GetComponentsInChildren<Button>().Where(b => b.name.EndsWith("Card")))
                 {
                     b.onClick.Invoke();
@@ -239,6 +249,19 @@ namespace OneHealth.EditorTools
                 }
             }
             return null;
+        }
+
+        /// <summary>True if a pointer click at the button's centre would hit the button (or one of its children).</summary>
+        static bool ClickReaches(Button button)
+        {
+            var es = UnityEngine.EventSystems.EventSystem.current;
+            if (es == null || !button.IsInteractable()) return false;
+            var corners = new Vector3[4];
+            ((RectTransform)button.transform).GetWorldCorners(corners);
+            var data = new UnityEngine.EventSystems.PointerEventData(es) { position = (corners[0] + corners[2]) / 2f };
+            var hits = new List<UnityEngine.EventSystems.RaycastResult>();
+            es.RaycastAll(data, hits);
+            return hits.Count > 0 && hits[0].gameObject.transform.IsChildOf(button.transform);
         }
 
         static void ClickNamed(Transform root, string name)

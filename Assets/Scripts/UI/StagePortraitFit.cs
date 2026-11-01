@@ -50,7 +50,9 @@ namespace OneHealth
             canvasRect = (RectTransform)canvas.transform;
             group = canvas.GetComponent<CanvasGroup>();
             if (group == null) group = canvas.gameObject.AddComponent<CanvasGroup>();
-            group.blocksRaycasts = false;
+            // The portrait canvas also hosts interactive UI (Scenario 2's case board), so it must keep receiving
+            // clicks. It sorts below the dialogue, menu and HUD canvases, so portraits never block those.
+            group.blocksRaycasts = true;
             positions = stage.Positions.ToArray();
             baseX = new float[positions.Length];
             fittedX = new float[positions.Length];
