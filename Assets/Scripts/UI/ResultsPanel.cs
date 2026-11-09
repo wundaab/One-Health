@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -35,6 +36,9 @@ namespace OneHealth
         [SerializeField] Sprite[] neutralSprites;
 
         string nextScene;
+        bool gameComplete;
+
+        const string Supporting = "You have completed One Health Innovator. Better health outcomes begin with better decisions and collective action.";
 
         bool wired;
 
@@ -54,17 +58,25 @@ namespace OneHealth
         {
             Wire();
             nextScene = next;
-            header.text = string.IsNullOrEmpty(next) || next == GameSession.MainMenuScene ? "Game Complete" : "Scenario Complete";
-            replayLabel.text = "Replay Scenario";
+            gameComplete = string.IsNullOrEmpty(next) || next == GameSession.MainMenuScene;
+            header.text = !gameComplete ? "Scenario Complete"
+                : GameSession.State.badges.Contains("One Health Champion") ? "CONGRATULATIONS, ONE HEALTH CHAMPION!" : "CONGRATULATIONS!";
+            header.enableAutoSizing = true;
+            header.fontSizeMin = 30;
+            header.fontSizeMax = 48;
+            replayLabel.text = gameComplete ? "Replay Game" : "Replay Scenario";
             nextButton.gameObject.SetActive(!string.IsNullOrEmpty(next));
             nextLabel.text = string.IsNullOrEmpty(nextStageLabel) ? "Next" : nextStageLabel;
             if (GameSession.IsReplay)
                 summaryText += "\n<i>This was a replay to try a different strategy. Your campaign continues from your original outcome.</i>";
+            if (gameComplete) summaryText = FinalSummary(summaryText);
             Fill(title, summaryText);
             // Game Complete has no Next: Main Menu becomes the primary (green) action and takes focus.
             bool hasNext = nextButton.gameObject.activeSelf;
             Style(menuButton, hasNext ? neutralSprites : primarySprites);
             Open();
+            UICues.Play(gameComplete ? Cue.Achievement : Cue.Transition);
+            if (gameComplete) StartCoroutine(Celebrate());
             (hasNext ? nextButton : menuButton).Select();
         }
 
@@ -72,12 +84,14 @@ namespace OneHealth
         {
             Wire();
             nextScene = null;
+            gameComplete = false;
             header.text = "Scenario Not Completed";
             replayLabel.text = "Retry Scenario";
             nextButton.gameObject.SetActive(false);
             Fill(title, reason);
             Style(menuButton, neutralSprites);
             Open();
+            UICues.Play(Cue.Warning);
             replayButton.Select();
         }
 
@@ -119,15 +133,12 @@ namespace OneHealth
             trustRow.text = Row(start.trust, end.trust, "", StatKind.Trust);
             resistanceRow.text = Row(start.resistance, end.resistance, "", StatKind.Resistance);
 
+            if (gameComplete) { FillFinal(end); return; }
             learnedText.text = List(end.knowledge, start.knowledge, "Nothing new recorded");
             var text = List(end.unlocks, start.unlocks, "No new capability unlocked");
             var newBadges = end.badges.FindAll(b => !start.badges.Contains(b));
             if (newBadges.Count > 0)
                 text += "\n<b>Badges:</b> " + string.Join(", ", newBadges.ToArray());
-            // Game Complete: badges are recognition only, so show the campaign total.
-            if (header.text == "Game Complete")
-                text += string.Format("\n<b>Campaign badges: {0} of {1}</b>",
-                    System.Array.FindAll(GameState.AllBadges, end.badges.Contains).Length, GameState.AllBadges.Length);
             unlockedText.text = text;
         }
 
@@ -190,8 +201,82 @@ namespace OneHealth
             return lines.Count == 0 ? empty : string.Join("\n", lines.ToArray());
         }
 
+        /// <summary>GAME COMPLETE status and outcome, then the closing message (Enhancement Plan section 4).</summary>
+        static string FinalSummary(string ending)
+        {
+            int k = ending.IndexOf(" — ");
+            string outcome = k > 0 ? ending.Substring(0, k) : "";
+            string status = outcome.Length > 0 && outcome != "GAME COMPLETE" ? "GAME COMPLETE · " + outcome : "GAME COMPLETE";
+            int replay = ending.IndexOf("\n<i>");
+            string extra = replay >= 0 ? ending.Substring(replay) : "";
+            return status + " — " + Supporting + extra;
+        }
+
+        /// <summary>
+        /// Final screen, right column: the achievements earned, each with what it recognises, then a short
+        /// debrief of how the campaign went on evidence, prevention and treatment, trust and collaboration.
+        /// </summary>
+        void FillFinal(GameState end)
+        {
+            var column = learnedText.transform.parent;
+            SetHeading(column, "LearnedHeading", string.Format("Achievements ({0} of {1})",
+                System.Array.FindAll(GameState.AllBadges, end.badges.Contains).Length, GameState.AllBadges.Length));
+            SetHeading(column, "UnlockedHeading", "Debrief");
+            Place(column.Find("UnlockedHeading"), -86f, 44f);
+            Place(learnedText.transform, 46f, 196f);
+            Place(unlockedText.transform, -158f, 100f);
+
+            var lines = new List<string>();
+            foreach (var b in GameState.AllBadges)
+                if (end.badges.Contains(b))
+                    lines.Add("• <b>" + b + "</b> <color=" + UITheme.ToHex(UITheme.InkMuted) + ">— " + Achievements.Reason(b) + "</color>");
+            learnedText.text = lines.Count > 0 ? string.Join("\n", lines.ToArray()) : "No badges this time. Replay to try a different strategy.";
+
+            string resistance = end.resistance <= 30 ? "kept low" : end.resistance <= 60 ? "held at a moderate level" : "left high";
+            string trust = end.trust >= 70 ? "strong" : end.trust >= 40 ? "steady" : "fragile";
+            unlockedText.text = string.Format(
+                "<b>Evidence:</b> {0} concepts recorded. <b>Collaboration:</b> {1} capabilities built.\n" +
+                "<b>Prevention and treatment:</b> resistance pressure {2}. <b>Community trust:</b> {3}.",
+                end.knowledge.Count, end.unlocks.Count, resistance, trust);
+        }
+
+        static void SetHeading(Transform column, string name, string text)
+        {
+            var t = column.Find(name);
+            if (t != null) t.GetComponent<TMP_Text>().text = text;
+        }
+
+        static void Place(Transform t, float y, float height)
+        {
+            var rt = t as RectTransform;
+            if (rt == null) return;
+            // Wider than the default lists (one achievement per line), keeping the left edge under the heading.
+            float left = rt.anchoredPosition.x - rt.sizeDelta.x / 2f, width = Mathf.Max(rt.sizeDelta.x, 500f);
+            rt.anchoredPosition = new Vector2(left + width / 2f, y);
+            rt.sizeDelta = new Vector2(width, height);
+        }
+
+        /// <summary>A short celebration: the heading pops in.</summary>
+        IEnumerator Celebrate()
+        {
+            var t = header.transform;
+            for (float e = 0f; e < 0.6f; e += Time.unscaledDeltaTime)
+            {
+                float k = e / 0.6f;
+                t.localScale = Vector3.one * (1f + 0.12f * Mathf.Sin(k * Mathf.PI) * (1f - k * 0.5f));
+                yield return null;
+            }
+            t.localScale = Vector3.one;
+        }
+
         void Replay()
         {
+            if (gameComplete)
+            {
+                GameSession.StartNewCampaign();
+                GameSession.LoadScene(GameSession.Scenarios[0].scene);
+                return;
+            }
             GameSession.RestoreScenarioStart();
             GameSession.LoadScene(SceneManager.GetActiveScene().name);
         }

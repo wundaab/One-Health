@@ -13,6 +13,8 @@ namespace OneHealth
 
         public override void OnEnter()
         {
+            if (!GameSession.State.unlocks.Contains(capabilityId))
+                Notifier.Show(NoticeKind.Task, "Capability unlocked: " + capabilityId, "Activity completed. Your team is making progress.");
             GameSession.AddUnlock(capabilityId);
             FlowchartSync.SetBool(GetFlowchart(), "Unlocked_" + FlowchartSync.Key(capabilityId), true);
             Debug.Log("[OHI] Capability unlocked: " + capabilityId);

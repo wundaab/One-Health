@@ -13,6 +13,8 @@ namespace OneHealth
 
         public override void OnEnter()
         {
+            if (!GameSession.State.knowledge.Contains(knowledgeId))
+                Notifier.Show(NoticeKind.Discovery, "New knowledge recorded", knowledgeId);
             GameSession.AddKnowledge(knowledgeId);
             FlowchartSync.SetBool(GetFlowchart(), "Knowledge_" + FlowchartSync.Key(knowledgeId), true);
             Debug.Log("[OHI] Knowledge recorded: " + knowledgeId);
